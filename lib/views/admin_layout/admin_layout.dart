@@ -1,46 +1,42 @@
 import 'package:ecotrack_admin_panel/constants/responsive.dart';
+import 'package:ecotrack_admin_panel/viewmodel/admin_provider.dart';
 import 'package:ecotrack_admin_panel/views/dashboard/dashboard_screen.dart';
 import 'package:ecotrack_admin_panel/views/widgets/side_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-
-class AdminLayout extends StatefulWidget {
+class AdminLayout extends StatelessWidget {
   const AdminLayout({super.key});
 
   @override
-  State<AdminLayout> createState() => _AdminLayoutState();
-}
-
-class _AdminLayoutState extends State<AdminLayout> {
-  int selectedIndex = 0;
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Row(
-        children: [
-          SideBar(
-            selectedIndex: selectedIndex,
-            onItemSelected: (index) {
-              setState(() {
-                selectedIndex = index;
-              });
-            },
-          ),
+    return Consumer<AdminProvider>(
+      builder: (context, value, child) {
+        return Scaffold(
+          body: Row(
+            children: [
+              SideBar(
+                selectedIndex: value.selectedIndex,
+                onItemSelected: (index) {
+                  value.changeIndex(index);
+                },
+              ),
 
-          Expanded(
-            child: Column(
-              children: [
-                _header(context),
+              Expanded(
+                child: Column(
+                  children: [
+                    _header(context),
 
-                Expanded(
-                  child: _getScreen(),
+                    Expanded(
+                      child: _getScreen(value.selectedIndex),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -111,7 +107,7 @@ class _AdminLayoutState extends State<AdminLayout> {
     );
   }
 
-  Widget _getScreen() {
+  Widget _getScreen(int selectedIndex) {
     if (selectedIndex == 0) {
       return const DashboardScreen();
     }
