@@ -1,4 +1,5 @@
 import 'package:ecotrack_admin_panel/viewmodel/admin_provider.dart';
+import 'package:ecotrack_admin_panel/views/dashboard/dashboard_screen.dart';
 import 'package:ecotrack_admin_panel/views/widgets/side_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -21,17 +22,7 @@ class AdminLayout extends StatelessWidget {
                 },
               ),
 
-              Expanded(
-                child: Center(
-                  child: Text(
-                    'Admin Content',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
+              const Expanded(child: DashboardScreen()),
             ],
           ),
         );
