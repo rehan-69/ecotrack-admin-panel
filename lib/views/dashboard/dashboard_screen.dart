@@ -2,7 +2,6 @@ import 'package:ecotrack_admin_panel/constants/app_color.dart';
 import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:flutter/material.dart';
 
-
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
@@ -87,6 +86,10 @@ class DashboardScreen extends StatelessWidget {
               ),
             ],
           ),
+
+          SizedBox(height: context.height * 0.035),
+
+          _complaintStatus(context),
         ],
       ),
     );
@@ -159,6 +162,114 @@ class DashboardScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _complaintStatus(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(context.width * 0.015),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(
+          color: Colors.grey.shade200,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Complaint Status Overview',
+            style: TextStyle(
+              fontSize: context.width * 0.013,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+
+          SizedBox(height: context.height * 0.008),
+
+          Text(
+            'Distribution of complaints by current status.',
+            style: TextStyle(
+              fontSize: context.width * 0.010,
+              color: Colors.grey,
+            ),
+          ),
+
+          SizedBox(height: context.height * 0.025),
+
+          SizedBox(
+            height: context.height * 0.30,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _chartBar(
+                  context,
+                  'Pending',
+                  24,
+                  Colors.orange,
+                ),
+
+                _chartBar(
+                  context,
+                  'In Progress',
+                  31,
+                  Colors.blue,
+                ),
+
+                _chartBar(
+                  context,
+                  'Completed',
+                  73,
+                  AppColors.primaryColor,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _chartBar(
+    BuildContext context,
+    String title,
+    int value,
+    Color color,
+  ) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Container(
+          width: context.width * 0.045,
+          height: context.height * 0.20 * (value / 80),
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: const BorderRadius.vertical(
+              top: Radius.circular(8),
+            ),
+          ),
+        ),
+
+        SizedBox(height: context.height * 0.01),
+
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: context.width * 0.009,
+            color: Colors.grey.shade700,
+          ),
+        ),
+      ],
     );
   }
 }
