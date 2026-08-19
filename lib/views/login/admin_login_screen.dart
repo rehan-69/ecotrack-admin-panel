@@ -1,8 +1,8 @@
 import 'package:ecotrack_admin_panel/constants/responsive.dart';
+import 'package:ecotrack_admin_panel/views/admin_layout/admin_layout.dart';
 import 'package:ecotrack_admin_panel/views/widgets/custom_button.dart';
 import 'package:ecotrack_admin_panel/views/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
-
 
 class AdminLoginScreen extends StatelessWidget {
   const AdminLoginScreen({super.key});
@@ -30,10 +30,7 @@ class AdminLoginScreen extends StatelessWidget {
 
               const Text(
                 'Admin Panel',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               ),
 
               SizedBox(height: context.height * 0.030),
@@ -64,7 +61,14 @@ class AdminLoginScreen extends StatelessWidget {
 
               CustomButton(
                 text: 'Login',
-                onPressed: () {},
+                  onPressed:() {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AdminLayout(),
+                      ),
+                    );
+                },
                 width: context.width * 0.35,
                 height: context.height * 0.065,
                 borderRadius: context.width * 0.008,
