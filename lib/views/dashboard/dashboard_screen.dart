@@ -1,5 +1,6 @@
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
 import 'package:ecotrack_admin_panel/constants/responsive.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -208,31 +209,129 @@ class DashboardScreen extends StatelessWidget {
 
           SizedBox(
             height: context.height * 0.30,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _chartBar(
-                  context,
-                  'Pending',
-                  24,
-                  Colors.orange,
+            child: BarChart(
+              BarChartData(
+                maxY: 80,
+                minY: 0,
+
+                alignment: BarChartAlignment.spaceAround,
+
+                gridData: FlGridData(
+                  show: true,
+                  drawVerticalLine: false,
+                  horizontalInterval: 20,
+                  getDrawingHorizontalLine: (value) {
+                    return FlLine(
+                      color: Colors.grey.shade200,
+                      strokeWidth: 1,
+                      dashArray: [4, 4],
+                    );
+                  },
                 ),
 
-                _chartBar(
-                  context,
-                  'In Progress',
-                  31,
-                  Colors.blue,
+                borderData: FlBorderData(
+                  show: false,
                 ),
 
-                _chartBar(
-                  context,
-                  'Completed',
-                  73,
-                  AppColors.primaryColor,
+                barTouchData: BarTouchData(
+                  enabled: true,
+                  touchTooltipData: BarTouchTooltipData(
+                    getTooltipItem: (
+                      group,
+                      groupIndex,
+                      rod,
+                      rodIndex,
+                    ) {
+                      return BarTooltipItem(
+                        rod.toY.toInt().toString(),
+                        const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    },
+                  ),
                 ),
-              ],
+
+                titlesData: FlTitlesData(
+                  topTitles: const AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: false,
+                    ),
+                  ),
+
+                  rightTitles: const AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: false,
+                    ),
+                  ),
+
+                  leftTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      interval: 20,
+                      reservedSize: context.width * 0.025,
+                      getTitlesWidget: (value, meta) {
+                        return Text(
+                          value.toInt().toString(),
+                          style: TextStyle(
+                            fontSize: context.width * 0.009,
+                            color: Colors.grey,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      getTitlesWidget: (value, meta) {
+                        String title = '';
+
+                        if (value == 0) {
+                          title = 'Pending';
+                        } else if (value == 1) {
+                          title = 'In Progress';
+                        } else if (value == 2) {
+                          title = 'Completed';
+                        }
+
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: Text(
+                            title,
+                            style: TextStyle(
+                              fontSize: context.width * 0.009,
+                              color: Colors.grey.shade700,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+
+                barGroups: [
+                  _barGroup(
+                    0,
+                    24,
+                    Colors.orange,
+                  ),
+
+                  _barGroup(
+                    1,
+                    31,
+                    Colors.blue,
+                  ),
+
+                  _barGroup(
+                    2,
+                    73,
+                    AppColors.primaryColor,
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -240,33 +339,21 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _chartBar(
-    BuildContext context,
-    String title,
-    int value,
+  BarChartGroupData _barGroup(
+    int x,
+    double value,
     Color color,
   ) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Container(
-          width: context.width * 0.045,
-          height: context.height * 0.20 * (value / 80),
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: const BorderRadius.vertical(
-              top: Radius.circular(8),
-            ),
-          ),
-        ),
-
-        SizedBox(height: context.height * 0.01),
-
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: context.width * 0.009,
-            color: Colors.grey.shade700,
+    return BarChartGroupData(
+      x: x,
+      barRods: [
+        BarChartRodData(
+          toY: value,
+          color: color,
+          width: 45,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(8),
+            topRight: Radius.circular(8),
           ),
         ),
       ],
