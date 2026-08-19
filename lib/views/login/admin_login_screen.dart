@@ -1,4 +1,8 @@
+import 'package:ecotrack_admin_panel/constants/responsive.dart';
+import 'package:ecotrack_admin_panel/views/widgets/custom_button.dart';
+import 'package:ecotrack_admin_panel/views/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
+
 
 class AdminLoginScreen extends StatelessWidget {
   const AdminLoginScreen({super.key});
@@ -8,8 +12,8 @@ class AdminLoginScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Container(
-          width: 400,
-          padding: const EdgeInsets.all(30),
+          width: context.width * 0.40,
+          padding: EdgeInsets.all(context.width * 0.030),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -32,41 +36,40 @@ class AdminLoginScreen extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 30),
+              SizedBox(height: context.height * 0.030),
 
-              TextField(
-                decoration: InputDecoration(
-                  hintText: 'Admin Email',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
+              CustomTextField(
+                title: 'Admin Email',
+                width: context.width * 0.35,
+                height: context.height * 0.065,
+                fontSize: context.width * 0.012,
+                borderRadius: context.width * 0.008,
+                keyboardType: TextInputType.emailAddress,
+                prefixIcon: Icons.email_outlined,
               ),
 
-              const SizedBox(height: 20),
+              SizedBox(height: context.height * 0.020),
 
-              TextField(
+              CustomTextField(
+                title: 'Password',
+                width: context.width * 0.35,
+                height: context.height * 0.065,
+                fontSize: context.width * 0.012,
+                borderRadius: context.width * 0.008,
                 obscureText: true,
-                decoration: InputDecoration(
-                  hintText: 'Password',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
+                prefixIcon: Icons.lock_outline,
               ),
 
-              const SizedBox(height: 25),
+              SizedBox(height: context.height * 0.025),
 
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'Login',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
+              CustomButton(
+                text: 'Login',
+                onPressed: () {},
+                width: context.width * 0.35,
+                height: context.height * 0.065,
+                borderRadius: context.width * 0.008,
+                fontSize: context.width * 0.012,
+                fontWeight: FontWeight.w600,
               ),
             ],
           ),
