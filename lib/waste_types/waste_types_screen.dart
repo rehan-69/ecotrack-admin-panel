@@ -1,6 +1,7 @@
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
 import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:ecotrack_admin_panel/waste_types/add_waste_type_dialog.dart';
+import 'package:ecotrack_admin_panel/waste_types/edit_waste_type_dialog.dart';
 import 'package:flutter/material.dart';
 
 class WasteTypesScreen extends StatelessWidget {
@@ -333,7 +334,19 @@ class WasteTypesScreen extends StatelessWidget {
                     width: 73,
                     height: 34,
                     child: OutlinedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditWasteTypeDialog(
+                              wasteType: 'Household Waste',
+                              description:
+                                  'Daily kitchen and domestic waste from homes.',
+                              status: 'Active',
+                            ),
+                          ),
+                        );
+                      },
                       icon: const Icon(Icons.edit_outlined, size: 16),
                       label: Text(
                         'Edit',

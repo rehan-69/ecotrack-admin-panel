@@ -1,4 +1,5 @@
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
+import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:flutter/material.dart';
 
 class EditWasteTypeDialog extends StatelessWidget {
@@ -21,18 +22,22 @@ class EditWasteTypeDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Container(
-        width: 520,
-        padding: const EdgeInsets.all(24),
+        width: context.width < 600
+            ? context.width * 0.90
+            : 520,
+        padding: EdgeInsets.all(
+          context.width < 600 ? 18 : 24,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                const Text(
+                Text(
                   'Edit Waste Type',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: context.responsiveFont(20),
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -43,9 +48,9 @@ class EditWasteTypeDialog extends StatelessWidget {
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: const Icon(
+                  child: Icon(
                     Icons.close,
-                    size: 20,
+                    size: context.responsiveFont(20),
                     color: Colors.grey,
                   ),
                 ),
@@ -59,7 +64,7 @@ class EditWasteTypeDialog extends StatelessWidget {
             Text(
               'Update the details of this waste category.',
               style: TextStyle(
-                fontSize: 14,
+                fontSize: context.responsiveFont(14),
                 color: Colors.grey.shade600,
               ),
             ),
@@ -68,10 +73,10 @@ class EditWasteTypeDialog extends StatelessWidget {
               height: 20,
             ),
 
-            const Text(
+            Text(
               'Waste Type Name',
               style: TextStyle(
-                fontSize: 14,
+                fontSize: context.responsiveFont(14),
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -87,7 +92,7 @@ class EditWasteTypeDialog extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: 'e.g. Household Waste',
                 hintStyle: TextStyle(
-                  fontSize: 14,
+                  fontSize: context.responsiveFont(14),
                   color: Colors.grey.shade500,
                 ),
                 contentPadding:
@@ -120,10 +125,10 @@ class EditWasteTypeDialog extends StatelessWidget {
               height: 18,
             ),
 
-            const Text(
+            Text(
               'Description',
               style: TextStyle(
-                fontSize: 14,
+                fontSize: context.responsiveFont(14),
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -141,7 +146,7 @@ class EditWasteTypeDialog extends StatelessWidget {
                 hintText:
                     'Short description of this waste category',
                 hintStyle: TextStyle(
-                  fontSize: 14,
+                  fontSize: context.responsiveFont(14),
                   color: Colors.grey.shade500,
                 ),
                 contentPadding:
@@ -171,10 +176,10 @@ class EditWasteTypeDialog extends StatelessWidget {
               height: 18,
             ),
 
-            const Text(
+            Text(
               'Status',
               style: TextStyle(
-                fontSize: 14,
+                fontSize: context.responsiveFont(14),
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -211,8 +216,9 @@ class EditWasteTypeDialog extends StatelessWidget {
                 children: [
                   Text(
                     status,
-                    style: const TextStyle(
-                      fontSize: 14,
+                    style: TextStyle(
+                      fontSize:
+                          context.responsiveFont(14),
                     ),
                   ),
 
@@ -220,7 +226,8 @@ class EditWasteTypeDialog extends StatelessWidget {
 
                   Icon(
                     Icons.keyboard_arrow_down,
-                    size: 20,
+                    size:
+                        context.responsiveFont(20),
                     color: Colors.grey.shade600,
                   ),
                 ],
@@ -251,11 +258,12 @@ class EditWasteTypeDialog extends StatelessWidget {
                           BorderRadius.circular(10),
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Cancel',
                     style: TextStyle(
-                      color: Color(0xFF1F2937),
-                      fontSize: 14,
+                      color: const Color(0xFF1F2937),
+                      fontSize:
+                          context.responsiveFont(14),
                     ),
                   ),
                 ),
@@ -280,11 +288,12 @@ class EditWasteTypeDialog extends StatelessWidget {
                           BorderRadius.circular(10),
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Save',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 14,
+                      fontSize:
+                          context.responsiveFont(14),
                       fontWeight: FontWeight.w500,
                     ),
                   ),
