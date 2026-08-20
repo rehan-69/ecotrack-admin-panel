@@ -1,4 +1,5 @@
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
+import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:flutter/material.dart';
 
 class UserDetailScreen extends StatelessWidget {
@@ -25,57 +26,61 @@ class UserDetailScreen extends StatelessWidget {
       backgroundColor: const Color(0xFFF7FAF8),
       body: Row(
         children: [
-          _sideBar(),
+          _sideBar(context),
 
           Expanded(
             child: Column(
               children: [
-                _header(),
+                _header(context),
 
                 Expanded(
                   child: SingleChildScrollView(
-                    padding: const EdgeInsets.all(24),
+                    padding: EdgeInsets.all(
+                      context.width < 600 ? 16 : 24,
+                    ),
                     child: Column(
                       crossAxisAlignment:
                           CrossAxisAlignment.start,
                       children: [
                         _backButton(context),
 
-                        const SizedBox(
-                          height: 18,
+                        SizedBox(
+                          height: context.height * 0.018,
                         ),
 
                         Text(
                           'User Details',
-                          style: const TextStyle(
-                            fontSize: 26,
+                          style: TextStyle(
+                            fontSize:
+                                context.responsiveFont(26),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
 
-                        const SizedBox(
-                          height: 24,
+                        SizedBox(
+                          height: context.height * 0.025,
                         ),
 
-                        _userCard(),
+                        _userCard(context),
 
-                        const SizedBox(
-                          height: 34,
+                        SizedBox(
+                          height: context.height * 0.035,
                         ),
 
-                        const Text(
+                        Text(
                           'Recent Complaints',
                           style: TextStyle(
-                            fontSize: 17,
+                            fontSize:
+                                context.responsiveFont(17),
                             fontWeight: FontWeight.w600,
                           ),
                         ),
 
-                        const SizedBox(
-                          height: 16,
+                        SizedBox(
+                          height: context.height * 0.016,
                         ),
 
-                        _complaintsTable(),
+                        _complaintsTable(context),
                       ],
                     ),
                   ),
@@ -89,111 +94,155 @@ class UserDetailScreen extends StatelessWidget {
   }
 
   // SIDEBAR
-  Widget _sideBar() {
+
+  Widget _sideBar(BuildContext context) {
+    double sidebarWidth;
+
+    if (context.width < 600) {
+      sidebarWidth = 90;
+    } else if (context.width < 900) {
+      sidebarWidth = 180;
+    } else {
+      sidebarWidth = 250;
+    }
+
     return Container(
-      width: 250,
+      width: sidebarWidth,
       color: Colors.white,
       child: Column(
         children: [
           Container(
             height: 66,
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
+            padding: EdgeInsets.symmetric(
+              horizontal:
+                  context.width < 600 ? 10 : 20,
             ),
-            child: Row(
-              children: [
-                Container(
-                  width: 42,
-                  height: 42,
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius:
-                        BorderRadius.circular(12),
-                  ),
-                  child: const Icon(
-                    Icons.eco_outlined,
-                    color: Colors.white,
-                  ),
-                ),
-
-                const SizedBox(
-                  width: 12,
-                ),
-
-                const Column(
-                  mainAxisAlignment:
-                      MainAxisAlignment.center,
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'EcoTrack',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+            child: context.width < 600
+                ? Center(
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color:
+                            AppColors.primaryColor,
+                        borderRadius:
+                            BorderRadius.circular(12),
+                      ),
+                      child: const Icon(
+                        Icons.eco_outlined,
+                        color: Colors.white,
                       ),
                     ),
-                    Text(
-                      'Admin Panel',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
+                  )
+                : Row(
+                    children: [
+                      Container(
+                        width: 42,
+                        height: 42,
+                        decoration: BoxDecoration(
+                          color:
+                              AppColors.primaryColor,
+                          borderRadius:
+                              BorderRadius.circular(12),
+                        ),
+                        child: const Icon(
+                          Icons.eco_outlined,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+
+                      const SizedBox(
+                        width: 12,
+                      ),
+
+                      Column(
+                        mainAxisAlignment:
+                            MainAxisAlignment.center,
+                        crossAxisAlignment:
+                            CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'EcoTrack',
+                            style: TextStyle(
+                              fontSize:
+                                  context.responsiveFont(
+                                16,
+                              ),
+                              fontWeight:
+                                  FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            'Admin Panel',
+                            style: TextStyle(
+                              fontSize:
+                                  context.responsiveFont(
+                                12,
+                              ),
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
           ),
 
           const Divider(
             height: 1,
           ),
 
-          const SizedBox(
-            height: 18,
+          SizedBox(
+            height: context.height * 0.02,
           ),
 
-          const Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 20,
-            ),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'MANAGEMENT',
-                style: TextStyle(
-                  fontSize: 11,
-                  color: Color(0xFF64748B),
-                  fontWeight: FontWeight.w600,
+          if (context.width >= 600)
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+              ),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'MANAGEMENT',
+                  style: TextStyle(
+                    fontSize:
+                        context.responsiveFont(11),
+                    color:
+                        const Color(0xFF64748B),
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ),
-          ),
 
-          const SizedBox(
-            height: 12,
+          SizedBox(
+            height: context.height * 0.012,
           ),
 
           _menuItem(
+            context,
             Icons.dashboard_outlined,
             'Dashboard',
             false,
           ),
 
           _menuItem(
+            context,
             Icons.description_outlined,
             'Complaints',
             false,
           ),
 
           _menuItem(
+            context,
             Icons.people_outline,
             'Users',
             true,
           ),
 
           _menuItem(
+            context,
             Icons.delete_outline,
             'Waste Types',
             false,
@@ -202,7 +251,9 @@ class UserDetailScreen extends StatelessWidget {
           const Spacer(),
 
           Container(
-            padding: const EdgeInsets.all(20),
+            padding: EdgeInsets.all(
+              context.width < 600 ? 12 : 20,
+            ),
             decoration: BoxDecoration(
               border: Border(
                 top: BorderSide(
@@ -210,26 +261,36 @@ class UserDetailScreen extends StatelessWidget {
                 ),
               ),
             ),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.logout,
-                  color: Colors.grey.shade600,
-                ),
+            child: context.width < 600
+                ? Center(
+                    child: Icon(
+                      Icons.logout,
+                      size: 20,
+                      color: Colors.grey.shade600,
+                    ),
+                  )
+                : Row(
+                    children: [
+                      Icon(
+                        Icons.logout,
+                        color: Colors.grey.shade600,
+                      ),
 
-                const SizedBox(
-                  width: 12,
-                ),
+                      const SizedBox(
+                        width: 12,
+                      ),
 
-                Text(
-                  'Logout',
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.grey.shade700,
+                      Text(
+                        'Logout',
+                        style: TextStyle(
+                          fontSize:
+                              context.responsiveFont(15),
+                          color:
+                              Colors.grey.shade700,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
           ),
         ],
       ),
@@ -237,17 +298,19 @@ class UserDetailScreen extends StatelessWidget {
   }
 
   Widget _menuItem(
+    BuildContext context,
     IconData icon,
     String title,
     bool selected,
   ) {
     return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 12,
+      margin: EdgeInsets.symmetric(
+        horizontal: context.width < 600 ? 6 : 12,
         vertical: 3,
       ),
-      padding: const EdgeInsets.symmetric(
-        horizontal: 14,
+      padding: EdgeInsets.symmetric(
+        horizontal:
+            context.width < 600 ? 8 : 14,
         vertical: 12,
       ),
       decoration: BoxDecoration(
@@ -256,43 +319,56 @@ class UserDetailScreen extends StatelessWidget {
             : Colors.transparent,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Row(
-        children: [
-          Icon(
-            icon,
-            size: 20,
-            color: selected
-                ? Colors.white
-                : Colors.grey.shade600,
-          ),
+      child: context.width < 600
+          ? Center(
+              child: Icon(
+                icon,
+                size: 20,
+                color: selected
+                    ? Colors.white
+                    : Colors.grey.shade600,
+              ),
+            )
+          : Row(
+              children: [
+                Icon(
+                  icon,
+                  size: 20,
+                  color: selected
+                      ? Colors.white
+                      : Colors.grey.shade600,
+                ),
 
-          const SizedBox(
-            width: 14,
-          ),
+                const SizedBox(
+                  width: 14,
+                ),
 
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 15,
-              color: selected
-                  ? Colors.white
-                  : Colors.grey.shade700,
-              fontWeight: selected
-                  ? FontWeight.w600
-                  : FontWeight.w400,
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize:
+                        context.responsiveFont(15),
+                    color: selected
+                        ? Colors.white
+                        : Colors.grey.shade700,
+                    fontWeight: selected
+                        ? FontWeight.w600
+                        : FontWeight.w400,
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
     );
   }
 
   // HEADER
-  Widget _header() {
+
+  Widget _header(BuildContext context) {
     return Container(
       height: 66,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 24,
+      padding: EdgeInsets.symmetric(
+        horizontal:
+            context.width < 600 ? 12 : 24,
       ),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -304,17 +380,18 @@ class UserDetailScreen extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Text(
+          Text(
             'Nashik Municipal Corporation',
             style: TextStyle(
-              fontSize: 16,
+              fontSize:
+                  context.responsiveFont(16),
               fontWeight: FontWeight.w600,
             ),
           ),
 
           const Spacer(),
 
-          const Column(
+          Column(
             mainAxisAlignment:
                 MainAxisAlignment.center,
             crossAxisAlignment:
@@ -323,34 +400,41 @@ class UserDetailScreen extends StatelessWidget {
               Text(
                 'Admin',
                 style: TextStyle(
-                  fontSize: 15,
+                  fontSize:
+                      context.responsiveFont(15),
                   fontWeight: FontWeight.bold,
                 ),
               ),
+
               Text(
                 'admin@ecotrack.gov.in',
                 style: TextStyle(
-                  fontSize: 12,
+                  fontSize:
+                      context.responsiveFont(12),
                   color: Colors.grey,
                 ),
               ),
             ],
           ),
 
-          const SizedBox(
-            width: 14,
+          SizedBox(
+            width: context.width * 0.01,
           ),
 
           CircleAvatar(
-            radius: 18,
+            radius: context.width < 600
+                ? 16
+                : 18,
             backgroundColor:
-                Color(0xFFE8F5E9),
+                const Color(0xFFE8F5E9),
             child: Text(
               'AD',
               style: TextStyle(
-                fontSize: 12,
+                fontSize:
+                    context.responsiveFont(12),
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF2E7D32),
+                color:
+                    const Color(0xFF2E7D32),
               ),
             ),
           ),
@@ -360,6 +444,7 @@ class UserDetailScreen extends StatelessWidget {
   }
 
   // BACK BUTTON
+
   Widget _backButton(
     BuildContext context,
   ) {
@@ -370,21 +455,22 @@ class UserDetailScreen extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
+          Icon(
             Icons.arrow_back,
-            size: 20,
-            color: Color(0xFF64748B),
+            size: context.responsiveFont(20),
+            color: const Color(0xFF64748B),
           ),
 
           const SizedBox(
             width: 8,
           ),
 
-          const Text(
+          Text(
             'Back',
             style: TextStyle(
-              fontSize: 14,
-              color: Color(0xFF64748B),
+              fontSize:
+                  context.responsiveFont(14),
+              color: const Color(0xFF64748B),
             ),
           ),
         ],
@@ -393,10 +479,15 @@ class UserDetailScreen extends StatelessWidget {
   }
 
   // USER CARD
-  Widget _userCard() {
+
+  Widget _userCard(
+    BuildContext context,
+  ) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(
+        context.width < 600 ? 16 : 20,
+      ),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
@@ -418,44 +509,53 @@ class UserDetailScreen extends StatelessWidget {
           Row(
             children: [
               CircleAvatar(
-                radius: 28,
+                radius: context.width < 600
+                    ? 23
+                    : 28,
                 backgroundColor:
                     AppColors.primaryColor,
-                child: const Text(
+                child: Text(
                   'RS',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize:
+                        context.responsiveFont(16),
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),
               ),
 
-              const SizedBox(
-                width: 16,
+              SizedBox(
+                width: context.width < 600
+                    ? 10
+                    : 16,
               ),
 
-              const Column(
+              Column(
                 crossAxisAlignment:
                     CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Rahul Sharma',
+                    name,
                     style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
+                      fontSize:
+                          context.responsiveFont(20),
+                      fontWeight:
+                          FontWeight.w600,
                     ),
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 4,
                   ),
 
                   Text(
                     'Citizen · USR-01',
                     style: TextStyle(
-                      fontSize: 14,
-                      color: Color(0xFF64748B),
+                      fontSize:
+                          context.responsiveFont(14),
+                      color:
+                          const Color(0xFF64748B),
                     ),
                   ),
                 ],
@@ -467,11 +567,13 @@ class UserDetailScreen extends StatelessWidget {
                 crossAxisAlignment:
                     CrossAxisAlignment.end,
                 children: [
-                  const Text(
+                  Text(
                     'Account Status',
                     style: TextStyle(
-                      fontSize: 13,
-                      color: Color(0xFF64748B),
+                      fontSize:
+                          context.responsiveFont(13),
+                      color:
+                          const Color(0xFF64748B),
                     ),
                   ),
 
@@ -479,69 +581,135 @@ class UserDetailScreen extends StatelessWidget {
                     height: 7,
                   ),
 
-                  _statusBadge(),
+                  _statusBadge(context),
                 ],
               ),
             ],
           ),
 
-          const SizedBox(
-            height: 24,
+          SizedBox(
+            height: context.height * 0.025,
           ),
 
-          Row(
-            children: [
-              Expanded(
-                child: _infoBox(
+          if (context.width < 700)
+            Wrap(
+              spacing: 12,
+              runSpacing: 12,
+              children: [
+                _responsiveInfoBox(
+                  context,
                   Icons.email_outlined,
                   'Email',
                   email,
                 ),
-              ),
 
-              const SizedBox(
-                width: 16,
-              ),
-
-              Expanded(
-                child: _infoBox(
+                _responsiveInfoBox(
+                  context,
                   Icons.phone_outlined,
                   'Mobile',
                   mobile,
                 ),
-              ),
 
-              const SizedBox(
-                width: 16,
-              ),
-
-              Expanded(
-                child: _infoBox(
+                _responsiveInfoBox(
+                  context,
                   Icons.calendar_today_outlined,
                   'Joined Date',
                   joinedDate,
                 ),
-              ),
 
-              const SizedBox(
-                width: 16,
-              ),
-
-              Expanded(
-                child: _infoBox(
+                _responsiveInfoBox(
+                  context,
                   Icons.description_outlined,
                   'Total Complaints',
                   totalComplaints,
                 ),
-              ),
-            ],
-          ),
+              ],
+            )
+          else
+            Row(
+              children: [
+                Expanded(
+                  child: _infoBox(
+                    context,
+                    Icons.email_outlined,
+                    'Email',
+                    email,
+                  ),
+                ),
+
+                const SizedBox(
+                  width: 16,
+                ),
+
+                Expanded(
+                  child: _infoBox(
+                    context,
+                    Icons.phone_outlined,
+                    'Mobile',
+                    mobile,
+                  ),
+                ),
+
+                const SizedBox(
+                  width: 16,
+                ),
+
+                Expanded(
+                  child: _infoBox(
+                    context,
+                    Icons.calendar_today_outlined,
+                    'Joined Date',
+                    joinedDate,
+                  ),
+                ),
+
+                const SizedBox(
+                  width: 16,
+                ),
+
+                Expanded(
+                  child: _infoBox(
+                    context,
+                    Icons.description_outlined,
+                    'Total Complaints',
+                    totalComplaints,
+                  ),
+                ),
+              ],
+            ),
         ],
       ),
     );
   }
 
+  Widget _responsiveInfoBox(
+    BuildContext context,
+    IconData icon,
+    String title,
+    String value,
+  ) {
+    double boxWidth;
+
+    if (context.width < 450) {
+      boxWidth = double.infinity;
+    } else {
+      boxWidth =
+          (context.width - 110) / 2;
+    }
+
+    return SizedBox(
+      width: boxWidth,
+      child: _infoBox(
+        context,
+        icon,
+        title,
+        value,
+      ),
+    );
+  }
+
   Widget _infoBox(
+    BuildContext context,
     IconData icon,
     String title,
     String value,
@@ -564,7 +732,7 @@ class UserDetailScreen extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                size: 16,
+                size: context.responsiveFont(16),
                 color: Colors.grey.shade600,
               ),
 
@@ -572,11 +740,16 @@ class UserDetailScreen extends StatelessWidget {
                 width: 7,
               ),
 
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Color(0xFF64748B),
+              Expanded(
+                child: Text(
+                  title,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize:
+                        context.responsiveFont(12),
+                    color:
+                        const Color(0xFF64748B),
+                  ),
                 ),
               ),
             ],
@@ -586,8 +759,10 @@ class UserDetailScreen extends StatelessWidget {
 
           Text(
             value,
-            style: const TextStyle(
-              fontSize: 14,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize:
+                  context.responsiveFont(14),
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -596,21 +771,27 @@ class UserDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _statusBadge() {
+  Widget _statusBadge(
+    BuildContext context,
+  ) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 12,
-        vertical: 5,
+      padding: EdgeInsets.symmetric(
+        horizontal:
+            context.responsiveFont(12),
+        vertical:
+            context.responsiveFont(5),
       ),
       decoration: BoxDecoration(
         color: const Color(0xFFD9F5DF),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius:
+            BorderRadius.circular(20),
       ),
       child: Text(
         status,
-        style: const TextStyle(
-          fontSize: 12,
-          color: Color(0xFF16833A),
+        style: TextStyle(
+          fontSize:
+              context.responsiveFont(12),
+          color: const Color(0xFF16833A),
           fontWeight: FontWeight.w500,
         ),
       ),
@@ -618,7 +799,10 @@ class UserDetailScreen extends StatelessWidget {
   }
 
   // RECENT COMPLAINTS
-  Widget _complaintsTable() {
+
+  Widget _complaintsTable(
+    BuildContext context,
+  ) {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -637,32 +821,43 @@ class UserDetailScreen extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        children: [
-          _tableRow(
-            isHeader: true,
-            complaintId: 'COMPLAINT ID',
-            title: 'TITLE',
-            wasteType: 'WASTE TYPE',
-            date: 'DATE',
-            status: 'STATUS',
-            action: 'ACTION',
-          ),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: SizedBox(
+          width: context.width < 700
+              ? 750
+              : context.width,
+          child: Column(
+            children: [
+              _tableRow(
+                context,
+                isHeader: true,
+                complaintId: 'COMPLAINT ID',
+                title: 'TITLE',
+                wasteType: 'WASTE TYPE',
+                date: 'DATE',
+                status: 'STATUS',
+                action: 'ACTION',
+              ),
 
-          _tableRow(
-            complaintId: 'ECO-1042',
-            title: 'Household Waste',
-            wasteType: 'Household Waste',
-            date: '12 Mar 2026',
-            status: 'In Progress',
-            action: 'View',
+              _tableRow(
+                context,
+                complaintId: 'ECO-1042',
+                title: 'Household Waste',
+                wasteType: 'Household Waste',
+                date: '12 Mar 2026',
+                status: 'In Progress',
+                action: 'View',
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
 
-  Widget _tableRow({
+  Widget _tableRow(
+    BuildContext context, {
     bool isHeader = false,
     required String complaintId,
     required String title,
@@ -672,9 +867,10 @@ class UserDetailScreen extends StatelessWidget {
     required String action,
   }) {
     return Container(
-      padding: const EdgeInsets.symmetric(
+      padding: EdgeInsets.symmetric(
         horizontal: 16,
-        vertical: 14,
+        vertical:
+            context.responsiveFont(14),
       ),
       decoration: BoxDecoration(
         color: isHeader
@@ -691,6 +887,7 @@ class UserDetailScreen extends StatelessWidget {
           Expanded(
             flex: 15,
             child: _tableText(
+              context,
               complaintId,
               isHeader,
             ),
@@ -699,6 +896,7 @@ class UserDetailScreen extends StatelessWidget {
           Expanded(
             flex: 18,
             child: _tableText(
+              context,
               title,
               isHeader,
             ),
@@ -707,6 +905,7 @@ class UserDetailScreen extends StatelessWidget {
           Expanded(
             flex: 20,
             child: _tableText(
+              context,
               wasteType,
               isHeader,
             ),
@@ -715,6 +914,7 @@ class UserDetailScreen extends StatelessWidget {
           Expanded(
             flex: 15,
             child: _tableText(
+              context,
               date,
               isHeader,
             ),
@@ -724,6 +924,7 @@ class UserDetailScreen extends StatelessWidget {
             flex: 15,
             child: isHeader
                 ? _tableText(
+                    context,
                     status,
                     true,
                   )
@@ -732,13 +933,17 @@ class UserDetailScreen extends StatelessWidget {
                         Alignment.centerLeft,
                     child: Container(
                       padding:
-                          const EdgeInsets
-                              .symmetric(
-                        horizontal: 10,
-                        vertical: 5,
+                          EdgeInsets.symmetric(
+                        horizontal:
+                            context.responsiveFont(
+                          10,
+                        ),
+                        vertical:
+                            context.responsiveFont(
+                          5,
+                        ),
                       ),
-                      decoration:
-                          BoxDecoration(
+                      decoration: BoxDecoration(
                         color: const Color(
                           0xFFE3F2FD,
                         ),
@@ -749,8 +954,11 @@ class UserDetailScreen extends StatelessWidget {
                       ),
                       child: Text(
                         status,
-                        style: const TextStyle(
-                          fontSize: 12,
+                        style: TextStyle(
+                          fontSize:
+                              context.responsiveFont(
+                            12,
+                          ),
                           color: Colors.blue,
                         ),
                       ),
@@ -763,11 +971,10 @@ class UserDetailScreen extends StatelessWidget {
             child: Text(
               action,
               style: TextStyle(
-                fontSize: 13,
+                fontSize:
+                    context.responsiveFont(13),
                 color: isHeader
-                    ? const Color(
-                        0xFF64748B,
-                      )
+                    ? const Color(0xFF64748B)
                     : AppColors.primaryColor,
                 fontWeight: isHeader
                     ? FontWeight.w500
@@ -781,13 +988,17 @@ class UserDetailScreen extends StatelessWidget {
   }
 
   Widget _tableText(
+    BuildContext context,
     String text,
     bool isHeader,
   ) {
     return Text(
       text,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
-        fontSize: isHeader ? 12 : 14,
+        fontSize: context.responsiveFont(
+          isHeader ? 12 : 14,
+        ),
         color: isHeader
             ? const Color(0xFF64748B)
             : const Color(0xFF07152B),
