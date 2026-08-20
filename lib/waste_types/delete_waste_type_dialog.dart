@@ -1,3 +1,4 @@
+import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:flutter/material.dart';
 
 class DeleteWasteTypeDialog extends StatelessWidget {
@@ -11,16 +12,20 @@ class DeleteWasteTypeDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Container(
-        width: 520,
-        padding: const EdgeInsets.all(24),
+        width: context.width < 600
+            ? context.width * 0.90
+            : 520,
+        padding: EdgeInsets.all(
+          context.width < 600 ? 18 : 24,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Delete Waste Type?',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: context.responsiveFont(20),
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -32,7 +37,7 @@ class DeleteWasteTypeDialog extends StatelessWidget {
             Text(
               'Are you sure you want to delete this waste type?',
               style: TextStyle(
-                fontSize: 14,
+                fontSize: context.responsiveFont(14),
                 color: Colors.grey.shade600,
               ),
             ),
@@ -61,11 +66,13 @@ class DeleteWasteTypeDialog extends StatelessWidget {
                           BorderRadius.circular(10),
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Cancel',
                     style: TextStyle(
-                      fontSize: 14,
-                      color: Color(0xFF1F2937),
+                      fontSize:
+                          context.responsiveFont(14),
+                      color:
+                          const Color(0xFF1F2937),
                     ),
                   ),
                 ),
@@ -90,12 +97,14 @@ class DeleteWasteTypeDialog extends StatelessWidget {
                           BorderRadius.circular(10),
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Delete',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize:
+                          context.responsiveFont(14),
                       color: Colors.white,
-                      fontWeight: FontWeight.w500,
+                      fontWeight:
+                          FontWeight.w500,
                     ),
                   ),
                 ),
