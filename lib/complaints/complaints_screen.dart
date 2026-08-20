@@ -48,206 +48,310 @@ class ComplaintsScreen extends StatelessWidget {
       ),
     );
   }
-
   Widget _filters(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(
-        context.width * 0.012,
+  return Container(
+    width: double.infinity,
+    padding: const EdgeInsets.all(14),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(15),
+      border: Border.all(
+        color: Colors.grey.shade200,
       ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(
-          color: Colors.grey.shade200,
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withValues(alpha: 0.04),
+          blurRadius: 10,
+          offset: const Offset(0, 3),
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 450,
-                  height: 48,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText:
-                          'Search by complaint ID, title or citizen',
-                      prefixIcon: const Icon(
-                        Icons.search,
-                        color: Colors.grey,
+      ],
+    ),
+    child: LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth >= 900) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // TOP ROW
+              Row(
+                children: [
+                  // SEARCH BOX
+                  SizedBox(
+                    width: 448,
+                    height: 40,
+                    child: TextField(
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: const Color(0xFF334155),
                       ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                          color: Colors.grey.shade300,
+                      decoration: InputDecoration(
+                        hintText:
+                            'Search by complaint ID, title or citizen',
+                        hintStyle: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey.shade500,
                         ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                          color: Colors.grey.shade300,
+                        prefixIcon: Icon(
+                          Icons.search,
+                          size: 20,
+                          color: Colors.grey.shade600,
+                        ),
+                        contentPadding: EdgeInsets.zero,
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                            color: Colors.grey.shade300,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                            color: Colors.grey.shade300,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                            color: Colors.grey.shade400,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
 
-                SizedBox(
-                  width: context.width * 0.015,
-                ),
+                  const Spacer(),
 
-                _dropdown(
-                  context,
-                  'All Waste Types',
-                ),
+                  // WASTE TYPE DROPDOWN
+                  _dropdown(
+                    context,
+                    'All Waste Types',
+                  ),
 
-                SizedBox(
-                  width: context.width * 0.012,
-                ),
+                  const SizedBox(width: 10),
 
-                _dropdown(
-                  context,
-                  'All Wards',
-                ),
-              ],
-            ),
-          ),
+                  // WARD DROPDOWN
+                  _dropdown(
+                    context,
+                    'All Wards',
+                  ),
+                ],
+              ),
 
-          SizedBox(
-            height: context.height * 0.018,
-          ),
+              const SizedBox(height: 10),
 
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
+              // STATUS FILTERS
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  _filterButton(
+                    context,
+                    'All',
+                    true,
+                  ),
+
+                  const SizedBox(width: 8),
+
+                  _filterButton(
+                    context,
+                    'Pending',
+                    false,
+                  ),
+
+                  const SizedBox(width: 8),
+
+                  _filterButton(
+                    context,
+                    'In Progress',
+                    false,
+                  ),
+
+                  const SizedBox(width: 8),
+
+                  _filterButton(
+                    context,
+                    'Completed',
+                    false,
+                  ),
+                ],
+              ),
+            ],
+          );
+        }
+
+        // MOBILE / SMALL WIDTH
+        return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: SizedBox(
+            width: 845,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _filterButton(
-                  context,
-                  'All',
-                  true,
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 448,
+                      height: 40,
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText:
+                              'Search by complaint ID, title or citizen',
+                          prefixIcon: const Icon(
+                            Icons.search,
+                            size: 20,
+                            color: Colors.grey,
+                          ),
+                          contentPadding: EdgeInsets.zero,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade300,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade300,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    const Spacer(),
+
+                    _dropdown(
+                      context,
+                      'All Waste Types',
+                    ),
+
+                    const SizedBox(width: 10),
+
+                    _dropdown(
+                      context,
+                      'All Wards',
+                    ),
+                  ],
                 ),
 
-                SizedBox(
-                  width: context.width * 0.008,
-                ),
+                const SizedBox(height: 10),
 
-                _filterButton(
-                  context,
-                  'Pending',
-                  false,
-                ),
+                Row(
+                  children: [
+                    _filterButton(
+                      context,
+                      'All',
+                      true,
+                    ),
 
-                SizedBox(
-                  width: context.width * 0.008,
-                ),
+                    const SizedBox(width: 8),
 
-                _filterButton(
-                  context,
-                  'In Progress',
-                  false,
-                ),
+                    _filterButton(
+                      context,
+                      'Pending',
+                      false,
+                    ),
 
-                SizedBox(
-                  width: context.width * 0.008,
-                ),
+                    const SizedBox(width: 8),
 
-                _filterButton(
-                  context,
-                  'Completed',
-                  false,
+                    _filterButton(
+                      context,
+                      'In Progress',
+                      false,
+                    ),
+
+                    const SizedBox(width: 8),
+
+                    _filterButton(
+                      context,
+                      'Completed',
+                      false,
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _filterButton(
-    BuildContext context,
-    String text,
-    bool selected,
-  ) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: context.width * 0.012,
-        vertical: context.height * 0.012,
-      ),
-      decoration: BoxDecoration(
+        );
+      },
+    ),
+  );
+}
+Widget _filterButton(
+  BuildContext context,
+  String text,
+  bool selected,
+) {
+  return Container(
+    height: 38,
+    padding: const EdgeInsets.symmetric(
+      horizontal: 16,
+    ),
+    decoration: BoxDecoration(
+      color: selected
+          ? AppColors.primaryColor
+          : Colors.white,
+      borderRadius: BorderRadius.circular(10),
+      border: Border.all(
         color: selected
             ? AppColors.primaryColor
-            : Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: selected
-              ? AppColors.primaryColor
-              : Colors.grey.shade300,
-        ),
+            : Colors.grey.shade300,
       ),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontSize: context.width * 0.0095,
-          color: selected
-              ? Colors.white
-              : Colors.grey.shade700,
-          fontWeight: selected
-              ? FontWeight.w600
-              : FontWeight.w400,
-        ),
+    ),
+    alignment: Alignment.center,
+    child: Text(
+      text,
+      style: TextStyle(
+        fontSize: context.width * 0.0095,
+        color: selected
+            ? Colors.white
+            : Colors.grey.shade700,
+        fontWeight: selected
+            ? FontWeight.w600
+            : FontWeight.w400,
       ),
-    );
-  }
+    ),
+  );
+}
 
-  Widget _dropdown(
-    BuildContext context,
-    String text,
-  ) {
-    return Container(
-      width: 180,
-      height: 48,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 14,
+Widget _dropdown(
+  BuildContext context,
+  String text,
+) {
+  return Container(
+    width: 180,
+    height: 48,
+    padding: const EdgeInsets.symmetric(
+      horizontal: 14,
+    ),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(10),
+      border: Border.all(
+        color: Colors.grey.shade300,
       ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: Colors.grey.shade300,
-        ),
-      ),
-      child: Row(
-        children: [
-          Text(
-            text,
-            style: TextStyle(
-              fontSize: context.width * 0.0095,
-              color: Colors.grey.shade700,
-            ),
+    ),
+    child: Row(
+      children: [
+        Text(
+          text,
+          style: TextStyle(
+            fontSize: context.width * 0.0095,
+            color: Colors.grey.shade700,
           ),
+        ),
 
-          const Spacer(),
+        const Spacer(),
 
-          const Icon(
-            Icons.keyboard_arrow_down,
-            color: Colors.grey,
-          ),
-        ],
-      ),
-    );
-  }
-
+        const Icon(
+          Icons.keyboard_arrow_down,
+          color: Colors.grey,
+        ),
+      ],
+    ),
+  );
+}
   Widget _complaintsTable(BuildContext context) {
     double tableWidth =
         context.width < 1200 ? 1200 : context.width;
