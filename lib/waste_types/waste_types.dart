@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 class WasteTypesScreen extends StatelessWidget {
   const WasteTypesScreen({super.key});
 
-  // Minimum table width for small screens.
-  // On larger screens the table expands automatically.
   static const double minTableWidth = 988;
 
   @override
@@ -25,16 +23,12 @@ class WasteTypesScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: context.height * 0.020,),
-              // =====================================================
               // PAGE HEADER
-              // =====================================================
 
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // -------------------------------------------------
                   // TITLE + SUBTITLE
-                  // -------------------------------------------------
 
                   const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,9 +59,7 @@ class WasteTypesScreen extends StatelessWidget {
 
                   const Spacer(),
 
-                  // -------------------------------------------------
                   // ADD WASTE TYPE BUTTON
-                  // -------------------------------------------------
 
                   SizedBox(
                     width: 164,
@@ -101,9 +93,7 @@ class WasteTypesScreen extends StatelessWidget {
 
               const SizedBox(height: 23),
 
-              // =====================================================
               // TABLE
-              // =====================================================
 
               _wasteTypeTable(),
             ],
@@ -113,9 +103,7 @@ class WasteTypesScreen extends StatelessWidget {
     );
   }
 
-  // ===============================================================
   // WASTE TYPE TABLE
-  // ===============================================================
 
   Widget _wasteTypeTable() {
     return LayoutBuilder(
@@ -226,9 +214,7 @@ class WasteTypesScreen extends StatelessWidget {
     );
   }
 
-  // ===============================================================
   // TABLE HEADER
-  // ===============================================================
 
   Widget _tableHeader(double width) {
     return Container(
@@ -281,9 +267,7 @@ class WasteTypesScreen extends StatelessWidget {
     );
   }
 
-  // ===============================================================
   // HEADER CELL
-  // ===============================================================
 
   Widget _headerCell(String text) {
     return SizedBox(
@@ -307,9 +291,7 @@ class WasteTypesScreen extends StatelessWidget {
     );
   }
 
-  // ===============================================================
   // WASTE ROW
-  // ===============================================================
 
   Widget _wasteRow(
     double width,
@@ -335,9 +317,7 @@ class WasteTypesScreen extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // =========================================================
           // WASTE TYPE
-          // =========================================================
 
           Expanded(
             flex: 18,
@@ -347,9 +327,7 @@ class WasteTypesScreen extends StatelessWidget {
             ),
           ),
 
-          // =========================================================
           // DESCRIPTION
-          // =========================================================
 
           Expanded(
             flex: 36,
@@ -359,9 +337,7 @@ class WasteTypesScreen extends StatelessWidget {
             ),
           ),
 
-          // =========================================================
           // TOTAL COMPLAINTS
-          // =========================================================
 
           Expanded(
             flex: 16,
@@ -370,9 +346,7 @@ class WasteTypesScreen extends StatelessWidget {
             ),
           ),
 
-          // =========================================================
           // STATUS
-          // =========================================================
 
           Expanded(
             flex: 10,
@@ -406,9 +380,7 @@ class WasteTypesScreen extends StatelessWidget {
             ),
           ),
 
-          // =========================================================
           // ACTIONS
-          // =========================================================
 
           Expanded(
             flex: 20,
@@ -416,9 +388,7 @@ class WasteTypesScreen extends StatelessWidget {
               height: 59,
               child: Row(
                 children: [
-                  // -------------------------------------------------
                   // EDIT BUTTON
-                  // -------------------------------------------------
 
                   SizedBox(
                     width: 73,
@@ -498,9 +468,7 @@ class WasteTypesScreen extends StatelessWidget {
     );
   }
 
-  // ===============================================================
   // DATA CELL
-  // ===============================================================
 
   Widget _dataCell(
     String text, {
