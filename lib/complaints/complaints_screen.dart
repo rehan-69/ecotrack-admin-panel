@@ -9,14 +9,18 @@ class ComplaintsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: EdgeInsets.all(context.width * 0.018),
+      padding: EdgeInsets.all(
+        context.width * 0.018,
+      ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment:
+            CrossAxisAlignment.start,
         children: [
           Text(
             'Complaints',
             style: TextStyle(
-              fontSize: context.width * 0.022,
+              fontSize:
+                  context.responsiveFont(28),
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -28,7 +32,8 @@ class ComplaintsScreen extends StatelessWidget {
           Text(
             'View and manage citizen waste complaints.',
             style: TextStyle(
-              fontSize: context.width * 0.011,
+              fontSize:
+                  context.responsiveFont(14),
               color: Colors.grey.shade600,
             ),
           ),
@@ -48,145 +53,34 @@ class ComplaintsScreen extends StatelessWidget {
       ),
     );
   }
+
   Widget _filters(BuildContext context) {
-  return Container(
-    width: double.infinity,
-    padding: const EdgeInsets.all(14),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(15),
-      border: Border.all(
-        color: Colors.grey.shade200,
-      ),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withValues(alpha: 0.04),
-          blurRadius: 10,
-          offset: const Offset(0, 3),
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius:
+            BorderRadius.circular(15),
+        border: Border.all(
+          color: Colors.grey.shade200,
         ),
-      ],
-    ),
-    child: LayoutBuilder(
-      builder: (context, constraints) {
-        if (constraints.maxWidth >= 900) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // TOP ROW
-              Row(
-                children: [
-                  // SEARCH BOX
-                  SizedBox(
-                    width: 448,
-                    height: 40,
-                    child: TextField(
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: const Color(0xFF334155),
-                      ),
-                      decoration: InputDecoration(
-                        hintText:
-                            'Search by complaint ID, title or citizen',
-                        hintStyle: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey.shade500,
-                        ),
-                        prefixIcon: Icon(
-                          Icons.search,
-                          size: 20,
-                          color: Colors.grey.shade600,
-                        ),
-                        contentPadding: EdgeInsets.zero,
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(
-                            color: Colors.grey.shade300,
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(
-                            color: Colors.grey.shade300,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(
-                            color: Colors.grey.shade400,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  const Spacer(),
-
-                  // WASTE TYPE DROPDOWN
-                  _dropdown(
-                    context,
-                    'All Waste Types',
-                  ),
-
-                  const SizedBox(width: 10),
-
-                  // WARD DROPDOWN
-                  _dropdown(
-                    context,
-                    'All Wards',
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 10),
-
-              // STATUS FILTERS
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  _filterButton(
-                    context,
-                    'All',
-                    true,
-                  ),
-
-                  const SizedBox(width: 8),
-
-                  _filterButton(
-                    context,
-                    'Pending',
-                    false,
-                  ),
-
-                  const SizedBox(width: 8),
-
-                  _filterButton(
-                    context,
-                    'In Progress',
-                    false,
-                  ),
-
-                  const SizedBox(width: 8),
-
-                  _filterButton(
-                    context,
-                    'Completed',
-                    false,
-                  ),
-                ],
-              ),
-            ],
-          );
-        }
-
-        // MOBILE / SMALL WIDTH
-        return SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: SizedBox(
-            width: 845,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(
+              alpha: 0.04,
+            ),
+            blurRadius: 10,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          if (constraints.maxWidth >= 900) {
+            return Column(
+              crossAxisAlignment:
+                  CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
@@ -194,25 +88,67 @@ class ComplaintsScreen extends StatelessWidget {
                       width: 448,
                       height: 40,
                       child: TextField(
-                        decoration: InputDecoration(
+                        style: TextStyle(
+                          fontSize:
+                              context.responsiveFont(14),
+                          color:
+                              const Color(0xFF334155),
+                        ),
+                        decoration:
+                            InputDecoration(
                           hintText:
                               'Search by complaint ID, title or citizen',
-                          prefixIcon: const Icon(
+                          hintStyle: TextStyle(
+                            fontSize:
+                                context.responsiveFont(14),
+                            color:
+                                Colors.grey.shade500,
+                          ),
+                          prefixIcon: Icon(
                             Icons.search,
                             size: 20,
-                            color: Colors.grey,
+                            color:
+                                Colors.grey.shade600,
                           ),
-                          contentPadding: EdgeInsets.zero,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: Colors.grey.shade300,
+                          contentPadding:
+                              EdgeInsets.zero,
+                          filled: true,
+                          fillColor:
+                              Colors.white,
+                          border:
+                              OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(
+                              10,
+                            ),
+                            borderSide:
+                                BorderSide(
+                              color:
+                                  Colors.grey.shade300,
                             ),
                           ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: Colors.grey.shade300,
+                          enabledBorder:
+                              OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(
+                              10,
+                            ),
+                            borderSide:
+                                BorderSide(
+                              color:
+                                  Colors.grey.shade300,
+                            ),
+                          ),
+                          focusedBorder:
+                              OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(
+                              10,
+                            ),
+                            borderSide:
+                                BorderSide(
+                              color:
+                                  Colors.grey.shade400,
                             ),
                           ),
                         ),
@@ -226,7 +162,9 @@ class ComplaintsScreen extends StatelessWidget {
                       'All Waste Types',
                     ),
 
-                    const SizedBox(width: 10),
+                    const SizedBox(
+                      width: 10,
+                    ),
 
                     _dropdown(
                       context,
@@ -235,9 +173,13 @@ class ComplaintsScreen extends StatelessWidget {
                   ],
                 ),
 
-                const SizedBox(height: 10),
+                const SizedBox(
+                  height: 10,
+                ),
 
                 Row(
+                  mainAxisAlignment:
+                      MainAxisAlignment.start,
                   children: [
                     _filterButton(
                       context,
@@ -245,7 +187,9 @@ class ComplaintsScreen extends StatelessWidget {
                       true,
                     ),
 
-                    const SizedBox(width: 8),
+                    const SizedBox(
+                      width: 8,
+                    ),
 
                     _filterButton(
                       context,
@@ -253,7 +197,9 @@ class ComplaintsScreen extends StatelessWidget {
                       false,
                     ),
 
-                    const SizedBox(width: 8),
+                    const SizedBox(
+                      width: 8,
+                    ),
 
                     _filterButton(
                       context,
@@ -261,7 +207,9 @@ class ComplaintsScreen extends StatelessWidget {
                       false,
                     ),
 
-                    const SizedBox(width: 8),
+                    const SizedBox(
+                      width: 8,
+                    ),
 
                     _filterButton(
                       context,
@@ -271,107 +219,257 @@ class ComplaintsScreen extends StatelessWidget {
                   ],
                 ),
               ],
+            );
+          }
+
+          return SingleChildScrollView(
+            scrollDirection:
+                Axis.horizontal,
+            child: SizedBox(
+              width: 845,
+              child: Column(
+                crossAxisAlignment:
+                    CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 448,
+                        height: 40,
+                        child: TextField(
+                          style: TextStyle(
+                            fontSize:
+                                context.responsiveFont(14),
+                            color:
+                                const Color(0xFF334155),
+                          ),
+                          decoration:
+                              InputDecoration(
+                            hintText:
+                                'Search by complaint ID, title or citizen',
+                            hintStyle:
+                                TextStyle(
+                              fontSize:
+                                  context.responsiveFont(14),
+                              color:
+                                  Colors.grey.shade500,
+                            ),
+                            prefixIcon:
+                                const Icon(
+                              Icons.search,
+                              size: 20,
+                              color: Colors.grey,
+                            ),
+                            contentPadding:
+                                EdgeInsets.zero,
+                            border:
+                                OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.circular(
+                                10,
+                              ),
+                              borderSide:
+                                  BorderSide(
+                                color:
+                                    Colors.grey.shade300,
+                              ),
+                            ),
+                            enabledBorder:
+                                OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.circular(
+                                10,
+                              ),
+                              borderSide:
+                                  BorderSide(
+                                color:
+                                    Colors.grey.shade300,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      const Spacer(),
+
+                      _dropdown(
+                        context,
+                        'All Waste Types',
+                      ),
+
+                      const SizedBox(
+                        width: 10,
+                      ),
+
+                      _dropdown(
+                        context,
+                        'All Wards',
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(
+                    height: 10,
+                  ),
+
+                  Row(
+                    children: [
+                      _filterButton(
+                        context,
+                        'All',
+                        true,
+                      ),
+
+                      const SizedBox(
+                        width: 8,
+                      ),
+
+                      _filterButton(
+                        context,
+                        'Pending',
+                        false,
+                      ),
+
+                      const SizedBox(
+                        width: 8,
+                      ),
+
+                      _filterButton(
+                        context,
+                        'In Progress',
+                        false,
+                      ),
+
+                      const SizedBox(
+                        width: 8,
+                      ),
+
+                      _filterButton(
+                        context,
+                        'Completed',
+                        false,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      },
-    ),
-  );
-}
-Widget _filterButton(
-  BuildContext context,
-  String text,
-  bool selected,
-) {
-  return Container(
-    height: 38,
-    padding: const EdgeInsets.symmetric(
-      horizontal: 16,
-    ),
-    decoration: BoxDecoration(
-      color: selected
-          ? AppColors.primaryColor
-          : Colors.white,
-      borderRadius: BorderRadius.circular(10),
-      border: Border.all(
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _filterButton(
+    BuildContext context,
+    String text,
+    bool selected,
+  ) {
+    return Container(
+      height: 38,
+      padding:
+          const EdgeInsets.symmetric(
+        horizontal: 16,
+      ),
+      decoration: BoxDecoration(
         color: selected
             ? AppColors.primaryColor
-            : Colors.grey.shade300,
+            : Colors.white,
+        borderRadius:
+            BorderRadius.circular(10),
+        border: Border.all(
+          color: selected
+              ? AppColors.primaryColor
+              : Colors.grey.shade300,
+        ),
       ),
-    ),
-    alignment: Alignment.center,
-    child: Text(
-      text,
-      style: TextStyle(
-        fontSize: context.width * 0.0095,
-        color: selected
-            ? Colors.white
-            : Colors.grey.shade700,
-        fontWeight: selected
-            ? FontWeight.w600
-            : FontWeight.w400,
+      alignment: Alignment.center,
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize:
+              context.responsiveFont(14),
+          color: selected
+              ? Colors.white
+              : Colors.grey.shade700,
+          fontWeight: selected
+              ? FontWeight.w600
+              : FontWeight.w400,
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
-Widget _dropdown(
-  BuildContext context,
-  String text,
-) {
-  return Container(
-    width: 180,
-    height: 48,
-    padding: const EdgeInsets.symmetric(
-      horizontal: 14,
-    ),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(10),
-      border: Border.all(
-        color: Colors.grey.shade300,
+  Widget _dropdown(
+    BuildContext context,
+    String text,
+  ) {
+    return Container(
+      width: 180,
+      height: 48,
+      padding:
+          const EdgeInsets.symmetric(
+        horizontal: 14,
       ),
-    ),
-    child: Row(
-      children: [
-        Text(
-          text,
-          style: TextStyle(
-            fontSize: context.width * 0.0095,
-            color: Colors.grey.shade700,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius:
+            BorderRadius.circular(10),
+        border: Border.all(
+          color: Colors.grey.shade300,
+        ),
+      ),
+      child: Row(
+        children: [
+          Text(
+            text,
+            style: TextStyle(
+              fontSize:
+                  context.responsiveFont(14),
+              color: Colors.grey.shade700,
+            ),
           ),
-        ),
 
-        const Spacer(),
+          const Spacer(),
 
-        const Icon(
-          Icons.keyboard_arrow_down,
-          color: Colors.grey,
-        ),
-      ],
-    ),
-  );
-}
-  Widget _complaintsTable(BuildContext context) {
+          const Icon(
+            Icons.keyboard_arrow_down,
+            color: Colors.grey,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _complaintsTable(
+    BuildContext context,
+  ) {
     double tableWidth =
-        context.width < 1200 ? 1200 : context.width;
+        context.width < 1200
+            ? 1200
+            : context.width;
 
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius:
+            BorderRadius.circular(15),
         border: Border.all(
           color: Colors.grey.shade200,
         ),
       ),
       child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
+        scrollDirection:
+            Axis.horizontal,
         child: SizedBox(
           width: tableWidth,
           child: Column(
             children: [
-              _tableHeader(context, tableWidth),
+              _tableHeader(
+                context,
+                tableWidth,
+              ),
 
               _tableRow(
                 context,
@@ -544,13 +642,15 @@ Widget _dropdown(
     return SizedBox(
       width: width,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
+        padding:
+            const EdgeInsets.symmetric(
           horizontal: 12,
         ),
         child: Text(
           text,
           style: TextStyle(
-            fontSize: context.width * 0.0085,
+            fontSize:
+                context.responsiveFont(12),
             color: Colors.grey.shade600,
             fontWeight: FontWeight.w500,
           ),
@@ -595,7 +695,8 @@ Widget _dropdown(
             width: tableWidth * 0.08,
             child: Center(
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius:
+                    BorderRadius.circular(8),
                 child: Image.asset(
                   image,
                   width: 48,
@@ -639,22 +740,27 @@ Widget _dropdown(
           SizedBox(
             width: tableWidth * 0.09,
             child: Align(
-              alignment: Alignment.centerLeft,
+              alignment:
+                  Alignment.centerLeft,
               child: Container(
-                padding: const EdgeInsets.symmetric(
+                padding:
+                    const EdgeInsets.symmetric(
                   horizontal: 10,
                   vertical: 6,
                 ),
                 decoration: BoxDecoration(
                   color: statusBackground,
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius:
+                      BorderRadius.circular(20),
                 ),
                 child: Text(
                   status,
                   style: TextStyle(
-                    fontSize: context.width * 0.0085,
+                    fontSize:
+                        context.responsiveFont(12),
                     color: statusColor,
-                    fontWeight: FontWeight.w500,
+                    fontWeight:
+                        FontWeight.w500,
                   ),
                 ),
               ),
@@ -685,8 +791,10 @@ Widget _dropdown(
               child: Text(
                 'View',
                 style: TextStyle(
-                  fontSize: context.width * 0.0095,
-                  color: AppColors.primaryColor,
+                  fontSize:
+                      context.responsiveFont(14),
+                  color:
+                      AppColors.primaryColor,
                 ),
               ),
             ),
@@ -704,16 +812,20 @@ Widget _dropdown(
     return SizedBox(
       width: width,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
+        padding:
+            const EdgeInsets.symmetric(
           horizontal: 12,
         ),
         child: Text(
           text,
           maxLines: 2,
-          overflow: TextOverflow.ellipsis,
+          overflow:
+              TextOverflow.ellipsis,
           style: TextStyle(
-            fontSize: context.width * 0.0095,
-            color: const Color(0xFF0F172A),
+            fontSize:
+                context.responsiveFont(14),
+            color:
+                const Color(0xFF0F172A),
           ),
         ),
       ),
