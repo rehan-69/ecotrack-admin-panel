@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 class ComplaintDetailScreen extends StatelessWidget {
   final String complaintId;
+  final String image;
+  final String title;
   final String citizen;
   final String wasteType;
   final String location;
@@ -13,6 +15,8 @@ class ComplaintDetailScreen extends StatelessWidget {
   const ComplaintDetailScreen({
     super.key,
     required this.complaintId,
+    required this.image,
+    required this.title,
     required this.citizen,
     required this.wasteType,
     required this.location,
@@ -25,7 +29,9 @@ class ComplaintDetailScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFF7FAF8),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(context.width * 0.025),
+        padding: EdgeInsets.all(
+          context.width * 0.025,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -92,6 +98,18 @@ class ComplaintDetailScreen extends StatelessWidget {
                   ),
 
                   SizedBox(
+                    height: context.height * 0.008,
+                  ),
+
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: context.width * 0.018,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  SizedBox(
                     height: context.height * 0.02,
                   ),
 
@@ -99,18 +117,14 @@ class ComplaintDetailScreen extends StatelessWidget {
                     crossAxisAlignment:
                         CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        width: context.width * 0.22,
-                        height: context.height * 0.30,
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade100,
-                          borderRadius:
-                              BorderRadius.circular(12),
-                        ),
-                        child: const Icon(
-                          Icons.image_outlined,
-                          size: 50,
-                          color: Colors.grey,
+                      ClipRRect(
+                        borderRadius:
+                            BorderRadius.circular(12),
+                        child: Image.asset(
+                          image,
+                          width: context.width * 0.22,
+                          height: context.height * 0.30,
+                          fit: BoxFit.cover,
                         ),
                       ),
 
@@ -201,10 +215,10 @@ class ComplaintDetailScreen extends StatelessWidget {
                   ),
 
                   Container(
-                    width: context.width * 0.25,
-                    height: context.height * 0.055,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: context.width * 0.01,
+                    width: 280,
+                    height: 50,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
                     ),
                     decoration: BoxDecoration(
                       color: Colors.white,

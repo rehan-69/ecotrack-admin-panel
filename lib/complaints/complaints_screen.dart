@@ -1,6 +1,6 @@
-import 'package:ecotrack_admin_panel/complaints/complaints_detail_screen.dart';
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
 import 'package:ecotrack_admin_panel/constants/responsive.dart';
+import 'package:ecotrack_admin_panel/complaints/complaints_detail_screen.dart';
 import 'package:flutter/material.dart';
 
 class ComplaintsScreen extends StatelessWidget {
@@ -9,7 +9,7 @@ class ComplaintsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: EdgeInsets.all(context.width * 0.025),
+      padding: EdgeInsets.all(context.width * 0.018),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -21,23 +21,29 @@ class ComplaintsScreen extends StatelessWidget {
             ),
           ),
 
-          SizedBox(height: context.height * 0.01),
+          SizedBox(
+            height: context.height * 0.008,
+          ),
 
           Text(
             'View and manage citizen waste complaints.',
             style: TextStyle(
-              fontSize: context.width * 0.012,
-              color: Colors.grey,
+              fontSize: context.width * 0.011,
+              color: Colors.grey.shade600,
             ),
           ),
 
-          SizedBox(height: context.height * 0.025),
+          SizedBox(
+            height: context.height * 0.025,
+          ),
 
           _filters(context),
 
-          SizedBox(height: context.height * 0.02),
+          SizedBox(
+            height: context.height * 0.025,
+          ),
 
-          _complaintTable(context),
+          _complaintsTable(context),
         ],
       ),
     );
@@ -45,199 +51,413 @@ class ComplaintsScreen extends StatelessWidget {
 
   Widget _filters(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(context.width * 0.015),
+      width: double.infinity,
+      padding: EdgeInsets.all(
+        context.width * 0.012,
+      ),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(
+          color: Colors.grey.shade200,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 10,
+            offset: const Offset(0, 3),
+          ),
+        ],
       ),
       child: Column(
         children: [
-          Row(
-            children: [
-              SizedBox(
-                width: context.width * 0.34,
-                height: context.height * 0.06,
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search by complaint ID, title or citizen',
-                    prefixIcon: const Icon(Icons.search),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.grey.shade300),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 450,
+                  height: 48,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText:
+                          'Search by complaint ID, title or citizen',
+                      prefixIcon: const Icon(
+                        Icons.search,
+                        color: Colors.grey,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          color: Colors.grey.shade300,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          color: Colors.grey.shade300,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+
+                SizedBox(
+                  width: context.width * 0.015,
+                ),
+
+                _dropdown(
+                  context,
+                  'All Waste Types',
+                ),
+
+                SizedBox(
+                  width: context.width * 0.012,
+                ),
+
+                _dropdown(
+                  context,
+                  'All Wards',
+                ),
+              ],
+            ),
           ),
 
-          SizedBox(height: context.height * 0.015),
+          SizedBox(
+            height: context.height * 0.018,
+          ),
 
-          Row(
-            children: [
-              _filterButton(context, 'All', true),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                _filterButton(
+                  context,
+                  'All',
+                  true,
+                ),
 
-              _filterButton(context, 'Pending', false),
+                SizedBox(
+                  width: context.width * 0.008,
+                ),
 
-              _filterButton(context, 'In Progress', false),
+                _filterButton(
+                  context,
+                  'Pending',
+                  false,
+                ),
 
-              _filterButton(context, 'Completed', false),
+                SizedBox(
+                  width: context.width * 0.008,
+                ),
 
-              const Spacer(),
+                _filterButton(
+                  context,
+                  'In Progress',
+                  false,
+                ),
 
-              _dropdownButton(context, 'All Waste Types'),
+                SizedBox(
+                  width: context.width * 0.008,
+                ),
 
-              SizedBox(width: context.width * 0.01),
-
-              _dropdownButton(context, 'All Wards'),
-            ],
+                _filterButton(
+                  context,
+                  'Completed',
+                  false,
+                ),
+              ],
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _filterButton(BuildContext context, String text, bool selected) {
-    return Padding(
-      padding: EdgeInsets.only(right: context.width * 0.008),
-      child: Container(
-        height: context.height * 0.055,
-        padding: EdgeInsets.symmetric(horizontal: context.width * 0.012),
-        decoration: BoxDecoration(
-          color: selected ? AppColors.primaryColor : Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: selected ? AppColors.primaryColor : Colors.grey.shade300,
-          ),
+  Widget _filterButton(
+    BuildContext context,
+    String text,
+    bool selected,
+  ) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: context.width * 0.012,
+        vertical: context.height * 0.012,
+      ),
+      decoration: BoxDecoration(
+        color: selected
+            ? AppColors.primaryColor
+            : Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          color: selected
+              ? AppColors.primaryColor
+              : Colors.grey.shade300,
         ),
-        alignment: Alignment.center,
-        child: Text(
-          text,
-          style: TextStyle(
-            fontSize: context.width * 0.010,
-            color: selected ? Colors.white : Colors.grey.shade700,
-            fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
-          ),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: context.width * 0.0095,
+          color: selected
+              ? Colors.white
+              : Colors.grey.shade700,
+          fontWeight: selected
+              ? FontWeight.w600
+              : FontWeight.w400,
         ),
       ),
     );
   }
 
-  Widget _dropdownButton(BuildContext context, String text) {
+  Widget _dropdown(
+    BuildContext context,
+    String text,
+  ) {
     return Container(
-      width: context.width * 0.14,
-      height: context.height * 0.055,
-      padding: EdgeInsets.symmetric(horizontal: context.width * 0.01),
+      width: 180,
+      height: 48,
+      padding: const EdgeInsets.symmetric(
+        horizontal: 14,
+      ),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.grey.shade300),
+        border: Border.all(
+          color: Colors.grey.shade300,
+        ),
       ),
       child: Row(
         children: [
           Text(
             text,
             style: TextStyle(
-              fontSize: context.width * 0.010,
+              fontSize: context.width * 0.0095,
               color: Colors.grey.shade700,
             ),
           ),
 
           const Spacer(),
 
-          const Icon(Icons.keyboard_arrow_down, size: 20),
+          const Icon(
+            Icons.keyboard_arrow_down,
+            color: Colors.grey,
+          ),
         ],
       ),
     );
   }
 
-  Widget _complaintTable(BuildContext context) {
+  Widget _complaintsTable(BuildContext context) {
+    double tableWidth =
+        context.width < 1200 ? 1200 : context.width;
+
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(
+          color: Colors.grey.shade200,
+        ),
       ),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        child: DataTable(
-          headingRowHeight: context.height * 0.07,
-          dataRowHeight: context.height * 0.08,
+        child: SizedBox(
+          width: tableWidth,
+          child: Column(
+            children: [
+              _tableHeader(context, tableWidth),
 
-          columns: const [
-            DataColumn(label: Text('COMPLAINT ID')),
-            DataColumn(label: Text('PHOTO')),
-            DataColumn(label: Text('COMPLAINT TITLE')),
-            DataColumn(label: Text('CITIZEN')),
-            DataColumn(label: Text('WASTE TYPE')),
-            DataColumn(label: Text('WARD / LOCATION')),
-            DataColumn(label: Text('SUBMITTED DATE')),
-            DataColumn(label: Text('STATUS')),
-            DataColumn(label: Text('ACTION')),
-          ],
+              _tableRow(
+                context,
+                tableWidth,
+                'ECO-1042',
+                'assets/waste-household.jpg',
+                'Household Waste',
+                'Rahul Sharma',
+                'Household Waste',
+                'Ward 07',
+                '12 Mar 2026',
+                'In Progress',
+                Colors.blue,
+                const Color(0xFFE3F2FD),
+              ),
 
-          rows: [
-            _complaintRow(
-              context,
-              'ECO-1042',
-              'assets/household_waste.jpg',
-              'Household Waste',
-              'Rahul Sharma',
-              'Household Waste',
-              'Ward 07',
-              '12 Mar 2026',
-              'In Progress',
-              Colors.blue,
-            ),
+              _tableRow(
+                context,
+                tableWidth,
+                'ECO-1038',
+                'assets/waste-household.jpg',
+                'Construction Debris',
+                'Amit Patil',
+                'Construction Debris',
+                'Ward 07',
+                '08 Mar 2026',
+                'Completed',
+                Colors.green,
+                const Color(0xFFE0F5E5),
+              ),
 
-            _complaintRow(
-              context,
-              'ECO-1038',
-              'assets/construction_waste.jpg',
-              'Construction Debris',
-              'Amit Patil',
-              'Construction Debris',
-              'Ward 07',
-              '08 Mar 2026',
-              'Completed',
-              Colors.green,
-            ),
+              _tableRow(
+                context,
+                tableWidth,
+                'ECO-1031',
+                'assets/waste-household.jpg',
+                'Garden Waste',
+                'Priya Shah',
+                'Garden Waste',
+                'Ward 04',
+                '02 Mar 2026',
+                'Completed',
+                Colors.green,
+                const Color(0xFFE0F5E5),
+              ),
 
-            _complaintRow(
-              context,
-              'ECO-1031',
-              'assets/garden_waste.jpg',
-              'Garden Waste',
-              'Priya Shah',
-              'Garden Waste',
-              'Ward 04',
-              '02 Mar 2026',
-              'Completed',
-              Colors.green,
-            ),
+              _tableRow(
+                context,
+                tableWidth,
+                'ECO-1025',
+                'assets/waste-household.jpg',
+                'Plastic Waste',
+                'Sameer Khan',
+                'Plastic Waste',
+                'Ward 04',
+                '27 Feb 2026',
+                'Pending',
+                Colors.orange,
+                const Color(0xFFFFF0CC),
+              ),
 
-            _complaintRow(
-              context,
-              'ECO-1025',
-              'assets/plastic_waste.jpg',
-              'Plastic Waste',
-              'Sameer Khan',
-              'Plastic Waste',
-              'Ward 04',
-              '27 Feb 2026',
-              'Pending',
-              Colors.orange,
-            ),
-          ],
+              _tableRow(
+                context,
+                tableWidth,
+                'ECO-1019',
+                'assets/waste-household.jpg',
+                'E-Waste dumped near road',
+                'Neha Joshi',
+                'E-Waste',
+                'Ward 02',
+                '21 Feb 2026',
+                'Pending',
+                Colors.orange,
+                const Color(0xFFFFF0CC),
+              ),
+
+              _tableRow(
+                context,
+                tableWidth,
+                'ECO-1014',
+                'assets/waste-household.jpg',
+                'Household Waste near road',
+                'Vikas Deshmukh',
+                'Household Waste',
+                'Ward 09',
+                '16 Feb 2026',
+                'In Progress',
+                Colors.blue,
+                const Color(0xFFE3F2FD),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  DataRow _complaintRow(
+  Widget _tableHeader(
     BuildContext context,
+    double tableWidth,
+  ) {
+    return Container(
+      height: 58,
+      color: const Color(0xFFF8FAFA),
+      child: Row(
+        children: [
+          _headerCell(
+            context,
+            'COMPLAINT\nID',
+            tableWidth * 0.10,
+          ),
+
+          _headerCell(
+            context,
+            'PHOTO',
+            tableWidth * 0.08,
+          ),
+
+          _headerCell(
+            context,
+            'COMPLAINT TITLE',
+            tableWidth * 0.15,
+          ),
+
+          _headerCell(
+            context,
+            'CITIZEN',
+            tableWidth * 0.12,
+          ),
+
+          _headerCell(
+            context,
+            'WASTE TYPE',
+            tableWidth * 0.14,
+          ),
+
+          _headerCell(
+            context,
+            'WARD /\nLOCATION',
+            tableWidth * 0.12,
+          ),
+
+          _headerCell(
+            context,
+            'SUBMITTED\nDATE',
+            tableWidth * 0.12,
+          ),
+
+          _headerCell(
+            context,
+            'STATUS',
+            tableWidth * 0.09,
+          ),
+
+          _headerCell(
+            context,
+            'ACTION',
+            tableWidth * 0.08,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _headerCell(
+    BuildContext context,
+    String text,
+    double width,
+  ) {
+    return SizedBox(
+      width: width,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 12,
+        ),
+        child: Text(
+          text,
+          style: TextStyle(
+            fontSize: context.width * 0.0085,
+            color: Colors.grey.shade600,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _tableRow(
+    BuildContext context,
+    double tableWidth,
     String id,
     String image,
     String title,
@@ -247,78 +467,152 @@ class ComplaintsScreen extends StatelessWidget {
     String date,
     String status,
     Color statusColor,
+    Color statusBackground,
   ) {
-    return DataRow(
-      cells: [
-        DataCell(Text(id, style: const TextStyle(fontWeight: FontWeight.w600))),
-
-        DataCell(
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.asset(
-              image,
-              width: context.width * 0.035,
-              height: context.width * 0.035,
-              fit: BoxFit.cover,
-            ),
+    return Container(
+      height: 70,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.grey.shade200,
           ),
         ),
+      ),
+      child: Row(
+        children: [
+          _dataCell(
+            context,
+            id,
+            tableWidth * 0.10,
+          ),
 
-        DataCell(Text(title)),
-
-        DataCell(Text(citizen)),
-
-        DataCell(Text(wasteType)),
-
-        DataCell(Text(location)),
-
-        DataCell(Text(date)),
-
-        DataCell(
-          Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.width * 0.008,
-              vertical: context.height * 0.006,
-            ),
-            decoration: BoxDecoration(
-              color: statusColor.withValues(alpha: 0.12),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Text(
-              status,
-              style: TextStyle(
-                fontSize: context.width * 0.009,
-                color: statusColor,
-                fontWeight: FontWeight.w600,
+          SizedBox(
+            width: tableWidth * 0.08,
+            child: Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset(
+                  image,
+                  width: 48,
+                  height: 48,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
-        ),
 
-        DataCell(
-          TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ComplaintDetailScreen(
-                    complaintId: id,
-                    citizen: citizen,
-                    wasteType: wasteType,
-                    location: location,
-                    date: date,
-                    status: status,
+          _dataCell(
+            context,
+            title,
+            tableWidth * 0.15,
+          ),
+
+          _dataCell(
+            context,
+            citizen,
+            tableWidth * 0.12,
+          ),
+
+          _dataCell(
+            context,
+            wasteType,
+            tableWidth * 0.14,
+          ),
+
+          _dataCell(
+            context,
+            location,
+            tableWidth * 0.12,
+          ),
+
+          _dataCell(
+            context,
+            date,
+            tableWidth * 0.12,
+          ),
+
+          SizedBox(
+            width: tableWidth * 0.09,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: statusBackground,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  status,
+                  style: TextStyle(
+                    fontSize: context.width * 0.0085,
+                    color: statusColor,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
-              );
-            },
-            child: Text(
-              'View',
-              style: TextStyle(color: AppColors.primaryColor),
+              ),
             ),
           ),
+
+          SizedBox(
+            width: tableWidth * 0.08,
+            child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        ComplaintDetailScreen(
+                      complaintId: id,
+                      image: image,
+                      title: title,
+                      citizen: citizen,
+                      wasteType: wasteType,
+                      location: location,
+                      date: date,
+                      status: status,
+                    ),
+                  ),
+                );
+              },
+              child: Text(
+                'View',
+                style: TextStyle(
+                  fontSize: context.width * 0.0095,
+                  color: AppColors.primaryColor,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _dataCell(
+    BuildContext context,
+    String text,
+    double width,
+  ) {
+    return SizedBox(
+      width: width,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 12,
         ),
-      ],
+        child: Text(
+          text,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            fontSize: context.width * 0.0095,
+            color: const Color(0xFF0F172A),
+          ),
+        ),
+      ),
     );
   }
 }

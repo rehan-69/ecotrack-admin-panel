@@ -1,3 +1,4 @@
+import 'package:ecotrack_admin_panel/complaints/complaints_screen.dart';
 import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:ecotrack_admin_panel/viewmodel/admin_provider.dart';
 import 'package:ecotrack_admin_panel/views/dashboard/dashboard_screen.dart';
@@ -111,6 +112,10 @@ class AdminLayout extends StatelessWidget {
     if (selectedIndex == 0) {
       return const DashboardScreen();
     }
+
+    if (selectedIndex == 1) {
+    return const ComplaintsScreen();
+  }
 
     return const Center(
       child: Text(

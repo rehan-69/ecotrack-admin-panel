@@ -362,234 +362,334 @@ class DashboardScreen extends StatelessWidget {
       ],
     );
   }
-
-  Widget _recentComplaints(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Text(
-              'Recent Complaints',
-              style: TextStyle(
-                fontSize: context.width * 0.013,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-
-            const Spacer(),
-
-            Text(
-              'View All Complaints',
-              style: TextStyle(
-                fontSize: context.width * 0.010,
-                color: AppColors.primaryColor,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
-        ),
-
-        SizedBox(height: context.height * 0.015),
-
-        Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(15),
-            border: Border.all(
-              color: Colors.grey.shade200,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Column(
-            children: [
-              _complaintHeader(context),
-
-              _complaintRow(
-                context,
-                'ECO-1042',
-                'Rahul Sharma',
-                'Household Waste',
-                'Ward 07',
-                '12 Mar 2026',
-                'In Progress',
-                Colors.blue,
-                const Color(0xFFE3F2FD),
-              ),
-
-              _complaintRow(
-                context,
-                'ECO-1038',
-                'Amit Patil',
-                'Construction Debris',
-                'Ward 07',
-                '08 Mar 2026',
-                'Completed',
-                Colors.green,
-                const Color(0xFFE0F5E5),
-              ),
-
-              _complaintRow(
-                context,
-                'ECO-1031',
-                'Priya Shah',
-                'Garden Waste',
-                'Ward 04',
-                '02 Mar 2026',
-                'Completed',
-                Colors.green,
-                const Color(0xFFE0F5E5),
-              ),
-
-              _complaintRow(
-                context,
-                'ECO-1025',
-                'Sameer Khan',
-                'Plastic Waste',
-                'Ward 04',
-                '27 Feb 2026',
-                'Pending',
-                Colors.orange,
-                const Color(0xFFFFF3D6),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _complaintHeader(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: context.width * 0.015,
-        vertical: context.height * 0.018,
-      ),
-      child: Row(
+Widget _recentComplaints(BuildContext context) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(
         children: [
-          _tableTitle(context, 'COMPLAINT ID', 12),
-          _tableTitle(context, 'CITIZEN', 12),
-          _tableTitle(context, 'WASTE TYPE', 15),
-          _tableTitle(context, 'LOCATION', 10),
-          _tableTitle(context, 'DATE', 10),
-          _tableTitle(context, 'STATUS', 10),
-          _tableTitle(context, 'ACTION', 7),
+          Text(
+            'Recent Complaints',
+            style: TextStyle(
+              fontSize: context.width * 0.013,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+
+          const Spacer(),
+
+          Text(
+            'View All Complaints',
+            style: TextStyle(
+              fontSize: context.width * 0.010,
+              color: AppColors.primaryColor,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ],
       ),
-    );
-  }
 
-  Widget _tableTitle(
-    BuildContext context,
-    String title,
-    int flex,
-  ) {
-    return Expanded(
-      flex: flex,
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: context.width * 0.0085,
-          color: Colors.grey.shade700,
-          fontWeight: FontWeight.w500,
-        ),
+      SizedBox(
+        height: context.height * 0.015,
       ),
-    );
-  }
 
-  Widget _complaintRow(
-    BuildContext context,
-    String id,
-    String citizen,
-    String wasteType,
-    String location,
-    String date,
-    String status,
-    Color statusColor,
-    Color statusBackground,
-  ) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: context.width * 0.015,
-        vertical: context.height * 0.018,
-      ),
-      decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            color: Colors.grey.shade200,
-          ),
-        ),
-      ),
-      child: Row(
-        children: [
-          _tableText(context, id, 12),
-          _tableText(context, citizen, 12),
-          _tableText(context, wasteType, 15),
-          _tableText(context, location, 10),
-          _tableText(context, date, 10),
+      LayoutBuilder(
+        builder: (context, constraints) {
+          final double tableWidth =
+              constraints.maxWidth < 950
+                  ? 950
+                  : constraints.maxWidth;
 
-          Expanded(
-            flex: 10,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: context.width * 0.007,
-                  vertical: context.height * 0.006,
+          return Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(
+                color: Colors.grey.shade200,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(
+                    alpha: 0.05,
+                  ),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
                 ),
-                decoration: BoxDecoration(
-                  color: statusBackground,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Text(
-                  status,
-                  style: TextStyle(
-                    fontSize: context.width * 0.008,
-                    color: statusColor,
-                    fontWeight: FontWeight.w500,
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: SizedBox(
+                  width: tableWidth,
+                  child: Column(
+                    children: [
+                      _complaintHeader(
+                        context,
+                        tableWidth,
+                      ),
+
+                      _complaintRow(
+                        context,
+                        tableWidth,
+                        'ECO-1042',
+                        'Rahul Sharma',
+                        'Household Waste',
+                        'Ward 07',
+                        '12 Mar 2026',
+                        'In Progress',
+                        Colors.blue,
+                        const Color(0xFFE3F2FD),
+                      ),
+
+                      _complaintRow(
+                        context,
+                        tableWidth,
+                        'ECO-1038',
+                        'Amit Patil',
+                        'Construction Debris',
+                        'Ward 07',
+                        '08 Mar 2026',
+                        'Completed',
+                        Colors.green,
+                        const Color(0xFFE0F5E5),
+                      ),
+
+                      _complaintRow(
+                        context,
+                        tableWidth,
+                        'ECO-1031',
+                        'Priya Shah',
+                        'Garden Waste',
+                        'Ward 04',
+                        '02 Mar 2026',
+                        'Completed',
+                        Colors.green,
+                        const Color(0xFFE0F5E5),
+                      ),
+
+                      _complaintRow(
+                        context,
+                        tableWidth,
+                        'ECO-1025',
+                        'Sameer Khan',
+                        'Plastic Waste',
+                        'Ward 04',
+                        '27 Feb 2026',
+                        'Pending',
+                        Colors.orange,
+                        const Color(0xFFFFF3D6),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
-          ),
+          );
+        },
+      ),
+    ],
+  );
+}
 
-          Expanded(
-            flex: 7,
-            child: Text(
-              'View',
-              style: TextStyle(
-                fontSize: context.width * 0.009,
-                color: AppColors.primaryColor,
-                fontWeight: FontWeight.w500,
+Widget _complaintHeader(
+  BuildContext context,
+  double tableWidth,
+) {
+  final double width = tableWidth - 32;
+
+  return Container(
+    height: 48,
+    padding: const EdgeInsets.symmetric(
+      horizontal: 16,
+    ),
+    color: const Color(0xFFF8FAFA),
+    child: Row(
+      children: [
+        _tableTitle(
+          context,
+          'COMPLAINT ID',
+          width * 0.16,
+        ),
+
+        _tableTitle(
+          context,
+          'CITIZEN',
+          width * 0.15,
+        ),
+
+        _tableTitle(
+          context,
+          'WASTE TYPE',
+          width * 0.20,
+        ),
+
+        _tableTitle(
+          context,
+          'LOCATION',
+          width * 0.12,
+        ),
+
+        _tableTitle(
+          context,
+          'DATE',
+          width * 0.14,
+        ),
+
+        _tableTitle(
+          context,
+          'STATUS',
+          width * 0.15,
+        ),
+
+        _tableTitle(
+          context,
+          'ACTION',
+          width * 0.08,
+        ),
+      ],
+    ),
+  );
+}
+
+Widget _tableTitle(
+  BuildContext context,
+  String title,
+  double width,
+) {
+  return SizedBox(
+    width: width,
+    child: Text(
+      title,
+      style: TextStyle(
+        fontSize: context.width * 0.009,
+        color: Colors.grey.shade700,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+  );
+}
+
+Widget _complaintRow(
+  BuildContext context,
+  double tableWidth,
+  String id,
+  String citizen,
+  String wasteType,
+  String location,
+  String date,
+  String status,
+  Color statusColor,
+  Color statusBackground,
+) {
+  final double width = tableWidth - 32;
+
+  return Container(
+    height: 50,
+    padding: const EdgeInsets.symmetric(
+      horizontal: 16,
+    ),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      border: Border(
+        top: BorderSide(
+          color: Colors.grey.shade200,
+        ),
+      ),
+    ),
+    child: Row(
+      children: [
+        _tableText(
+          context,
+          id,
+          width * 0.16,
+        ),
+
+        _tableText(
+          context,
+          citizen,
+          width * 0.15,
+        ),
+
+        _tableText(
+          context,
+          wasteType,
+          width * 0.20,
+        ),
+
+        _tableText(
+          context,
+          location,
+          width * 0.12,
+        ),
+
+        _tableText(
+          context,
+          date,
+          width * 0.14,
+        ),
+
+        SizedBox(
+          width: width * 0.15,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: 5,
+              ),
+              decoration: BoxDecoration(
+                color: statusBackground,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                status,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: context.width * 0.0085,
+                  color: statusColor,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _tableText(
-    BuildContext context,
-    String text,
-    int flex,
-  ) {
-    return Expanded(
-      flex: flex,
-      child: Text(
-        text,
-        style: TextStyle(
-          fontSize: context.width * 0.009,
-          color: Colors.black87,
         ),
+
+        SizedBox(
+          width: width * 0.08,
+          child: Text(
+            'View',
+            style: TextStyle(
+              fontSize: context.width * 0.009,
+              color: AppColors.primaryColor,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget _tableText(
+  BuildContext context,
+  String text,
+  double width,
+) {
+  return SizedBox(
+    width: width,
+    child: Text(
+      text,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: TextStyle(
+        fontSize: context.width * 0.0095,
+        color: Colors.black87,
       ),
-    );
-  }
+    ),
+  );
+}
 }
