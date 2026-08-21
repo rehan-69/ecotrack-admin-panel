@@ -1,5 +1,5 @@
-import 'package:ecotrack_admin_panel/constants/app_color.dart';
 import 'package:flutter/material.dart';
+import 'package:ecotrack_admin_panel/constants/app_color.dart';
 
 class UserDetailScreen extends StatelessWidget {
   final String name;

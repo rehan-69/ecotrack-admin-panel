@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
 import 'package:ecotrack_admin_panel/waste_types/add_waste_type_dialog.dart';
-import 'package:ecotrack_admin_panel/waste_types/delete_waste_type_dialog.dart';
 import 'package:ecotrack_admin_panel/waste_types/edit_waste_type_dialog.dart';
-import 'package:flutter/material.dart';
+import 'package:ecotrack_admin_panel/waste_types/delete_waste_type_dialog.dart';
+
 
 class WasteTypesScreen extends StatelessWidget {
   const WasteTypesScreen({super.key});

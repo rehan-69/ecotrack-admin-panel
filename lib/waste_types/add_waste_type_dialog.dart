@@ -1,5 +1,6 @@
-import 'package:ecotrack_admin_panel/constants/app_color.dart';
 import 'package:flutter/material.dart';
+import 'package:ecotrack_admin_panel/constants/app_color.dart';
+
 
 class AddWasteTypeDialog extends StatelessWidget {
   const AddWasteTypeDialog({super.key});

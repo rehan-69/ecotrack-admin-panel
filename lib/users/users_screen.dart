@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:ecotrack_admin_panel/users/user_detail_screen.dart';
-import 'package:flutter/material.dart';
 
 class UsersScreen extends StatelessWidget {
   const UsersScreen({super.key});

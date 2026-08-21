@@ -1,8 +1,9 @@
-import 'package:ecotrack_admin_panel/constants/app_color.dart';
-import 'package:ecotrack_admin_panel/viewmodel/admin_provider.dart';
-import 'package:ecotrack_admin_panel/views/widgets/side_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ecotrack_admin_panel/constants/app_color.dart';
+import 'package:ecotrack_admin_panel/views/widgets/side_bar.dart';
+import 'package:ecotrack_admin_panel/viewmodel/admin_provider.dart';
+
 
 class ComplaintDetailScreen extends StatelessWidget {
   final String complaintId;
