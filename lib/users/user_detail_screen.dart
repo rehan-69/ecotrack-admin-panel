@@ -1,6 +1,7 @@
-import 'package:ecotrack_admin_panel/complaints/complaints_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
+import 'package:ecotrack_admin_panel/complaints/complaints_detail_screen.dart';
+
 
 class UserDetailScreen extends StatelessWidget {
   final String name;
@@ -61,9 +62,7 @@ class UserDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // MAIN CONTENT
-  // ============================================================
 
   Widget _mainContent(BuildContext context) {
     final bool isMobile = MediaQuery.of(context).size.width < 600;
@@ -103,9 +102,7 @@ class UserDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // MOBILE HEADER
-  // ============================================================
 
   PreferredSizeWidget _mobileHeader(BuildContext context) {
     return AppBar(
@@ -138,9 +135,7 @@ class UserDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // SIDEBAR
-  // ============================================================
 
   Widget _sideBar(BuildContext context) {
     final bool isMobile = MediaQuery.of(context).size.width < 900;
@@ -161,9 +156,7 @@ class UserDetailScreen extends StatelessWidget {
 
       child: Column(
         children: [
-          // ======================================================
           // LOGO
-          // ======================================================
           Container(
             height: 66,
 
@@ -213,9 +206,7 @@ class UserDetailScreen extends StatelessWidget {
 
           const SizedBox(height: 18),
 
-          // ======================================================
           // MANAGEMENT
-          // ======================================================
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
 
@@ -245,9 +236,7 @@ class UserDetailScreen extends StatelessWidget {
 
           const Spacer(),
 
-          // ======================================================
           // LOGOUT
-          // ======================================================
           Container(
             padding: const EdgeInsets.all(20),
 
@@ -273,9 +262,7 @@ class UserDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // MENU ITEM
-  // ============================================================
 
   Widget _menuItem(
     BuildContext context,
@@ -320,9 +307,7 @@ class UserDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // DESKTOP HEADER
-  // ============================================================
 
   Widget _header(BuildContext context) {
     return Container(
@@ -384,9 +369,7 @@ class UserDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // BACK BUTTON
-  // ============================================================
 
   Widget _backButton(BuildContext context) {
     return InkWell(
@@ -411,9 +394,7 @@ class UserDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // USER CARD
-  // ============================================================
 
   Widget _userCard(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
@@ -445,9 +426,7 @@ class UserDetailScreen extends StatelessWidget {
 
       child: Column(
         children: [
-          // ======================================================
           // USER HEADER
-          // ======================================================
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
 
@@ -516,9 +495,7 @@ class UserDetailScreen extends StatelessWidget {
 
           SizedBox(height: MediaQuery.of(context).size.height * 0.025),
 
-          // ======================================================
           // MOBILE INFO BOXES
-          // ======================================================
           if (width < 700)
             Column(
               children: [
@@ -558,9 +535,7 @@ class UserDetailScreen extends StatelessWidget {
               ],
             )
           else
-            // ==================================================
             // DESKTOP INFO BOXES
-            // ==================================================
             Row(
               children: [
                 Expanded(
@@ -611,9 +586,7 @@ class UserDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // RESPONSIVE INFO BOX
-  // ============================================================
 
   Widget _responsiveInfoBox(
     BuildContext context,
@@ -628,9 +601,7 @@ class UserDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // INFO BOX
-  // ============================================================
 
   Widget _infoBox(
     BuildContext context,
@@ -689,9 +660,7 @@ class UserDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // STATUS BADGE
-  // ============================================================
 
   Widget _statusBadge(BuildContext context) {
     return Container(
@@ -714,9 +683,7 @@ class UserDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // RECENT COMPLAINTS
-  // ============================================================
 
   Widget _complaintsTable(BuildContext context) {
     return Container(
@@ -777,9 +744,7 @@ class UserDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // TABLE ROW
-  // ============================================================
 
   Widget _tableRow(
     BuildContext context, {
@@ -880,9 +845,7 @@ class UserDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // TABLE TEXT
-  // ============================================================
 
   Widget _tableText(BuildContext context, String text, bool isHeader) {
     return Text(

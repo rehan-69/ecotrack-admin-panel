@@ -3,7 +3,6 @@ import 'package:ecotrack_admin_panel/constants/app_color.dart';
 import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:ecotrack_admin_panel/complaints/complaints_detail_screen.dart';
 
-
 class ComplaintsScreen extends StatelessWidget {
   const ComplaintsScreen({super.key});
 
@@ -14,12 +13,11 @@ class ComplaintsScreen extends StatelessWidget {
         context.width * 0.018,
       ),
       child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Complaints',
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
             ),
@@ -59,8 +57,7 @@ class ComplaintsScreen extends StatelessWidget {
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius:
-            BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(15),
         border: Border.all(
           color: Colors.grey.shade200,
         ),
@@ -78,8 +75,7 @@ class ComplaintsScreen extends StatelessWidget {
         builder: (context, constraints) {
           if (constraints.maxWidth >= 900) {
             return Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
@@ -91,59 +87,42 @@ class ComplaintsScreen extends StatelessWidget {
                           fontSize: 14,
                           color: Color(0xFF334155),
                         ),
-                        decoration:
-                            InputDecoration(
+                        decoration: InputDecoration(
                           hintText:
                               'Search by complaint ID, title or citizen',
                           hintStyle: TextStyle(
                             fontSize: 14,
-                            color:
-                                Colors.grey.shade500,
+                            color: Colors.grey.shade500,
                           ),
                           prefixIcon: Icon(
                             Icons.search,
                             size: 20,
-                            color:
-                                Colors.grey.shade600,
+                            color: Colors.grey.shade600,
                           ),
-                          contentPadding:
-                              EdgeInsets.zero,
+                          contentPadding: EdgeInsets.zero,
                           filled: true,
                           fillColor: Colors.white,
-                          border:
-                              OutlineInputBorder(
+                          border: OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.circular(
-                              10,
-                            ),
-                            borderSide:
-                                BorderSide(
-                              color:
-                                  Colors.grey.shade300,
+                                BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade300,
                             ),
                           ),
                           enabledBorder:
                               OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.circular(
-                              10,
-                            ),
-                            borderSide:
-                                BorderSide(
-                              color:
-                                  Colors.grey.shade300,
+                                BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade300,
                             ),
                           ),
                           focusedBorder:
                               OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.circular(
-                              10,
-                            ),
-                            borderSide:
-                                BorderSide(
-                              color:
-                                  Colors.grey.shade400,
+                                BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade400,
                             ),
                           ),
                         ),
@@ -155,6 +134,15 @@ class ComplaintsScreen extends StatelessWidget {
                     _dropdown(
                       context,
                       'All Waste Types',
+                      [
+                        'All Waste Types',
+                        'Household Waste',
+                        'Plastic Waste',
+                        'Construction Debris',
+                        'Garden Waste',
+                        'E-Waste',
+                        'Other',
+                      ],
                     ),
 
                     const SizedBox(
@@ -164,6 +152,13 @@ class ComplaintsScreen extends StatelessWidget {
                     _dropdown(
                       context,
                       'All Wards',
+                      [
+                        'All Wards',
+                        'Ward 02',
+                        'Ward 04',
+                        'Ward 07',
+                        'Ward 09',
+                      ],
                     ),
                   ],
                 ),
@@ -229,8 +224,7 @@ class ComplaintsScreen extends StatelessWidget {
                     fontSize: 14,
                     color: Color(0xFF334155),
                   ),
-                  decoration:
-                      InputDecoration(
+                  decoration: InputDecoration(
                     hintText:
                         'Search by complaint ID, title or citizen',
                     hintStyle: TextStyle(
@@ -242,10 +236,8 @@ class ComplaintsScreen extends StatelessWidget {
                       size: 20,
                       color: Colors.grey,
                     ),
-                    contentPadding:
-                        EdgeInsets.zero,
-                    border:
-                        OutlineInputBorder(
+                    contentPadding: EdgeInsets.zero,
+                    border: OutlineInputBorder(
                       borderRadius:
                           BorderRadius.circular(10),
                       borderSide: BorderSide(
@@ -275,11 +267,27 @@ class ComplaintsScreen extends StatelessWidget {
                   _dropdown(
                     context,
                     'All Waste Types',
+                    [
+                      'All Waste Types',
+                      'Household Waste',
+                      'Plastic Waste',
+                      'Construction Debris',
+                      'Garden Waste',
+                      'E-Waste',
+                      'Other',
+                    ],
                   ),
 
                   _dropdown(
                     context,
                     'All Wards',
+                    [
+                      'All Wards',
+                      'Ward 02',
+                      'Ward 04',
+                      'Ward 07',
+                      'Ward 09',
+                    ],
                   ),
                 ],
               ),
@@ -331,16 +339,14 @@ class ComplaintsScreen extends StatelessWidget {
   ) {
     return Container(
       height: 38,
-      padding:
-          const EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         horizontal: 16,
       ),
       decoration: BoxDecoration(
         color: selected
             ? AppColors.primaryColor
             : Colors.white,
-        borderRadius:
-            BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(10),
         border: Border.all(
           color: selected
               ? AppColors.primaryColor
@@ -365,40 +371,125 @@ class ComplaintsScreen extends StatelessWidget {
 
   Widget _dropdown(
     BuildContext context,
-    String text,
+    String selectedValue,
+    List<String> items,
   ) {
-    return Container(
-      width: 180,
-      height: 48,
-      padding:
-          const EdgeInsets.symmetric(
-        horizontal: 14,
-      ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius:
-            BorderRadius.circular(10),
-        border: Border.all(
-          color: Colors.grey.shade300,
+    return SizedBox(
+      width: 170,
+      height: 40,
+      child: PopupMenuButton<String>(
+        initialValue: selectedValue,
+
+        onSelected: (value) {
+          // Later filter logic add karenge.
+        },
+
+        position: PopupMenuPosition.under,
+
+        offset: Offset.zero,
+
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
         ),
-      ),
-      child: Row(
-        children: [
-          Text(
-            text,
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.grey.shade700,
+
+        color: Colors.white,
+        elevation: 4,
+
+        itemBuilder: (context) {
+          return items.map((type) {
+            final isSelected =
+                type == selectedValue;
+
+            return PopupMenuItem<String>(
+              value: type,
+              height: 32,
+              child: Container(
+                width: double.infinity,
+                padding:
+                    const EdgeInsets.symmetric(
+                  horizontal: 8,
+                ),
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? const Color(0xFFE8F5E9)
+                      : Colors.transparent,
+                  borderRadius:
+                      BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        type,
+                        maxLines: 1,
+                        overflow:
+                            TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: isSelected
+                              ? AppColors.primaryColor
+                              : const Color(
+                                  0xFF374151,
+                                ),
+                          fontWeight: isSelected
+                              ? FontWeight.w500
+                              : FontWeight.w400,
+                        ),
+                      ),
+                    ),
+
+                    if (isSelected)
+                      const Icon(
+                        Icons.check,
+                        size: 18,
+                        color:
+                            AppColors.primaryColor,
+                      ),
+                  ],
+                ),
+              ),
+            );
+          }).toList();
+        },
+
+        child: Container(
+          width: double.infinity,
+          height: 40,
+          padding:
+              const EdgeInsets.symmetric(
+            horizontal: 12,
+          ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius:
+                BorderRadius.circular(8),
+            border: Border.all(
+              color: Colors.grey.shade300,
             ),
           ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  selectedValue,
+                  maxLines: 1,
+                  overflow:
+                      TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Color(0xFF374151),
+                  ),
+                ),
+              ),
 
-          const Spacer(),
-
-          const Icon(
-            Icons.keyboard_arrow_down,
-            color: Colors.grey,
+              Icon(
+                Icons.keyboard_arrow_down,
+                size: 18,
+                color: Colors.grey.shade600,
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -735,7 +826,7 @@ class ComplaintsScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                      ComplaintDetailScreen(
+                        ComplaintDetailScreen(
                       complaintId: id,
                       image: image,
                       title: title,
