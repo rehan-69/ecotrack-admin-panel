@@ -1,3 +1,4 @@
+import 'package:ecotrack_admin_panel/complaints/complaints_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
 
@@ -21,8 +22,7 @@ class UserDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isMobile =
-        MediaQuery.of(context).size.width < 900;
+    final bool isMobile = MediaQuery.of(context).size.width < 900;
 
     if (isMobile) {
       return Scaffold(
@@ -52,9 +52,7 @@ class UserDetailScreen extends StatelessWidget {
               children: [
                 _header(context),
 
-                Expanded(
-                  child: _mainContent(context),
-                ),
+                Expanded(child: _mainContent(context)),
               ],
             ),
           ),
@@ -68,58 +66,36 @@ class UserDetailScreen extends StatelessWidget {
   // ============================================================
 
   Widget _mainContent(BuildContext context) {
-    final bool isMobile =
-        MediaQuery.of(context).size.width < 600;
+    final bool isMobile = MediaQuery.of(context).size.width < 600;
 
     return SingleChildScrollView(
-      padding: EdgeInsets.all(
-        isMobile ? 16 : 24,
-      ),
+      padding: EdgeInsets.all(isMobile ? 16 : 24),
 
       child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
 
         children: [
           _backButton(context),
 
-          SizedBox(
-            height: MediaQuery.of(context).size.height *
-                0.018,
-          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.018),
 
           const Text(
             'User Details',
-            style: TextStyle(
-              fontSize: 26,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
           ),
 
-          SizedBox(
-            height: MediaQuery.of(context).size.height *
-                0.025,
-          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.025),
 
           _userCard(context),
 
-          SizedBox(
-            height: MediaQuery.of(context).size.height *
-                0.035,
-          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.035),
 
           const Text(
             'Recent Complaints',
-            style: TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.w600,
-            ),
+            style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
           ),
 
-          SizedBox(
-            height: MediaQuery.of(context).size.height *
-                0.016,
-          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.016),
 
           _complaintsTable(context),
         ],
@@ -131,9 +107,7 @@ class UserDetailScreen extends StatelessWidget {
   // MOBILE HEADER
   // ============================================================
 
-  PreferredSizeWidget _mobileHeader(
-    BuildContext context,
-  ) {
+  PreferredSizeWidget _mobileHeader(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: const Color(0xFF1B1B27),
@@ -146,11 +120,7 @@ class UserDetailScreen extends StatelessWidget {
             onPressed: () {
               Scaffold.of(context).openDrawer();
             },
-            icon: const Icon(
-              Icons.menu,
-              color: Colors.white,
-              size: 28,
-            ),
+            icon: const Icon(Icons.menu, color: Colors.white, size: 28),
           );
         },
       ),
@@ -173,8 +143,7 @@ class UserDetailScreen extends StatelessWidget {
   // ============================================================
 
   Widget _sideBar(BuildContext context) {
-    final bool isMobile =
-        MediaQuery.of(context).size.width < 900;
+    final bool isMobile = MediaQuery.of(context).size.width < 900;
 
     double sidebarWidth;
 
@@ -195,14 +164,10 @@ class UserDetailScreen extends StatelessWidget {
           // ======================================================
           // LOGO
           // ======================================================
-
           Container(
             height: 66,
 
-            padding: EdgeInsets.symmetric(
-              horizontal:
-                  isMobile ? 20 : 20,
-            ),
+            padding: EdgeInsets.symmetric(horizontal: isMobile ? 20 : 20),
 
             child: Row(
               children: [
@@ -211,45 +176,32 @@ class UserDetailScreen extends StatelessWidget {
                   height: 42,
 
                   decoration: BoxDecoration(
-                    color:
-                        AppColors.primaryColor,
-                    borderRadius:
-                        BorderRadius.circular(12),
+                    color: AppColors.primaryColor,
+                    borderRadius: BorderRadius.circular(12),
                   ),
 
-                  child: const Icon(
-                    Icons.eco_outlined,
-                    color: Colors.white,
-                  ),
+                  child: const Icon(Icons.eco_outlined, color: Colors.white),
                 ),
 
-                const SizedBox(
-                  width: 12,
-                ),
+                const SizedBox(width: 12),
 
                 const Column(
-                  mainAxisAlignment:
-                      MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
 
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
 
                   children: [
                     Text(
                       'EcoTrack',
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight:
-                            FontWeight.bold,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
 
                     Text(
                       'Admin Panel',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                      ),
+                      style: TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                   ],
                 ),
@@ -257,110 +209,61 @@ class UserDetailScreen extends StatelessWidget {
             ),
           ),
 
-          const Divider(
-            height: 1,
-          ),
+          const Divider(height: 1),
 
-          const SizedBox(
-            height: 18,
-          ),
+          const SizedBox(height: 18),
 
           // ======================================================
           // MANAGEMENT
           // ======================================================
-
           Padding(
-            padding:
-                const EdgeInsets.symmetric(
-              horizontal: 20,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
 
             child: Align(
-              alignment:
-                  Alignment.centerLeft,
+              alignment: Alignment.centerLeft,
 
               child: const Text(
                 'MANAGEMENT',
                 style: TextStyle(
                   fontSize: 11,
-                  color:
-                      Color(0xFF64748B),
-                  fontWeight:
-                      FontWeight.w600,
+                  color: Color(0xFF64748B),
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
           ),
 
-          const SizedBox(
-            height: 12,
-          ),
+          const SizedBox(height: 12),
 
-          _menuItem(
-            context,
-            Icons.dashboard_outlined,
-            'Dashboard',
-            false,
-          ),
+          _menuItem(context, Icons.dashboard_outlined, 'Dashboard', false),
 
-          _menuItem(
-            context,
-            Icons.description_outlined,
-            'Complaints',
-            false,
-          ),
+          _menuItem(context, Icons.description_outlined, 'Complaints', false),
 
-          _menuItem(
-            context,
-            Icons.people_outline,
-            'Users',
-            true,
-          ),
+          _menuItem(context, Icons.people_outline, 'Users', true),
 
-          _menuItem(
-            context,
-            Icons.delete_outline,
-            'Waste Types',
-            false,
-          ),
+          _menuItem(context, Icons.delete_outline, 'Waste Types', false),
 
           const Spacer(),
 
           // ======================================================
           // LOGOUT
           // ======================================================
-
           Container(
-            padding:
-                const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
 
             decoration: BoxDecoration(
-              border: Border(
-                top: BorderSide(
-                  color:
-                      Colors.grey.shade200,
-                ),
-              ),
+              border: Border(top: BorderSide(color: Colors.grey.shade200)),
             ),
 
             child: Row(
               children: [
-                Icon(
-                  Icons.logout,
-                  color:
-                      Colors.grey.shade600,
-                ),
+                Icon(Icons.logout, color: Colors.grey.shade600),
 
-                const SizedBox(
-                  width: 12,
-                ),
+                const SizedBox(width: 12),
 
                 const Text(
                   'Logout',
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.grey,
-                  ),
+                  style: TextStyle(fontSize: 15, color: Colors.grey),
                 ),
               ],
             ),
@@ -381,25 +284,14 @@ class UserDetailScreen extends StatelessWidget {
     bool selected,
   ) {
     return Container(
-      margin:
-          const EdgeInsets.symmetric(
-        horizontal: 12,
-        vertical: 3,
-      ),
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
 
-      padding:
-          const EdgeInsets.symmetric(
-        horizontal: 14,
-        vertical: 12,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
 
       decoration: BoxDecoration(
-        color: selected
-            ? AppColors.primaryColor
-            : Colors.transparent,
+        color: selected ? AppColors.primaryColor : Colors.transparent,
 
-        borderRadius:
-            BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(10),
       ),
 
       child: Row(
@@ -408,27 +300,19 @@ class UserDetailScreen extends StatelessWidget {
             icon,
             size: 20,
 
-            color: selected
-                ? Colors.white
-                : Colors.grey.shade600,
+            color: selected ? Colors.white : Colors.grey.shade600,
           ),
 
-          const SizedBox(
-            width: 14,
-          ),
+          const SizedBox(width: 14),
 
           Text(
             title,
             style: TextStyle(
               fontSize: 15,
 
-              color: selected
-                  ? Colors.white
-                  : Colors.grey.shade700,
+              color: selected ? Colors.white : Colors.grey.shade700,
 
-              fontWeight: selected
-                  ? FontWeight.w600
-                  : FontWeight.w400,
+              fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
             ),
           ),
         ],
@@ -444,79 +328,54 @@ class UserDetailScreen extends StatelessWidget {
     return Container(
       height: 66,
 
-      padding:
-          const EdgeInsets.symmetric(
-        horizontal: 24,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 24),
 
       decoration: BoxDecoration(
         color: Colors.white,
 
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.grey.shade200,
-          ),
-        ),
+        border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
       ),
 
       child: Row(
         children: [
           const Text(
             'Nashik Municipal Corporation',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight:
-                  FontWeight.w600,
-            ),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
 
           const Spacer(),
 
           Column(
-            mainAxisAlignment:
-                MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
 
-            crossAxisAlignment:
-                CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
 
             children: const [
               Text(
                 'Admin',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight:
-                      FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
 
               Text(
                 'admin@ecotrack.gov.in',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey,
-                ),
+                style: TextStyle(fontSize: 12, color: Colors.grey),
               ),
             ],
           ),
 
-          const SizedBox(
-            width: 12,
-          ),
+          const SizedBox(width: 12),
 
           const CircleAvatar(
             radius: 18,
 
-            backgroundColor:
-                Color(0xFFE8F5E9),
+            backgroundColor: Color(0xFFE8F5E9),
 
             child: Text(
               'AD',
               style: TextStyle(
                 fontSize: 12,
-                fontWeight:
-                    FontWeight.bold,
-                color:
-                    Color(0xFF2E7D32),
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF2E7D32),
               ),
             ),
           ),
@@ -529,37 +388,23 @@ class UserDetailScreen extends StatelessWidget {
   // BACK BUTTON
   // ============================================================
 
-  Widget _backButton(
-    BuildContext context,
-  ) {
+  Widget _backButton(BuildContext context) {
     return InkWell(
       onTap: () {
         Navigator.pop(context);
       },
 
       child: Row(
-        mainAxisSize:
-            MainAxisSize.min,
+        mainAxisSize: MainAxisSize.min,
 
         children: const [
-          Icon(
-            Icons.arrow_back,
-            size: 20,
-            color:
-                Color(0xFF64748B),
-          ),
+          Icon(Icons.arrow_back, size: 20, color: Color(0xFF64748B)),
 
-          SizedBox(
-            width: 8,
-          ),
+          SizedBox(width: 8),
 
           Text(
             'Back',
-            style: TextStyle(
-              fontSize: 14,
-              color:
-                  Color(0xFF64748B),
-            ),
+            style: TextStyle(fontSize: 14, color: Color(0xFF64748B)),
           ),
         ],
       ),
@@ -570,41 +415,30 @@ class UserDetailScreen extends StatelessWidget {
   // USER CARD
   // ============================================================
 
-  Widget _userCard(
-    BuildContext context,
-  ) {
-    final double width =
-        MediaQuery.of(context).size.width;
+  Widget _userCard(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
 
-    final bool isMobile =
-        width < 600;
+    final bool isMobile = width < 600;
 
     return Container(
       width: double.infinity,
 
-      padding: EdgeInsets.all(
-        isMobile ? 16 : 20,
-      ),
+      padding: EdgeInsets.all(isMobile ? 16 : 20),
 
       decoration: BoxDecoration(
         color: Colors.white,
 
-        borderRadius:
-            BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(15),
 
-        border: Border.all(
-          color: Colors.grey.shade200,
-        ),
+        border: Border.all(color: Colors.grey.shade200),
 
         boxShadow: [
           BoxShadow(
-            color: Colors.black
-                .withValues(alpha: 0.04),
+            color: Colors.black.withValues(alpha: 0.04),
 
             blurRadius: 10,
 
-            offset:
-                const Offset(0, 4),
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -614,94 +448,65 @@ class UserDetailScreen extends StatelessWidget {
           // ======================================================
           // USER HEADER
           // ======================================================
-
           Row(
-            crossAxisAlignment:
-                CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
 
             children: [
               CircleAvatar(
-                radius:
-                    isMobile ? 23 : 28,
+                radius: isMobile ? 23 : 28,
 
-                backgroundColor:
-                    AppColors.primaryColor,
+                backgroundColor: AppColors.primaryColor,
 
                 child: const Text(
                   'RS',
                   style: TextStyle(
                     fontSize: 16,
-                    fontWeight:
-                        FontWeight.bold,
-                    color:
-                        Colors.white,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
               ),
 
-              SizedBox(
-                width:
-                    isMobile ? 10 : 16,
-              ),
+              SizedBox(width: isMobile ? 10 : 16),
 
               Expanded(
                 child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
 
                   children: [
                     Text(
                       name,
                       maxLines: 1,
-                      overflow:
-                          TextOverflow.ellipsis,
+                      overflow: TextOverflow.ellipsis,
 
-                      style:
-                          const TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
-                        fontWeight:
-                            FontWeight.w600,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
 
-                    const SizedBox(
-                      height: 4,
-                    ),
+                    const SizedBox(height: 4),
 
                     const Text(
                       'Citizen · USR-01',
-                      style:
-                          TextStyle(
-                        fontSize: 14,
-                        color:
-                            Color(0xFF64748B),
-                      ),
+                      style: TextStyle(fontSize: 14, color: Color(0xFF64748B)),
                     ),
                   ],
                 ),
               ),
 
-              const SizedBox(
-                width: 8,
-              ),
+              const SizedBox(width: 8),
 
               Column(
-                crossAxisAlignment:
-                    CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
 
                 children: [
                   const Text(
                     'Account Status',
-                    style: TextStyle(
-                      fontSize: 13,
-                      color:
-                          Color(0xFF64748B),
-                    ),
+                    style: TextStyle(fontSize: 13, color: Color(0xFF64748B)),
                   ),
 
-                  const SizedBox(
-                    height: 7,
-                  ),
+                  const SizedBox(height: 7),
 
                   _statusBadge(context),
                 ],
@@ -709,18 +514,11 @@ class UserDetailScreen extends StatelessWidget {
             ],
           ),
 
-          SizedBox(
-            height:
-                MediaQuery.of(context)
-                    .size
-                    .height *
-                    0.025,
-          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.025),
 
           // ======================================================
           // MOBILE INFO BOXES
           // ======================================================
-
           if (width < 700)
             Column(
               children: [
@@ -731,9 +529,7 @@ class UserDetailScreen extends StatelessWidget {
                   email,
                 ),
 
-                const SizedBox(
-                  height: 12,
-                ),
+                const SizedBox(height: 12),
 
                 _responsiveInfoBox(
                   context,
@@ -742,9 +538,7 @@ class UserDetailScreen extends StatelessWidget {
                   mobile,
                 ),
 
-                const SizedBox(
-                  height: 12,
-                ),
+                const SizedBox(height: 12),
 
                 _responsiveInfoBox(
                   context,
@@ -753,9 +547,7 @@ class UserDetailScreen extends StatelessWidget {
                   joinedDate,
                 ),
 
-                const SizedBox(
-                  height: 12,
-                ),
+                const SizedBox(height: 12),
 
                 _responsiveInfoBox(
                   context,
@@ -769,7 +561,6 @@ class UserDetailScreen extends StatelessWidget {
             // ==================================================
             // DESKTOP INFO BOXES
             // ==================================================
-
             Row(
               children: [
                 Expanded(
@@ -781,9 +572,7 @@ class UserDetailScreen extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(
-                  width: 16,
-                ),
+                const SizedBox(width: 16),
 
                 Expanded(
                   child: _infoBox(
@@ -794,9 +583,7 @@ class UserDetailScreen extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(
-                  width: 16,
-                ),
+                const SizedBox(width: 16),
 
                 Expanded(
                   child: _infoBox(
@@ -807,9 +594,7 @@ class UserDetailScreen extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(
-                  width: 16,
-                ),
+                const SizedBox(width: 16),
 
                 Expanded(
                   child: _infoBox(
@@ -839,12 +624,7 @@ class UserDetailScreen extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
 
-      child: _infoBox(
-        context,
-        icon,
-        title,
-        value,
-      ),
+      child: _infoBox(context, icon, title, value),
     );
   }
 
@@ -861,50 +641,34 @@ class UserDetailScreen extends StatelessWidget {
     return Container(
       height: 75,
 
-      padding:
-          const EdgeInsets.all(14),
+      padding: const EdgeInsets.all(14),
 
       decoration: BoxDecoration(
         color: Colors.white,
 
-        borderRadius:
-            BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12),
 
-        border: Border.all(
-          color:
-              Colors.grey.shade300,
-        ),
+        border: Border.all(color: Colors.grey.shade300),
       ),
 
       child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
 
         children: [
           Row(
             children: [
-              Icon(
-                icon,
-                size: 16,
-                color:
-                    Colors.grey.shade600,
-              ),
+              Icon(icon, size: 16, color: Colors.grey.shade600),
 
-              const SizedBox(
-                width: 7,
-              ),
+              const SizedBox(width: 7),
 
               Expanded(
                 child: Text(
                   title,
-                  overflow:
-                      TextOverflow.ellipsis,
+                  overflow: TextOverflow.ellipsis,
 
-                  style:
-                      const TextStyle(
+                  style: const TextStyle(
                     fontSize: 12,
-                    color:
-                        Color(0xFF64748B),
+                    color: Color(0xFF64748B),
                   ),
                 ),
               ),
@@ -916,15 +680,9 @@ class UserDetailScreen extends StatelessWidget {
           Text(
             value,
             maxLines: 1,
-            overflow:
-                TextOverflow.ellipsis,
+            overflow: TextOverflow.ellipsis,
 
-            style:
-                const TextStyle(
-              fontSize: 14,
-              fontWeight:
-                  FontWeight.w600,
-            ),
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
           ),
         ],
       ),
@@ -935,33 +693,22 @@ class UserDetailScreen extends StatelessWidget {
   // STATUS BADGE
   // ============================================================
 
-  Widget _statusBadge(
-    BuildContext context,
-  ) {
+  Widget _statusBadge(BuildContext context) {
     return Container(
-      padding:
-          const EdgeInsets.symmetric(
-        horizontal: 12,
-        vertical: 5,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
 
       decoration: BoxDecoration(
-        color:
-            const Color(0xFFD9F5DF),
+        color: const Color(0xFFD9F5DF),
 
-        borderRadius:
-            BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(20),
       ),
 
       child: Text(
         status,
-        style:
-            const TextStyle(
+        style: const TextStyle(
           fontSize: 12,
-          color:
-              Color(0xFF16833A),
-          fontWeight:
-              FontWeight.w500,
+          color: Color(0xFF16833A),
+          fontWeight: FontWeight.w500,
         ),
       ),
     );
@@ -971,60 +718,44 @@ class UserDetailScreen extends StatelessWidget {
   // RECENT COMPLAINTS
   // ============================================================
 
-  Widget _complaintsTable(
-    BuildContext context,
-  ) {
+  Widget _complaintsTable(BuildContext context) {
     return Container(
       width: double.infinity,
 
       decoration: BoxDecoration(
         color: Colors.white,
 
-        borderRadius:
-            BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(15),
 
-        border: Border.all(
-          color: Colors.grey.shade200,
-        ),
+        border: Border.all(color: Colors.grey.shade200),
 
         boxShadow: [
           BoxShadow(
-            color: Colors.black
-                .withValues(alpha: 0.04),
+            color: Colors.black.withValues(alpha: 0.04),
 
             blurRadius: 10,
 
-            offset:
-                const Offset(0, 4),
+            offset: const Offset(0, 4),
           ),
         ],
       ),
 
       child: SingleChildScrollView(
-        scrollDirection:
-            Axis.horizontal,
+        scrollDirection: Axis.horizontal,
 
         child: SizedBox(
-          width:
-              MediaQuery.of(context)
-                      .size
-                      .width <
-                  700
+          width: MediaQuery.of(context).size.width < 700
               ? 750
-              : MediaQuery.of(context)
-                  .size
-                  .width,
+              : MediaQuery.of(context).size.width,
 
           child: Column(
             children: [
               _tableRow(
                 context,
                 isHeader: true,
-                complaintId:
-                    'COMPLAINT ID',
+                complaintId: 'COMPLAINT ID',
                 title: 'TITLE',
-                wasteType:
-                    'WASTE TYPE',
+                wasteType: 'WASTE TYPE',
                 date: 'DATE',
                 status: 'STATUS',
                 action: 'ACTION',
@@ -1032,16 +763,11 @@ class UserDetailScreen extends StatelessWidget {
 
               _tableRow(
                 context,
-                complaintId:
-                    'ECO-1042',
-                title:
-                    'Household Waste',
-                wasteType:
-                    'Household Waste',
-                date:
-                    '12 Mar 2026',
-                status:
-                    'In Progress',
+                complaintId: 'ECO-1042',
+                title: 'Household Waste',
+                wasteType: 'Household Waste',
+                date: '12 Mar 2026',
+                status: 'In Progress',
                 action: 'View',
               ),
             ],
@@ -1066,104 +792,48 @@ class UserDetailScreen extends StatelessWidget {
     required String action,
   }) {
     return Container(
-      padding:
-          const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 14,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
 
       decoration: BoxDecoration(
-        color: isHeader
-            ? const Color(0xFFF7F9F8)
-            : Colors.white,
+        color: isHeader ? const Color(0xFFF7F9F8) : Colors.white,
 
-        border: Border(
-          bottom: BorderSide(
-            color:
-                Colors.grey.shade200,
-          ),
-        ),
+        border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
       ),
 
       child: Row(
         children: [
-          Expanded(
-            flex: 15,
-            child: _tableText(
-              context,
-              complaintId,
-              isHeader,
-            ),
-          ),
+          Expanded(flex: 15, child: _tableText(context, complaintId, isHeader)),
 
-          Expanded(
-            flex: 18,
-            child: _tableText(
-              context,
-              title,
-              isHeader,
-            ),
-          ),
+          Expanded(flex: 18, child: _tableText(context, title, isHeader)),
 
-          Expanded(
-            flex: 20,
-            child: _tableText(
-              context,
-              wasteType,
-              isHeader,
-            ),
-          ),
+          Expanded(flex: 20, child: _tableText(context, wasteType, isHeader)),
 
-          Expanded(
-            flex: 15,
-            child: _tableText(
-              context,
-              date,
-              isHeader,
-            ),
-          ),
+          Expanded(flex: 15, child: _tableText(context, date, isHeader)),
 
           Expanded(
             flex: 15,
             child: isHeader
-                ? _tableText(
-                    context,
-                    status,
-                    true,
-                  )
+                ? _tableText(context, status, true)
                 : Align(
-                    alignment:
-                        Alignment.centerLeft,
+                    alignment: Alignment.centerLeft,
 
                     child: Container(
-                      padding:
-                          const EdgeInsets
-                              .symmetric(
+                      padding: const EdgeInsets.symmetric(
                         horizontal: 10,
                         vertical: 5,
                       ),
 
-                      decoration:
-                          BoxDecoration(
-                        color:
-                            const Color(
-                          0xFFE3F2FD,
-                        ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFE3F2FD),
 
-                        borderRadius:
-                            BorderRadius
-                                .circular(
-                          20,
-                        ),
+                        borderRadius: BorderRadius.circular(20),
                       ),
 
                       child: Text(
                         status,
-                        style:
-                            const TextStyle(
+                        style: const TextStyle(
                           fontSize: 12,
-                          color:
-                              Colors.blue,
+                          color: Colors.blue,
                         ),
                       ),
                     ),
@@ -1172,23 +842,36 @@ class UserDetailScreen extends StatelessWidget {
 
           Expanded(
             flex: 10,
-            child: Text(
-              action,
-              overflow:
-                  TextOverflow.ellipsis,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ComplaintDetailScreen(
+                      complaintId: complaintId,
+                      image: 'assets/waste-household.jpg',
+                      title: title,
+                      citizen: name,
+                      wasteType: wasteType,
+                      location: 'Ward 07',
+                      date: date,
+                      status: status,
+                    ),
+                  ),
+                );
+              },
+              child: Text(
+                action,
+                overflow: TextOverflow.ellipsis,
 
-              style: TextStyle(
-                fontSize: 13,
-                color: isHeader
-                    ? const Color(
-                        0xFF64748B,
-                      )
-                    : AppColors
-                        .primaryColor,
+                style: TextStyle(
+                  fontSize: 13,
+                  color: isHeader
+                      ? const Color(0xFF64748B)
+                      : AppColors.primaryColor,
 
-                fontWeight: isHeader
-                    ? FontWeight.w500
-                    : FontWeight.w400,
+                  fontWeight: isHeader ? FontWeight.w500 : FontWeight.w400,
+                ),
               ),
             ),
           ),
@@ -1201,31 +884,17 @@ class UserDetailScreen extends StatelessWidget {
   // TABLE TEXT
   // ============================================================
 
-  Widget _tableText(
-    BuildContext context,
-    String text,
-    bool isHeader,
-  ) {
+  Widget _tableText(BuildContext context, String text, bool isHeader) {
     return Text(
       text,
-      overflow:
-          TextOverflow.ellipsis,
+      overflow: TextOverflow.ellipsis,
 
       style: TextStyle(
-        fontSize:
-            isHeader ? 12 : 14,
+        fontSize: isHeader ? 12 : 14,
 
-        color: isHeader
-            ? const Color(
-                0xFF64748B,
-              )
-            : const Color(
-                0xFF07152B,
-              ),
+        color: isHeader ? const Color(0xFF64748B) : const Color(0xFF07152B),
 
-        fontWeight: isHeader
-            ? FontWeight.w500
-            : FontWeight.w400,
+        fontWeight: isHeader ? FontWeight.w500 : FontWeight.w400,
       ),
     );
   }

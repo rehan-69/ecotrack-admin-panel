@@ -735,7 +735,7 @@ class ComplaintsScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        ComplaintDetailScreen(
+                      ComplaintDetailScreen(
                       complaintId: id,
                       image: image,
                       title: title,

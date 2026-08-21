@@ -8,8 +8,6 @@ import 'package:ecotrack_admin_panel/complaints/complaints_screen.dart';
 import 'package:ecotrack_admin_panel/waste_types/waste_types_screen.dart';
 import 'package:ecotrack_admin_panel/views/dashboard/dashboard_screen.dart';
 
-
-
 class AdminLayout extends StatelessWidget {
   const AdminLayout({super.key});
 
@@ -37,9 +35,7 @@ class AdminLayout extends StatelessWidget {
 
             appBar: _mobileHeader(context),
 
-            body: _getScreen(
-              value.selectedIndex,
-            ),
+            body: _getScreen(value.selectedIndex),
           );
         }
 
@@ -58,11 +54,7 @@ class AdminLayout extends StatelessWidget {
                   children: [
                     _desktopHeader(context),
 
-                    Expanded(
-                      child: _getScreen(
-                        value.selectedIndex,
-                      ),
-                    ),
+                    Expanded(child: _getScreen(value.selectedIndex)),
                   ],
                 ),
               ),
@@ -80,25 +72,16 @@ class AdminLayout extends StatelessWidget {
   Widget _desktopHeader(BuildContext context) {
     return Container(
       height: context.height * 0.09,
-      padding: EdgeInsets.symmetric(
-        horizontal: context.width * 0.018,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: context.width * 0.018),
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.grey.shade200,
-          ),
-        ),
+        border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
       ),
       child: Row(
         children: [
           Text(
             'Nashik Municipal Corporation',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
 
           const Spacer(),
@@ -109,18 +92,12 @@ class AdminLayout extends StatelessWidget {
             children: [
               Text(
                 'Admin',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
 
               Text(
                 'admin@ecotrack.gov.in',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey,
-                ),
+                style: TextStyle(fontSize: 12, color: Colors.grey),
               ),
             ],
           ),
@@ -148,42 +125,59 @@ class AdminLayout extends StatelessWidget {
   // MOBILE HEADER
   // ------------------------------------------------------------
 
-  PreferredSizeWidget _mobileHeader(
-    BuildContext context,
-  ) {
+  PreferredSizeWidget _mobileHeader(BuildContext context) {
     return AppBar(
-      automaticallyImplyLeading: false,
-      backgroundColor: const Color(0xFF1B1B27),
-      elevation: 0,
+  automaticallyImplyLeading: false,
+  backgroundColor: Colors.white,
+  elevation: 0,
+  toolbarHeight: 64,
 
-      toolbarHeight: 64,
-
-      leading: Builder(
-        builder: (context) {
-          return IconButton(
-            icon: const Icon(
-              Icons.menu,
-              color: Colors.white,
-              size: 28,
-            ),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-          );
+  leading: Builder(
+    builder: (context) {
+      return IconButton(
+        icon: const Icon(
+          Icons.menu,
+          color: Colors.black54,
+          size: 28,
+        ),
+        onPressed: () {
+          Scaffold.of(context).openDrawer();
         },
-      ),
+      );
+    },
+  ),
 
-      title: const Text(
-        'Admin Panel',
+  title: Row(
+    children: [
+      const Text(
+        'Nashik Municipal Corporation',
         style: TextStyle(
-          color: Colors.white,
-          fontSize: 21,
-          fontWeight: FontWeight.bold,
+          color: Color(0xFF1F2937),
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
         ),
       ),
 
-      titleSpacing: 0,
-    );
+      // const Spacer(),
+      SizedBox(width: context.width * 0.14,),
+
+      const CircleAvatar(
+        radius: 15,
+        backgroundColor: Color(0xFF2E8B45),
+        child: Text(
+          'AD',
+          style: TextStyle(
+            fontSize: 10,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    ],
+  ),
+
+  titleSpacing: 0,
+);
   }
 
   // ------------------------------------------------------------
@@ -210,10 +204,7 @@ class AdminLayout extends StatelessWidget {
     return const Center(
       child: Text(
         'Coming Soon',
-        style: TextStyle(
-          fontSize: 25,
-          fontWeight: FontWeight.bold,
-        ),
+        style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
       ),
     );
   }
