@@ -1,5 +1,4 @@
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
-import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:ecotrack_admin_panel/viewmodel/admin_provider.dart';
 import 'package:ecotrack_admin_panel/views/widgets/side_bar.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +30,31 @@ class ComplaintDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<AdminProvider>(
       builder: (context, value, child) {
+        final bool isMobile =
+            MediaQuery.of(context).size.width < 900;
+
+        if (isMobile) {
+          return Scaffold(
+            backgroundColor: const Color(0xFFF7FAF8),
+
+            drawer: Drawer(
+              width: 280,
+              backgroundColor: Colors.white,
+              child: SideBar(
+                selectedIndex: 1,
+                onItemSelected: (index) {
+                  value.changeIndex(index);
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+
+            appBar: _mobileHeader(context),
+
+            body: _content(context),
+          );
+        }
+
         return Scaffold(
           body: Row(
             children: [
@@ -59,13 +83,15 @@ class ComplaintDetailScreen extends StatelessWidget {
     );
   }
 
-  // HEADER
+  // ============================================================
+  // DESKTOP HEADER
+  // ============================================================
 
   Widget _header(BuildContext context) {
     return Container(
       height: 64,
-      padding: EdgeInsets.symmetric(
-        horizontal: context.width * 0.018,
+      padding: const EdgeInsets.symmetric(
+        horizontal: 18,
       ),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -111,13 +137,14 @@ class ComplaintDetailScreen extends StatelessWidget {
             ],
           ),
 
-          SizedBox(
-            width: context.width * 0.01,
+          const SizedBox(
+            width: 12,
           ),
 
           const CircleAvatar(
             radius: 18,
-            backgroundColor: Color(0xFFE8F5E9),
+            backgroundColor:
+                Color(0xFFE8F5E9),
             child: Text(
               'AD',
               style: TextStyle(
@@ -132,29 +159,85 @@ class ComplaintDetailScreen extends StatelessWidget {
     );
   }
 
+  // ============================================================
+  // MOBILE HEADER
+  // ============================================================
+
+  PreferredSizeWidget _mobileHeader(
+    BuildContext context,
+  ) {
+    return AppBar(
+      automaticallyImplyLeading: false,
+      backgroundColor: const Color(0xFF1B1B27),
+      elevation: 0,
+      toolbarHeight: 64,
+
+      leading: Builder(
+        builder: (context) {
+          return IconButton(
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            icon: const Icon(
+              Icons.menu,
+              color: Colors.white,
+              size: 28,
+            ),
+          );
+        },
+      ),
+
+      titleSpacing: 0,
+
+      title: const Text(
+        'Admin Panel',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 21,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  // ============================================================
   // MAIN CONTENT
+  // ============================================================
 
   Widget _content(BuildContext context) {
-    final bool isMobile = context.width < 900;
+    final double screenWidth =
+        MediaQuery.of(context).size.width;
+
+    final bool isMobile =
+        screenWidth < 900;
 
     return Container(
+      width: double.infinity,
       color: const Color(0xFFF7FAF8),
+
       child: SingleChildScrollView(
         padding: EdgeInsets.all(
           isMobile ? 16 : 26,
         ),
+
         child: Column(
           crossAxisAlignment:
               CrossAxisAlignment.start,
+
           children: [
+            // ====================================================
             // BACK
+            // ====================================================
 
             InkWell(
               onTap: () {
                 Navigator.pop(context);
               },
+
               child: Row(
-                mainAxisSize: MainAxisSize.min,
+                mainAxisSize:
+                    MainAxisSize.min,
+
                 children: [
                   const Icon(
                     Icons.arrow_back,
@@ -181,20 +264,33 @@ class ComplaintDetailScreen extends StatelessWidget {
               height: 20,
             ),
 
+            // ====================================================
             // TITLE
+            // ====================================================
 
             Row(
+              crossAxisAlignment:
+                  CrossAxisAlignment.center,
+
               children: [
-                const Text(
-                  'Complaint Details',
-                  style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF07152B),
+                Expanded(
+                  child: Text(
+                    'Complaint Details',
+                    maxLines: 1,
+                    overflow:
+                        TextOverflow.ellipsis,
+
+                    style: const TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF07152B),
+                    ),
                   ),
                 ),
 
-                const Spacer(),
+                const SizedBox(
+                  width: 12,
+                ),
 
                 _statusBadge(
                   context,
@@ -209,17 +305,22 @@ class ComplaintDetailScreen extends StatelessWidget {
               height: 24,
             ),
 
+            // ====================================================
             // DESKTOP
+            // ====================================================
 
             if (!isMobile)
               Row(
                 crossAxisAlignment:
                     CrossAxisAlignment.start,
+
                 children: [
                   Expanded(
                     child: Column(
                       children: [
-                        _complaintImage(context),
+                        _complaintImage(
+                          context,
+                        ),
 
                         const SizedBox(
                           height: 24,
@@ -257,12 +358,16 @@ class ComplaintDetailScreen extends StatelessWidget {
                 ],
               ),
 
+            // ====================================================
             // MOBILE / TABLET
+            // ====================================================
 
             if (isMobile)
               Column(
                 children: [
-                  _complaintImage(context),
+                  _complaintImage(
+                    context,
+                  ),
 
                   const SizedBox(
                     height: 20,
@@ -295,18 +400,27 @@ class ComplaintDetailScreen extends StatelessWidget {
     );
   }
 
+  // ============================================================
   // COMPLAINT IMAGE
+  // ============================================================
 
   Widget _complaintImage(
     BuildContext context,
   ) {
+    final double screenWidth =
+        MediaQuery.of(context).size.width;
+
     return ClipRRect(
       borderRadius:
           BorderRadius.circular(15),
+
       child: SizedBox(
         width: double.infinity,
-        height:
-            context.width < 600 ? 250 : 385,
+
+        height: screenWidth < 600
+            ? 250
+            : 385,
+
         child: Image.asset(
           image,
           fit: BoxFit.cover,
@@ -315,7 +429,9 @@ class ComplaintDetailScreen extends StatelessWidget {
     );
   }
 
+  // ============================================================
   // CURRENT STATUS
+  // ============================================================
 
   Widget _currentStatusCard(
     BuildContext context,
@@ -323,26 +439,32 @@ class ComplaintDetailScreen extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
+
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius:
             BorderRadius.circular(15),
+
         border: Border.all(
           color: Colors.grey.shade200,
         ),
+
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(
               alpha: 0.04,
             ),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset:
+                const Offset(0, 4),
           ),
         ],
       ),
+
       child: Column(
         crossAxisAlignment:
             CrossAxisAlignment.start,
+
         children: [
           const Text(
             'Current Status',
@@ -386,24 +508,30 @@ class ComplaintDetailScreen extends StatelessWidget {
                 const EdgeInsets.symmetric(
               horizontal: 12,
             ),
+
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius:
                   BorderRadius.circular(9),
+
               border: Border.all(
                 color: Colors.grey.shade300,
               ),
             ),
+
             child: Row(
               children: [
-                Text(
-                  status,
-                  style: const TextStyle(
-                    fontSize: 14,
+                Expanded(
+                  child: Text(
+                    status,
+                    overflow:
+                        TextOverflow.ellipsis,
+
+                    style: const TextStyle(
+                      fontSize: 14,
+                    ),
                   ),
                 ),
-
-                const Spacer(),
 
                 const Icon(
                   Icons.keyboard_arrow_down,
@@ -421,25 +549,31 @@ class ComplaintDetailScreen extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             height: 37,
+
             child: ElevatedButton(
               onPressed: () {},
-              style: ElevatedButton.styleFrom(
+
+              style:
+                  ElevatedButton.styleFrom(
                 backgroundColor:
                     AppColors.primaryColor,
                 foregroundColor:
                     Colors.white,
                 elevation: 0,
+
                 shape:
                     RoundedRectangleBorder(
                   borderRadius:
                       BorderRadius.circular(9),
                 ),
               ),
+
               child: const Text(
                 'Update Status',
                 style: TextStyle(
                   fontSize: 14,
-                  fontWeight: FontWeight.w600,
+                  fontWeight:
+                      FontWeight.w600,
                 ),
               ),
             ),
@@ -449,37 +583,48 @@ class ComplaintDetailScreen extends StatelessWidget {
     );
   }
 
+  // ============================================================
   // COMPLAINT INFORMATION
+  // ============================================================
 
   Widget _complaintInformation(
     BuildContext context,
   ) {
+    final double screenWidth =
+        MediaQuery.of(context).size.width;
+
     final bool isMobile =
-        context.width < 600;
+        screenWidth < 600;
 
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
+
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius:
             BorderRadius.circular(15),
+
         border: Border.all(
           color: Colors.grey.shade200,
         ),
+
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(
               alpha: 0.04,
             ),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset:
+                const Offset(0, 4),
           ),
         ],
       ),
+
       child: Column(
         crossAxisAlignment:
             CrossAxisAlignment.start,
+
         children: [
           const Text(
             'Complaint Information',
@@ -497,9 +642,11 @@ class ComplaintDetailScreen extends StatelessWidget {
             Row(
               crossAxisAlignment:
                   CrossAxisAlignment.start,
+
               children: [
                 Expanded(
-                  child: _leftInformation(
+                  child:
+                      _leftInformation(
                     context,
                   ),
                 ),
@@ -509,7 +656,8 @@ class ComplaintDetailScreen extends StatelessWidget {
                 ),
 
                 Expanded(
-                  child: _rightInformation(
+                  child:
+                      _rightInformation(
                     context,
                   ),
                 ),
@@ -519,13 +667,17 @@ class ComplaintDetailScreen extends StatelessWidget {
           if (isMobile)
             Column(
               children: [
-                _leftInformation(context),
+                _leftInformation(
+                  context,
+                ),
 
                 const SizedBox(
                   height: 15,
                 ),
 
-                _rightInformation(context),
+                _rightInformation(
+                  context,
+                ),
               ],
             ),
 
@@ -537,15 +689,18 @@ class ComplaintDetailScreen extends StatelessWidget {
             width: double.infinity,
             padding:
                 const EdgeInsets.all(16),
+
             decoration: BoxDecoration(
               color:
                   const Color(0xFFF7F9F8),
               borderRadius:
                   BorderRadius.circular(12),
             ),
+
             child: Column(
               crossAxisAlignment:
                   CrossAxisAlignment.start,
+
               children: [
                 const Text(
                   'Description',
@@ -575,6 +730,10 @@ class ComplaintDetailScreen extends StatelessWidget {
       ),
     );
   }
+
+  // ============================================================
+  // LEFT INFORMATION
+  // ============================================================
 
   Widget _leftInformation(
     BuildContext context,
@@ -624,6 +783,10 @@ class ComplaintDetailScreen extends StatelessWidget {
     );
   }
 
+  // ============================================================
+  // RIGHT INFORMATION
+  // ============================================================
+
   Widget _rightInformation(
     BuildContext context,
   ) {
@@ -661,6 +824,10 @@ class ComplaintDetailScreen extends StatelessWidget {
     );
   }
 
+  // ============================================================
+  // INFORMATION ITEM
+  // ============================================================
+
   Widget _informationItem(
     BuildContext context,
     IconData icon,
@@ -670,20 +837,24 @@ class ComplaintDetailScreen extends StatelessWidget {
     return Row(
       crossAxisAlignment:
           CrossAxisAlignment.start,
+
       children: [
         Container(
           width: 34,
           height: 34,
+
           decoration: BoxDecoration(
             color:
                 const Color(0xFFEAF7EE),
             borderRadius:
                 BorderRadius.circular(10),
           ),
+
           child: Icon(
             icon,
             size: 18,
-            color: AppColors.primaryColor,
+            color:
+                AppColors.primaryColor,
           ),
         ),
 
@@ -695,6 +866,7 @@ class ComplaintDetailScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment:
                 CrossAxisAlignment.start,
+
             children: [
               Text(
                 label,
@@ -711,6 +883,10 @@ class ComplaintDetailScreen extends StatelessWidget {
 
               Text(
                 value,
+                maxLines: 3,
+                overflow:
+                    TextOverflow.ellipsis,
+
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight:
@@ -726,7 +902,9 @@ class ComplaintDetailScreen extends StatelessWidget {
     );
   }
 
+  // ============================================================
   // STATUS TIMELINE
+  // ============================================================
 
   Widget _statusTimeline(
     BuildContext context,
@@ -734,26 +912,32 @@ class ComplaintDetailScreen extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
+
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius:
             BorderRadius.circular(15),
+
         border: Border.all(
           color: Colors.grey.shade200,
         ),
+
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(
               alpha: 0.04,
             ),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset:
+                const Offset(0, 4),
           ),
         ],
       ),
+
       child: Column(
         crossAxisAlignment:
             CrossAxisAlignment.start,
+
         children: [
           const Text(
             'Status Timeline',
@@ -803,6 +987,10 @@ class ComplaintDetailScreen extends StatelessWidget {
     );
   }
 
+  // ============================================================
+  // TIMELINE ITEM
+  // ============================================================
+
   Widget _timelineItem(
     BuildContext context,
     String title,
@@ -812,18 +1000,22 @@ class ComplaintDetailScreen extends StatelessWidget {
   ) {
     return SizedBox(
       height: 64,
+
       child: Row(
         crossAxisAlignment:
             CrossAxisAlignment.start,
+
         children: [
           Column(
             children: [
               Container(
                 width: 28,
                 height: 28,
+
                 decoration: BoxDecoration(
                   color: current
-                      ? AppColors.primaryColor
+                      ? AppColors
+                          .primaryColor
                       : completed
                           ? const Color(
                               0xFFF4FBF6,
@@ -831,10 +1023,14 @@ class ComplaintDetailScreen extends StatelessWidget {
                           : const Color(
                               0xFFF3F5F6,
                             ),
-                  shape: BoxShape.circle,
+
+                  shape:
+                      BoxShape.circle,
+
                   border: Border.all(
                     color: current
-                        ? AppColors.primaryColor
+                        ? AppColors
+                            .primaryColor
                         : completed
                             ? AppColors
                                 .primaryColor
@@ -843,6 +1039,7 @@ class ComplaintDetailScreen extends StatelessWidget {
                               ),
                   ),
                 ),
+
                 child: Center(
                   child: completed
                       ? Icon(
@@ -886,9 +1083,11 @@ class ComplaintDetailScreen extends StatelessWidget {
                 const EdgeInsets.only(
               top: 5,
             ),
+
             child: Column(
               crossAxisAlignment:
                   CrossAxisAlignment.start,
+
               children: [
                 Text(
                   title,
@@ -923,6 +1122,10 @@ class ComplaintDetailScreen extends StatelessWidget {
     );
   }
 
+  // ============================================================
+  // STATUS BADGE
+  // ============================================================
+
   Widget _statusBadge(
     BuildContext context,
     String text,
@@ -935,17 +1138,24 @@ class ComplaintDetailScreen extends StatelessWidget {
         horizontal: 12,
         vertical: 5,
       ),
+
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius:
             BorderRadius.circular(20),
       ),
+
       child: Text(
         text,
+        maxLines: 1,
+        overflow:
+            TextOverflow.ellipsis,
+
         style: TextStyle(
           fontSize: 12,
           color: textColor,
-          fontWeight: FontWeight.w500,
+          fontWeight:
+              FontWeight.w500,
         ),
       ),
     );

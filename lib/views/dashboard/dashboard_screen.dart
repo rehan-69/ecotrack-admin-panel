@@ -9,123 +9,167 @@ class DashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        double dashboardWidth = constraints.maxWidth;
-
-        if (dashboardWidth < 1050) {
-          dashboardWidth = 1050;
-        }
+        final double dashboardWidth = constraints.maxWidth;
+        final bool isMobile = dashboardWidth < 700;
 
         return SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: SizedBox(
-            width: dashboardWidth,
-            child: SingleChildScrollView(
-              padding: EdgeInsets.all(
-                dashboardWidth * 0.025,
+          padding: EdgeInsets.all(
+            dashboardWidth * 0.025,
+          ),
+          child: Column(
+            crossAxisAlignment:
+                CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Dashboard',
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
               ),
-              child: Column(
-                crossAxisAlignment:
-                    CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Dashboard',
-                    style: const TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
 
-                  const SizedBox(
-                    height: 8,
-                  ),
-
-                  Text(
-                    'Monitor and manage waste complaints across your city.',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
-                    ),
-                  ),
-
-                  SizedBox(
-                    height: dashboardWidth * 0.035,
-                  ),
-
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _dashboardCard(
-                          context,
-                          'Total Complaints',
-                          '128',
-                          Icons.description_outlined,
-                          const Color(0xFFE8F5E9),
-                          AppColors.primaryColor,
-                        ),
-                      ),
-
-                      SizedBox(
-                        width: dashboardWidth * 0.015,
-                      ),
-
-                      Expanded(
-                        child: _dashboardCard(
-                          context,
-                          'Pending',
-                          '24',
-                          Icons.access_time,
-                          const Color(0xFFFFF3D6),
-                          Colors.orange,
-                        ),
-                      ),
-
-                      SizedBox(
-                        width: dashboardWidth * 0.015,
-                      ),
-
-                      Expanded(
-                        child: _dashboardCard(
-                          context,
-                          'In Progress',
-                          '31',
-                          Icons.sync,
-                          const Color(0xFFE3F2FD),
-                          Colors.blue,
-                        ),
-                      ),
-
-                      SizedBox(
-                        width: dashboardWidth * 0.015,
-                      ),
-
-                      Expanded(
-                        child: _dashboardCard(
-                          context,
-                          'Completed',
-                          '73',
-                          Icons.check_circle_outline,
-                          const Color(0xFFE0F5E5),
-                          Colors.green,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(
-                    height: dashboardWidth * 0.035,
-                  ),
-
-                  _complaintStatus(context),
-
-                  SizedBox(
-                    height: dashboardWidth * 0.035,
-                  ),
-
-                  _recentComplaints(context),
-                ],
+              const SizedBox(
+                height: 8,
               ),
-            ),
+
+              Text(
+                'Monitor and manage waste complaints across your city.',
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                ),
+              ),
+
+              SizedBox(
+                height: dashboardWidth * 0.035,
+              ),
+
+              if (isMobile)
+                Column(
+                  children: [
+                    _dashboardCard(
+                      context,
+                      'Total Complaints',
+                      '128',
+                      Icons.description_outlined,
+                      const Color(0xFFE8F5E9),
+                      AppColors.primaryColor,
+                    ),
+
+                    const SizedBox(
+                      height: 16,
+                    ),
+
+                    _dashboardCard(
+                      context,
+                      'Pending',
+                      '24',
+                      Icons.access_time,
+                      const Color(0xFFFFF3D6),
+                      Colors.orange,
+                    ),
+
+                    const SizedBox(
+                      height: 16,
+                    ),
+
+                    _dashboardCard(
+                      context,
+                      'In Progress',
+                      '31',
+                      Icons.sync,
+                      const Color(0xFFE3F2FD),
+                      Colors.blue,
+                    ),
+
+                    const SizedBox(
+                      height: 16,
+                    ),
+
+                    _dashboardCard(
+                      context,
+                      'Completed',
+                      '73',
+                      Icons.check_circle_outline,
+                      const Color(0xFFE0F5E5),
+                      Colors.green,
+                    ),
+                  ],
+                )
+              else
+                Row(
+                  children: [
+                    Expanded(
+                      child: _dashboardCard(
+                        context,
+                        'Total Complaints',
+                        '128',
+                        Icons.description_outlined,
+                        const Color(0xFFE8F5E9),
+                        AppColors.primaryColor,
+                      ),
+                    ),
+
+                    SizedBox(
+                      width: dashboardWidth * 0.015,
+                    ),
+
+                    Expanded(
+                      child: _dashboardCard(
+                        context,
+                        'Pending',
+                        '24',
+                        Icons.access_time,
+                        const Color(0xFFFFF3D6),
+                        Colors.orange,
+                      ),
+                    ),
+
+                    SizedBox(
+                      width: dashboardWidth * 0.015,
+                    ),
+
+                    Expanded(
+                      child: _dashboardCard(
+                        context,
+                        'In Progress',
+                        '31',
+                        Icons.sync,
+                        const Color(0xFFE3F2FD),
+                        Colors.blue,
+                      ),
+                    ),
+
+                    SizedBox(
+                      width: dashboardWidth * 0.015,
+                    ),
+
+                    Expanded(
+                      child: _dashboardCard(
+                        context,
+                        'Completed',
+                        '73',
+                        Icons.check_circle_outline,
+                        const Color(0xFFE0F5E5),
+                        Colors.green,
+                      ),
+                    ),
+                  ],
+                ),
+
+              SizedBox(
+                height: dashboardWidth * 0.035,
+              ),
+
+              _complaintStatus(context),
+
+              SizedBox(
+                height: dashboardWidth * 0.035,
+              ),
+
+              _recentComplaints(context),
+            ],
           ),
         );
       },
@@ -144,7 +188,8 @@ class DashboardScreen extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius:
+            BorderRadius.circular(15),
         border: Border.all(
           color: Colors.grey.shade200,
         ),
@@ -218,7 +263,8 @@ class DashboardScreen extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius:
+            BorderRadius.circular(15),
         border: Border.all(
           color: Colors.grey.shade200,
         ),
@@ -419,8 +465,10 @@ class DashboardScreen extends StatelessWidget {
           width: 45,
           borderRadius:
               const BorderRadius.only(
-            topLeft: Radius.circular(8),
-            topRight: Radius.circular(8),
+            topLeft:
+                Radius.circular(8),
+            topRight:
+                Radius.circular(8),
           ),
         ),
       ],
@@ -483,58 +531,83 @@ class DashboardScreen extends StatelessWidget {
           child: ClipRRect(
             borderRadius:
                 BorderRadius.circular(15),
-            child: Column(
-              children: [
-                _complaintHeader(context),
+            child: LayoutBuilder(
+              builder:
+                  (context, constraints) {
+                return SingleChildScrollView(
+                  scrollDirection:
+                      Axis.horizontal,
+                  child: SizedBox(
+                    width:
+                        constraints.maxWidth < 700
+                            ? 900
+                            : constraints.maxWidth,
+                    child: Column(
+                      children: [
+                        _complaintHeader(
+                          context,
+                        ),
 
-                _complaintRow(
-                  context,
-                  'ECO-1042',
-                  'Rahul Sharma',
-                  'Household Waste',
-                  'Ward 07',
-                  '12 Mar 2026',
-                  'In Progress',
-                  Colors.blue,
-                  const Color(0xFFE3F2FD),
-                ),
+                        _complaintRow(
+                          context,
+                          'ECO-1042',
+                          'Rahul Sharma',
+                          'Household Waste',
+                          'Ward 07',
+                          '12 Mar 2026',
+                          'In Progress',
+                          Colors.blue,
+                          const Color(
+                            0xFFE3F2FD,
+                          ),
+                        ),
 
-                _complaintRow(
-                  context,
-                  'ECO-1038',
-                  'Amit Patil',
-                  'Construction Debris',
-                  'Ward 07',
-                  '08 Mar 2026',
-                  'Completed',
-                  Colors.green,
-                  const Color(0xFFE0F5E5),
-                ),
+                        _complaintRow(
+                          context,
+                          'ECO-1038',
+                          'Amit Patil',
+                          'Construction Debris',
+                          'Ward 07',
+                          '08 Mar 2026',
+                          'Completed',
+                          Colors.green,
+                          const Color(
+                            0xFFE0F5E5,
+                          ),
+                        ),
 
-                _complaintRow(
-                  context,
-                  'ECO-1031',
-                  'Priya Shah',
-                  'Garden Waste',
-                  'Ward 04',
-                  '02 Mar 2026',
-                  'Completed',
-                  Colors.green,
-                  const Color(0xFFE0F5E5),
-                ),
+                        _complaintRow(
+                          context,
+                          'ECO-1031',
+                          'Priya Shah',
+                          'Garden Waste',
+                          'Ward 04',
+                          '02 Mar 2026',
+                          'Completed',
+                          Colors.green,
+                          const Color(
+                            0xFFE0F5E5,
+                          ),
+                        ),
 
-                _complaintRow(
-                  context,
-                  'ECO-1025',
-                  'Sameer Khan',
-                  'Plastic Waste',
-                  'Ward 04',
-                  '27 Feb 2026',
-                  'Pending',
-                  Colors.orange,
-                  const Color(0xFFFFF3D6),
-                ),
-              ],
+                        _complaintRow(
+                          context,
+                          'ECO-1025',
+                          'Sameer Khan',
+                          'Plastic Waste',
+                          'Ward 04',
+                          '27 Feb 2026',
+                          'Pending',
+                          Colors.orange,
+                          const Color(
+                            0xFFFFF3D6,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
           ),
         ),
@@ -546,7 +619,8 @@ class DashboardScreen extends StatelessWidget {
     BuildContext context,
   ) {
     return Container(
-      padding: const EdgeInsets.symmetric(
+      padding:
+          const EdgeInsets.symmetric(
         horizontal: 16,
         vertical: 16,
       ),
@@ -629,7 +703,8 @@ class DashboardScreen extends StatelessWidget {
     Color statusBackground,
   ) {
     return Container(
-      padding: const EdgeInsets.symmetric(
+      padding:
+          const EdgeInsets.symmetric(
         horizontal: 16,
         vertical: 16,
       ),
@@ -684,10 +759,14 @@ class DashboardScreen extends StatelessWidget {
                   horizontal: 10,
                   vertical: 6,
                 ),
-                decoration: BoxDecoration(
-                  color: statusBackground,
+                decoration:
+                    BoxDecoration(
+                  color:
+                      statusBackground,
                   borderRadius:
-                      BorderRadius.circular(20),
+                      BorderRadius.circular(
+                    20,
+                  ),
                 ),
                 child: Text(
                   status,
@@ -706,7 +785,8 @@ class DashboardScreen extends StatelessWidget {
             flex: 7,
             child: Text(
               'View',
-              style: const TextStyle(
+              style:
+                  const TextStyle(
                 fontSize: 14,
                 color:
                     AppColors.primaryColor,
@@ -730,8 +810,10 @@ class DashboardScreen extends StatelessWidget {
       child: Text(
         text,
         maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: const TextStyle(
+        overflow:
+            TextOverflow.ellipsis,
+        style:
+            const TextStyle(
           fontSize: 14,
           color: Colors.black87,
         ),

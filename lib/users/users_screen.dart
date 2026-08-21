@@ -8,19 +8,24 @@ class UsersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: EdgeInsets.all(context.width * 0.018),
+      padding: EdgeInsets.all(
+        context.width * 0.018,
+      ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment:
+            CrossAxisAlignment.start,
         children: [
           Text(
             'Users',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
             ),
           ),
 
-          SizedBox(height: context.height * 0.008),
+          SizedBox(
+            height: context.height * 0.008,
+          ),
 
           Text(
             'Manage registered EcoTrack citizens.',
@@ -30,11 +35,15 @@ class UsersScreen extends StatelessWidget {
             ),
           ),
 
-          SizedBox(height: context.height * 0.025),
+          SizedBox(
+            height: context.height * 0.025,
+          ),
 
           _searchBox(context),
 
-          SizedBox(height: context.height * 0.025),
+          SizedBox(
+            height: context.height * 0.025,
+          ),
 
           _usersTable(context),
         ],
@@ -45,64 +54,89 @@ class UsersScreen extends StatelessWidget {
   Widget _searchBox(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(context.width * 0.015),
+      padding: EdgeInsets.all(
+        context.width * 0.015,
+      ),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.grey.shade200),
+        borderRadius:
+            BorderRadius.circular(15),
+        border: Border.all(
+          color: Colors.grey.shade200,
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
+            color: Colors.black.withValues(
+              alpha: 0.04,
+            ),
             blurRadius: 10,
             offset: const Offset(0, 3),
           ),
         ],
       ),
-      child: SizedBox(
-        width: 450,
-        height: 48,
-        child: TextField(
-          style: TextStyle(fontSize: 14),
-          decoration: InputDecoration(
-            hintText: 'Search user',
-            hintStyle: TextStyle(
-              fontSize: 14,
-              color: Colors.grey.shade500,
-            ),
-            prefixIcon: const Icon(
-              Icons.search,
-              color: Colors.grey,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(
-                color: Colors.grey.shade300,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return SizedBox(
+            width: constraints.maxWidth < 450
+                ? constraints.maxWidth
+                : 450,
+            height: 48,
+            child: TextField(
+              style: const TextStyle(
+                fontSize: 14,
+              ),
+              decoration: InputDecoration(
+                hintText: 'Search user',
+                hintStyle: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey.shade500,
+                ),
+                prefixIcon: const Icon(
+                  Icons.search,
+                  color: Colors.grey,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius:
+                      BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                    color: Colors.grey.shade300,
+                  ),
+                ),
+                enabledBorder:
+                    OutlineInputBorder(
+                  borderRadius:
+                      BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                    color: Colors.grey.shade300,
+                  ),
+                ),
               ),
             ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(
-                color: Colors.grey.shade300,
-              ),
-            ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
 
-  Widget _usersTable(BuildContext context) {
+  Widget _usersTable(
+    BuildContext context,
+  ) {
     double tableWidth = 1100;
 
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.grey.shade200),
+        borderRadius:
+            BorderRadius.circular(15),
+        border: Border.all(
+          color: Colors.grey.shade200,
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
+            color: Colors.black.withValues(
+              alpha: 0.04,
+            ),
             blurRadius: 10,
             offset: const Offset(0, 3),
           ),
@@ -114,7 +148,10 @@ class UsersScreen extends StatelessWidget {
           width: tableWidth,
           child: Column(
             children: [
-              _tableHeader(context, tableWidth),
+              _tableHeader(
+                context,
+                tableWidth,
+              ),
 
               _userRow(
                 context,
@@ -251,7 +288,8 @@ class UsersScreen extends StatelessWidget {
     return SizedBox(
       width: width,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
+        padding:
+            const EdgeInsets.symmetric(
           horizontal: 16,
         ),
         child: Text(
@@ -321,16 +359,22 @@ class UsersScreen extends StatelessWidget {
           SizedBox(
             width: tableWidth * 0.10,
             child: Align(
-              alignment: Alignment.centerLeft,
+              alignment:
+                  Alignment.centerLeft,
               child: Container(
-                padding: const EdgeInsets.symmetric(
+                padding:
+                    const EdgeInsets.symmetric(
                   horizontal: 10,
                   vertical: 5,
                 ),
                 decoration: BoxDecoration(
                   color: status == 'Active'
-                      ? const Color(0xFFDDF5E2)
-                      : const Color(0xFFF1F3F3),
+                      ? const Color(
+                          0xFFDDF5E2,
+                        )
+                      : const Color(
+                          0xFFF1F3F3,
+                        ),
                   borderRadius:
                       BorderRadius.circular(20),
                 ),
@@ -350,7 +394,8 @@ class UsersScreen extends StatelessWidget {
           SizedBox(
             width: tableWidth * 0.08,
             child: Align(
-              alignment: Alignment.centerLeft,
+              alignment:
+                  Alignment.centerLeft,
               child: OutlinedButton(
                 onPressed: () {
                   Navigator.push(
@@ -361,15 +406,18 @@ class UsersScreen extends StatelessWidget {
                     ),
                   );
                 },
-                style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
+                style:
+                    OutlinedButton.styleFrom(
+                  padding:
+                      const EdgeInsets.symmetric(
                     horizontal: 14,
                     vertical: 8,
                   ),
                   side: BorderSide(
                     color: Colors.grey.shade300,
                   ),
-                  shape: RoundedRectangleBorder(
+                  shape:
+                      RoundedRectangleBorder(
                     borderRadius:
                         BorderRadius.circular(10),
                   ),
@@ -378,7 +426,8 @@ class UsersScreen extends StatelessWidget {
                   'View',
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.grey.shade800,
+                    color:
+                        Colors.grey.shade800,
                   ),
                 ),
               ),
@@ -398,13 +447,15 @@ class UsersScreen extends StatelessWidget {
     return SizedBox(
       width: width,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
+        padding:
+            const EdgeInsets.symmetric(
           horizontal: 16,
         ),
         child: Text(
           text,
           maxLines: 1,
-          overflow: TextOverflow.ellipsis,
+          overflow:
+              TextOverflow.ellipsis,
           style: TextStyle(
             fontSize: 14,
             color: Colors.black87,

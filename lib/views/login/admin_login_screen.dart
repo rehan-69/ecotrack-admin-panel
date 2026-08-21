@@ -1,4 +1,3 @@
-import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:ecotrack_admin_panel/views/admin_layout/admin_layout.dart';
 import 'package:ecotrack_admin_panel/views/widgets/custom_button.dart';
 import 'package:ecotrack_admin_panel/views/widgets/custom_text_field.dart';
@@ -9,22 +8,34 @@ class AdminLoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth =
+        MediaQuery.of(context).size.width;
+
+    final screenHeight =
+        MediaQuery.of(context).size.height;
+
+    final isMobile = screenWidth < 600;
+
     return Scaffold(
       body: Center(
         child: Container(
-          width: context.width * 0.40,
+          width: isMobile
+              ? screenWidth * 0.90
+              : screenWidth * 0.40,
           padding: EdgeInsets.all(
-            context.width * 0.030,
+            isMobile
+                ? 20
+                : screenWidth * 0.030,
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
+              const Text(
                 'EcoTrack',
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
-                  color: const Color(0xFF2E7D32),
+                  color: Color(0xFF2E7D32),
                 ),
               ),
 
@@ -32,7 +43,7 @@ class AdminLoginScreen extends StatelessWidget {
                 height: 10,
               ),
 
-              Text(
+              const Text(
                 'Admin Panel',
                 style: TextStyle(
                   fontSize: 20,
@@ -41,16 +52,23 @@ class AdminLoginScreen extends StatelessWidget {
               ),
 
               SizedBox(
-                height: context.height * 0.030,
+                height: isMobile
+                    ? 22
+                    : screenHeight * 0.030,
               ),
 
               CustomTextField(
                 title: 'Admin Email',
-                width: context.width * 0.35,
-                height: context.height * 0.065,
+                width: isMobile
+                    ? double.infinity
+                    : screenWidth * 0.35,
+                height: isMobile
+                    ? 52
+                    : screenHeight * 0.065,
                 fontSize: 16,
-                borderRadius:
-                    context.width * 0.008,
+                borderRadius: isMobile
+                    ? 10
+                    : screenWidth * 0.008,
                 keyboardType:
                     TextInputType.emailAddress,
                 prefixIcon:
@@ -58,23 +76,32 @@ class AdminLoginScreen extends StatelessWidget {
               ),
 
               SizedBox(
-                height: context.height * 0.020,
+                height: isMobile
+                    ? 16
+                    : screenHeight * 0.020,
               ),
 
               CustomTextField(
                 title: 'Password',
-                width: context.width * 0.35,
-                height: context.height * 0.065,
+                width: isMobile
+                    ? double.infinity
+                    : screenWidth * 0.35,
+                height: isMobile
+                    ? 52
+                    : screenHeight * 0.065,
                 fontSize: 16,
-                borderRadius:
-                    context.width * 0.008,
+                borderRadius: isMobile
+                    ? 10
+                    : screenWidth * 0.008,
                 obscureText: true,
                 prefixIcon:
                     Icons.lock_outline,
               ),
 
               SizedBox(
-                height: context.height * 0.025,
+                height: isMobile
+                    ? 20
+                    : screenHeight * 0.025,
               ),
 
               CustomButton(
@@ -88,10 +115,15 @@ class AdminLoginScreen extends StatelessWidget {
                     ),
                   );
                 },
-                width: context.width * 0.35,
-                height: context.height * 0.065,
-                borderRadius:
-                    context.width * 0.008,
+                width: isMobile
+                    ? double.infinity
+                    : screenWidth * 0.35,
+                height: isMobile
+                    ? 52
+                    : screenHeight * 0.065,
+                borderRadius: isMobile
+                    ? 10
+                    : screenWidth * 0.008,
                 fontSize: 16,
                 fontWeight:
                     FontWeight.w600,

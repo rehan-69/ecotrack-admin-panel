@@ -1,5 +1,4 @@
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
-import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:flutter/material.dart';
 
 class EditWasteTypeDialog extends StatelessWidget {
@@ -16,17 +15,22 @@ class EditWasteTypeDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth =
+        MediaQuery.of(context).size.width;
+
+    final isMobile = screenWidth < 600;
+
     return Dialog(
       backgroundColor: const Color(0xFFF7FAF8),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
       child: Container(
-        width: context.width < 600
-            ? context.width * 0.90
+        width: isMobile
+            ? screenWidth * 0.90
             : 520,
         padding: EdgeInsets.all(
-          context.width < 600 ? 18 : 24,
+          isMobile ? 18 : 24,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -35,7 +39,7 @@ class EditWasteTypeDialog extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text(
+                const Text(
                   'Edit Waste Type',
                   style: TextStyle(
                     fontSize: 20,
@@ -49,7 +53,7 @@ class EditWasteTypeDialog extends StatelessWidget {
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.close,
                     size: 20,
                     color: Colors.grey,
@@ -74,7 +78,7 @@ class EditWasteTypeDialog extends StatelessWidget {
               height: 20,
             ),
 
-            Text(
+            const Text(
               'Waste Type Name',
               style: TextStyle(
                 fontSize: 14,
@@ -108,19 +112,20 @@ class EditWasteTypeDialog extends StatelessWidget {
                     color: Colors.grey.shade300,
                   ),
                 ),
-                enabledBorder: OutlineInputBorder(
+                enabledBorder:
+                    OutlineInputBorder(
                   borderRadius:
                       BorderRadius.circular(10),
                   borderSide: BorderSide(
                     color: Colors.grey.shade300,
                   ),
                 ),
-                focusedBorder: OutlineInputBorder(
+                focusedBorder:
+                    OutlineInputBorder(
                   borderRadius:
                       BorderRadius.circular(10),
                   borderSide: BorderSide(
-                    color:
-                        AppColors.primaryColor,
+                    color: AppColors.primaryColor,
                   ),
                 ),
               ),
@@ -130,7 +135,7 @@ class EditWasteTypeDialog extends StatelessWidget {
               height: 18,
             ),
 
-            Text(
+            const Text(
               'Description',
               style: TextStyle(
                 fontSize: 14,
@@ -163,19 +168,20 @@ class EditWasteTypeDialog extends StatelessWidget {
                     color: Colors.grey.shade300,
                   ),
                 ),
-                enabledBorder: OutlineInputBorder(
+                enabledBorder:
+                    OutlineInputBorder(
                   borderRadius:
                       BorderRadius.circular(10),
                   borderSide: BorderSide(
                     color: Colors.grey.shade300,
                   ),
                 ),
-                focusedBorder: OutlineInputBorder(
+                focusedBorder:
+                    OutlineInputBorder(
                   borderRadius:
                       BorderRadius.circular(10),
                   borderSide: BorderSide(
-                    color:
-                        AppColors.primaryColor,
+                    color: AppColors.primaryColor,
                   ),
                 ),
               ),
@@ -185,7 +191,7 @@ class EditWasteTypeDialog extends StatelessWidget {
               height: 18,
             ),
 
-            Text(
+            const Text(
               'Status',
               style: TextStyle(
                 fontSize: 14,
@@ -226,7 +232,7 @@ class EditWasteTypeDialog extends StatelessWidget {
                 children: [
                   Text(
                     status,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                     ),
                   ),
@@ -259,8 +265,7 @@ class EditWasteTypeDialog extends StatelessWidget {
                     minimumSize:
                         const Size(82, 38),
                     side: BorderSide(
-                      color:
-                          Colors.grey.shade300,
+                      color: Colors.grey.shade300,
                     ),
                     shape:
                         RoundedRectangleBorder(
@@ -268,11 +273,10 @@ class EditWasteTypeDialog extends StatelessWidget {
                           BorderRadius.circular(10),
                     ),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Cancel',
                     style: TextStyle(
-                      color:
-                          const Color(0xFF1F2937),
+                      color: Color(0xFF1F2937),
                       fontSize: 14,
                     ),
                   ),
@@ -299,13 +303,12 @@ class EditWasteTypeDialog extends StatelessWidget {
                           BorderRadius.circular(10),
                     ),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Save',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
-                      fontWeight:
-                          FontWeight.w500,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),

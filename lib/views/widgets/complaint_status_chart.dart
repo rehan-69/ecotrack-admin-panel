@@ -1,5 +1,4 @@
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
-import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -8,66 +7,90 @@ class ComplaintStatusChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth =
+        MediaQuery.of(context).size.width;
+
+    final isMobile = screenWidth < 600;
+
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(context.width * 0.018),
+      padding: EdgeInsets.all(
+        isMobile ? 16 : 18,
+      ),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius:
+            BorderRadius.circular(15),
         border: Border.all(
           color: Colors.grey.shade200,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: Colors.black.withValues(
+              alpha: 0.05,
+            ),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment:
+            CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Complaint Status Overview',
             style: TextStyle(
-              fontSize: context.width * 0.013,
+              fontSize: 18,
               fontWeight: FontWeight.w600,
               color: Colors.black,
             ),
           ),
 
-          SizedBox(height: context.height * 0.008),
+          const SizedBox(
+            height: 8,
+          ),
 
-          Text(
+          const Text(
             'Distribution of complaints by current status.',
             style: TextStyle(
-              fontSize: context.width * 0.010,
+              fontSize: 14,
               color: Colors.grey,
             ),
           ),
 
-          SizedBox(height: context.height * 0.025),
+          const SizedBox(
+            height: 20,
+          ),
 
           SizedBox(
-            height: context.height * 0.32,
+            height: isMobile ? 250 : 300,
             child: BarChart(
               BarChartData(
                 maxY: 80,
                 minY: 0,
 
-                alignment: BarChartAlignment.spaceAround,
+                alignment:
+                    BarChartAlignment.spaceAround,
 
                 barTouchData: BarTouchData(
                   enabled: true,
-                  touchTooltipData: BarTouchTooltipData(
-                    getTooltipItem:
-                        (group, groupIndex, rod, rodIndex) {
+                  touchTooltipData:
+                      BarTouchTooltipData(
+                    getTooltipItem: (
+                      group,
+                      groupIndex,
+                      rod,
+                      rodIndex,
+                    ) {
                       return BarTooltipItem(
-                        rod.toY.toInt().toString(),
+                        rod.toY
+                            .toInt()
+                            .toString(),
                         const TextStyle(
                           color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                          fontWeight:
+                              FontWeight.bold,
                         ),
                       );
                     },
@@ -78,9 +101,11 @@ class ComplaintStatusChart extends StatelessWidget {
                   show: true,
                   drawVerticalLine: false,
                   horizontalInterval: 20,
-                  getDrawingHorizontalLine: (value) {
+                  getDrawingHorizontalLine:
+                      (value) {
                     return FlLine(
-                      color: Colors.grey.shade200,
+                      color:
+                          Colors.grey.shade200,
                       strokeWidth: 1,
                       dashArray: [4, 4],
                     );
@@ -92,14 +117,18 @@ class ComplaintStatusChart extends StatelessWidget {
                 ),
 
                 titlesData: FlTitlesData(
-                  topTitles: const AxisTitles(
-                    sideTitles: SideTitles(
+                  topTitles:
+                      const AxisTitles(
+                    sideTitles:
+                        SideTitles(
                       showTitles: false,
                     ),
                   ),
 
-                  rightTitles: const AxisTitles(
-                    sideTitles: SideTitles(
+                  rightTitles:
+                      const AxisTitles(
+                    sideTitles:
+                        SideTitles(
                       showTitles: false,
                     ),
                   ),
@@ -108,40 +137,51 @@ class ComplaintStatusChart extends StatelessWidget {
                     sideTitles: SideTitles(
                       showTitles: true,
                       interval: 20,
-                      reservedSize: context.width * 0.025,
-                      getTitlesWidget: (value, meta) {
-                        return Text(
-                          value.toInt().toString(),
-                          style: TextStyle(
-                            fontSize: context.width * 0.009,
-                            color: Colors.grey,
-                          ),
+                      reservedSize: 35,
+                      getTitlesWidget:
+                          (value, meta) {
+                        return const Text(
+                          '',
                         );
                       },
                     ),
                   ),
 
-                  bottomTitles: AxisTitles(
-                    sideTitles: SideTitles(
+                  bottomTitles:
+                      AxisTitles(
+                    sideTitles:
+                        SideTitles(
                       showTitles: true,
-                      getTitlesWidget: (value, meta) {
+                      getTitlesWidget:
+                          (value, meta) {
                         String title = '';
 
                         if (value == 0) {
                           title = 'Pending';
-                        } else if (value == 1) {
-                          title = 'In Progress';
-                        } else if (value == 2) {
-                          title = 'Completed';
+                        } else if (value ==
+                            1) {
+                          title =
+                              'In Progress';
+                        } else if (value ==
+                            2) {
+                          title =
+                              'Completed';
                         }
 
                         return Padding(
-                          padding: const EdgeInsets.only(top: 8),
+                          padding:
+                              const EdgeInsets
+                                  .only(
+                            top: 8,
+                          ),
                           child: Text(
                             title,
-                            style: TextStyle(
-                              fontSize: context.width * 0.009,
-                              color: Colors.grey.shade700,
+                            style:
+                                const TextStyle(
+                              fontSize: 12,
+                              color: Color(
+                                0xFF616161,
+                              ),
                             ),
                           ),
                         );
@@ -189,9 +229,12 @@ class ComplaintStatusChart extends StatelessWidget {
           toY: value,
           color: color,
           width: 45,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(8),
-            topRight: Radius.circular(8),
+          borderRadius:
+              const BorderRadius.only(
+            topLeft:
+                Radius.circular(8),
+            topRight:
+                Radius.circular(8),
           ),
         ),
       ],

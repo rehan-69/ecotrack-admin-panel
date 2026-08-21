@@ -2,7 +2,6 @@ import 'package:ecotrack_admin_panel/constants/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
@@ -36,10 +35,13 @@ class CustomButton extends StatelessWidget {
         height: height,
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(borderRadius),
+          borderRadius:
+              BorderRadius.circular(borderRadius),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.08),
+              color: Colors.black.withValues(
+                alpha: 0.08,
+              ),
               blurRadius: 8,
               offset: const Offset(0, 3),
             ),

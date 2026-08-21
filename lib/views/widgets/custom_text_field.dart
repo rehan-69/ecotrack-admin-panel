@@ -1,5 +1,4 @@
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
-import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -36,11 +35,13 @@ class CustomTextField extends StatelessWidget {
         controller: controller,
         obscureText: obscureText,
         keyboardType: keyboardType,
+
         style: GoogleFonts.inter(
           fontSize: fontSize,
           color: const Color(0xFF1F2937),
           fontWeight: FontWeight.w500,
         ),
+
         decoration: InputDecoration(
           hintText: title,
 
@@ -51,30 +52,39 @@ class CustomTextField extends StatelessWidget {
           ),
 
           prefixIcon: prefixIcon != null
-              ? Icon(
-                  prefixIcon,
-                  color: const Color(0xFF79808C),
-                  size: context.width * 0.018,
+              ? const Icon(
+                  Icons.email_outlined,
+                  color: Color(0xFF79808C),
+                  size: 20,
                 )
               : null,
 
           filled: true,
           fillColor: Colors.white,
 
-          contentPadding: EdgeInsets.symmetric(
-            horizontal: context.width * 0.015,
-            vertical: context.height * 0.018,
+          contentPadding:
+              const EdgeInsets.symmetric(
+            horizontal: 14,
+            vertical: 14,
           ),
 
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(borderRadius),
+          enabledBorder:
+              OutlineInputBorder(
+            borderRadius:
+                BorderRadius.circular(
+              borderRadius,
+            ),
             borderSide: const BorderSide(
               color: Color(0xFFE5E7EB),
             ),
           ),
 
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(borderRadius),
+          focusedBorder:
+              OutlineInputBorder(
+            borderRadius:
+                BorderRadius.circular(
+              borderRadius,
+            ),
             borderSide: const BorderSide(
               color: AppColors.primaryColor,
             ),

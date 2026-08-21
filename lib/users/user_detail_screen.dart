@@ -1,5 +1,4 @@
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
-import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:flutter/material.dart';
 
 class UserDetailScreen extends StatelessWidget {
@@ -22,8 +21,28 @@ class UserDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isMobile =
+        MediaQuery.of(context).size.width < 900;
+
+    if (isMobile) {
+      return Scaffold(
+        backgroundColor: const Color(0xFFF7FAF8),
+
+        drawer: Drawer(
+          width: 280,
+          backgroundColor: Colors.white,
+          child: _sideBar(context),
+        ),
+
+        appBar: _mobileHeader(context),
+
+        body: _mainContent(context),
+      );
+    }
+
     return Scaffold(
       backgroundColor: const Color(0xFFF7FAF8),
+
       body: Row(
         children: [
           _sideBar(context),
@@ -34,54 +53,7 @@ class UserDetailScreen extends StatelessWidget {
                 _header(context),
 
                 Expanded(
-                  child: SingleChildScrollView(
-                    padding: EdgeInsets.all(
-                      context.width < 600 ? 16 : 24,
-                    ),
-                    child: Column(
-                      crossAxisAlignment:
-                          CrossAxisAlignment.start,
-                      children: [
-                        _backButton(context),
-
-                        SizedBox(
-                          height: context.height * 0.018,
-                        ),
-
-                        Text(
-                          'User Details',
-                          style: const TextStyle(
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-
-                        SizedBox(
-                          height: context.height * 0.025,
-                        ),
-
-                        _userCard(context),
-
-                        SizedBox(
-                          height: context.height * 0.035,
-                        ),
-
-                        Text(
-                          'Recent Complaints',
-                          style: const TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-
-                        SizedBox(
-                          height: context.height * 0.016,
-                        ),
-
-                        _complaintsTable(context),
-                      ],
-                    ),
-                  ),
+                  child: _mainContent(context),
                 ),
               ],
             ),
@@ -91,14 +63,124 @@ class UserDetailScreen extends StatelessWidget {
     );
   }
 
+  // ============================================================
+  // MAIN CONTENT
+  // ============================================================
+
+  Widget _mainContent(BuildContext context) {
+    final bool isMobile =
+        MediaQuery.of(context).size.width < 600;
+
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(
+        isMobile ? 16 : 24,
+      ),
+
+      child: Column(
+        crossAxisAlignment:
+            CrossAxisAlignment.start,
+
+        children: [
+          _backButton(context),
+
+          SizedBox(
+            height: MediaQuery.of(context).size.height *
+                0.018,
+          ),
+
+          const Text(
+            'User Details',
+            style: TextStyle(
+              fontSize: 26,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+
+          SizedBox(
+            height: MediaQuery.of(context).size.height *
+                0.025,
+          ),
+
+          _userCard(context),
+
+          SizedBox(
+            height: MediaQuery.of(context).size.height *
+                0.035,
+          ),
+
+          const Text(
+            'Recent Complaints',
+            style: TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+
+          SizedBox(
+            height: MediaQuery.of(context).size.height *
+                0.016,
+          ),
+
+          _complaintsTable(context),
+        ],
+      ),
+    );
+  }
+
+  // ============================================================
+  // MOBILE HEADER
+  // ============================================================
+
+  PreferredSizeWidget _mobileHeader(
+    BuildContext context,
+  ) {
+    return AppBar(
+      automaticallyImplyLeading: false,
+      backgroundColor: const Color(0xFF1B1B27),
+      elevation: 0,
+      toolbarHeight: 64,
+
+      leading: Builder(
+        builder: (context) {
+          return IconButton(
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            icon: const Icon(
+              Icons.menu,
+              color: Colors.white,
+              size: 28,
+            ),
+          );
+        },
+      ),
+
+      titleSpacing: 0,
+
+      title: const Text(
+        'Admin Panel',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 21,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  // ============================================================
   // SIDEBAR
+  // ============================================================
 
   Widget _sideBar(BuildContext context) {
+    final bool isMobile =
+        MediaQuery.of(context).size.width < 900;
+
     double sidebarWidth;
 
-    if (context.width < 600) {
-      sidebarWidth = 90;
-    } else if (context.width < 900) {
+    if (isMobile) {
+      sidebarWidth = 280;
+    } else if (MediaQuery.of(context).size.width < 1200) {
       sidebarWidth = 180;
     } else {
       sidebarWidth = 250;
@@ -107,109 +189,111 @@ class UserDetailScreen extends StatelessWidget {
     return Container(
       width: sidebarWidth,
       color: Colors.white,
+
       child: Column(
         children: [
+          // ======================================================
+          // LOGO
+          // ======================================================
+
           Container(
             height: 66,
+
             padding: EdgeInsets.symmetric(
               horizontal:
-                  context.width < 600 ? 10 : 20,
+                  isMobile ? 20 : 20,
             ),
-            child: context.width < 600
-                ? Center(
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color:
-                            AppColors.primaryColor,
-                        borderRadius:
-                            BorderRadius.circular(12),
-                      ),
-                      child: const Icon(
-                        Icons.eco_outlined,
-                        color: Colors.white,
+
+            child: Row(
+              children: [
+                Container(
+                  width: 42,
+                  height: 42,
+
+                  decoration: BoxDecoration(
+                    color:
+                        AppColors.primaryColor,
+                    borderRadius:
+                        BorderRadius.circular(12),
+                  ),
+
+                  child: const Icon(
+                    Icons.eco_outlined,
+                    color: Colors.white,
+                  ),
+                ),
+
+                const SizedBox(
+                  width: 12,
+                ),
+
+                const Column(
+                  mainAxisAlignment:
+                      MainAxisAlignment.center,
+
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start,
+
+                  children: [
+                    Text(
+                      'EcoTrack',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight:
+                            FontWeight.bold,
                       ),
                     ),
-                  )
-                : Row(
-                    children: [
-                      Container(
-                        width: 42,
-                        height: 42,
-                        decoration: BoxDecoration(
-                          color:
-                              AppColors.primaryColor,
-                          borderRadius:
-                              BorderRadius.circular(12),
-                        ),
-                        child: const Icon(
-                          Icons.eco_outlined,
-                          color: Colors.white,
-                        ),
-                      ),
 
-                      const SizedBox(
-                        width: 12,
+                    Text(
+                      'Admin Panel',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey,
                       ),
-
-                      Column(
-                        mainAxisAlignment:
-                            MainAxisAlignment.center,
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'EcoTrack',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight:
-                                  FontWeight.bold,
-                            ),
-                          ),
-
-                          Text(
-                            'Admin Panel',
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
 
           const Divider(
             height: 1,
           ),
 
-          SizedBox(
-            height: context.height * 0.02,
+          const SizedBox(
+            height: 18,
           ),
 
-          if (context.width >= 600)
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(
-                horizontal: 20,
-              ),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'MANAGEMENT',
-                  style: const TextStyle(
-                    fontSize: 11,
-                    color: Color(0xFF64748B),
-                    fontWeight: FontWeight.w600,
-                  ),
+          // ======================================================
+          // MANAGEMENT
+          // ======================================================
+
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(
+              horizontal: 20,
+            ),
+
+            child: Align(
+              alignment:
+                  Alignment.centerLeft,
+
+              child: const Text(
+                'MANAGEMENT',
+                style: TextStyle(
+                  fontSize: 11,
+                  color:
+                      Color(0xFF64748B),
+                  fontWeight:
+                      FontWeight.w600,
                 ),
               ),
             ),
+          ),
 
-          SizedBox(
-            height: context.height * 0.012,
+          const SizedBox(
+            height: 12,
           ),
 
           _menuItem(
@@ -242,50 +326,53 @@ class UserDetailScreen extends StatelessWidget {
 
           const Spacer(),
 
+          // ======================================================
+          // LOGOUT
+          // ======================================================
+
           Container(
-            padding: EdgeInsets.all(
-              context.width < 600 ? 12 : 20,
-            ),
+            padding:
+                const EdgeInsets.all(20),
+
             decoration: BoxDecoration(
               border: Border(
                 top: BorderSide(
-                  color: Colors.grey.shade200,
+                  color:
+                      Colors.grey.shade200,
                 ),
               ),
             ),
-            child: context.width < 600
-                ? Center(
-                    child: Icon(
-                      Icons.logout,
-                      size: 20,
-                      color: Colors.grey.shade600,
-                    ),
-                  )
-                : Row(
-                    children: [
-                      Icon(
-                        Icons.logout,
-                        color: Colors.grey.shade600,
-                      ),
 
-                      const SizedBox(
-                        width: 12,
-                      ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.logout,
+                  color:
+                      Colors.grey.shade600,
+                ),
 
-                      Text(
-                        'Logout',
-                        style: const TextStyle(
-                          fontSize: 15,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ],
+                const SizedBox(
+                  width: 12,
+                ),
+
+                const Text(
+                  'Logout',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.grey,
                   ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
     );
   }
+
+  // ============================================================
+  // MENU ITEM
+  // ============================================================
 
   Widget _menuItem(
     BuildContext context,
@@ -294,85 +381,92 @@ class UserDetailScreen extends StatelessWidget {
     bool selected,
   ) {
     return Container(
-      margin: EdgeInsets.symmetric(
-        horizontal: context.width < 600 ? 6 : 12,
+      margin:
+          const EdgeInsets.symmetric(
+        horizontal: 12,
         vertical: 3,
       ),
-      padding: EdgeInsets.symmetric(
-        horizontal: context.width < 600 ? 8 : 14,
+
+      padding:
+          const EdgeInsets.symmetric(
+        horizontal: 14,
         vertical: 12,
       ),
+
       decoration: BoxDecoration(
         color: selected
             ? AppColors.primaryColor
             : Colors.transparent,
-        borderRadius: BorderRadius.circular(10),
+
+        borderRadius:
+            BorderRadius.circular(10),
       ),
-      child: context.width < 600
-          ? Center(
-              child: Icon(
-                icon,
-                size: 20,
-                color: selected
-                    ? Colors.white
-                    : Colors.grey.shade600,
-              ),
-            )
-          : Row(
-              children: [
-                Icon(
-                  icon,
-                  size: 20,
-                  color: selected
-                      ? Colors.white
-                      : Colors.grey.shade600,
-                ),
 
-                const SizedBox(
-                  width: 14,
-                ),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            size: 20,
 
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: selected
-                        ? Colors.white
-                        : Colors.grey.shade700,
-                    fontWeight: selected
-                        ? FontWeight.w600
-                        : FontWeight.w400,
-                  ),
-                ),
-              ],
+            color: selected
+                ? Colors.white
+                : Colors.grey.shade600,
+          ),
+
+          const SizedBox(
+            width: 14,
+          ),
+
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 15,
+
+              color: selected
+                  ? Colors.white
+                  : Colors.grey.shade700,
+
+              fontWeight: selected
+                  ? FontWeight.w600
+                  : FontWeight.w400,
             ),
+          ),
+        ],
+      ),
     );
   }
 
-  // HEADER
+  // ============================================================
+  // DESKTOP HEADER
+  // ============================================================
 
   Widget _header(BuildContext context) {
     return Container(
       height: 66,
-      padding: EdgeInsets.symmetric(
-        horizontal:
-            context.width < 600 ? 12 : 24,
+
+      padding:
+          const EdgeInsets.symmetric(
+        horizontal: 24,
       ),
+
       decoration: BoxDecoration(
         color: Colors.white,
+
         border: Border(
           bottom: BorderSide(
             color: Colors.grey.shade200,
           ),
         ),
       ),
+
       child: Row(
         children: [
-          Text(
+          const Text(
             'Nashik Municipal Corporation',
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 16,
-              fontWeight: FontWeight.w600,
+              fontWeight:
+                  FontWeight.w600,
             ),
           ),
 
@@ -381,20 +475,23 @@ class UserDetailScreen extends StatelessWidget {
           Column(
             mainAxisAlignment:
                 MainAxisAlignment.center,
+
             crossAxisAlignment:
                 CrossAxisAlignment.end,
-            children: [
+
+            children: const [
               Text(
                 'Admin',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 15,
-                  fontWeight: FontWeight.bold,
+                  fontWeight:
+                      FontWeight.bold,
                 ),
               ),
 
               Text(
                 'admin@ecotrack.gov.in',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 12,
                   color: Colors.grey,
                 ),
@@ -402,22 +499,24 @@ class UserDetailScreen extends StatelessWidget {
             ],
           ),
 
-          SizedBox(
-            width: context.width * 0.01,
+          const SizedBox(
+            width: 12,
           ),
 
-          CircleAvatar(
-            radius: context.width < 600
-                ? 16
-                : 18,
+          const CircleAvatar(
+            radius: 18,
+
             backgroundColor:
-                const Color(0xFFE8F5E9),
-            child: const Text(
+                Color(0xFFE8F5E9),
+
+            child: Text(
               'AD',
               style: TextStyle(
                 fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF2E7D32),
+                fontWeight:
+                    FontWeight.bold,
+                color:
+                    Color(0xFF2E7D32),
               ),
             ),
           ),
@@ -426,7 +525,9 @@ class UserDetailScreen extends StatelessWidget {
     );
   }
 
+  // ============================================================
   // BACK BUTTON
+  // ============================================================
 
   Widget _backButton(
     BuildContext context,
@@ -435,24 +536,29 @@ class UserDetailScreen extends StatelessWidget {
       onTap: () {
         Navigator.pop(context);
       },
+
       child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(
+        mainAxisSize:
+            MainAxisSize.min,
+
+        children: const [
+          Icon(
             Icons.arrow_back,
             size: 20,
-            color: Color(0xFF64748B),
+            color:
+                Color(0xFF64748B),
           ),
 
-          const SizedBox(
+          SizedBox(
             width: 8,
           ),
 
           Text(
             'Back',
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
-              color: Color(0xFF64748B),
+              color:
+                  Color(0xFF64748B),
             ),
           ),
         ],
@@ -460,96 +566,136 @@ class UserDetailScreen extends StatelessWidget {
     );
   }
 
+  // ============================================================
   // USER CARD
+  // ============================================================
 
   Widget _userCard(
     BuildContext context,
   ) {
+    final double width =
+        MediaQuery.of(context).size.width;
+
+    final bool isMobile =
+        width < 600;
+
     return Container(
       width: double.infinity,
+
       padding: EdgeInsets.all(
-        context.width < 600 ? 16 : 20,
+        isMobile ? 16 : 20,
       ),
+
       decoration: BoxDecoration(
         color: Colors.white,
+
         borderRadius:
             BorderRadius.circular(15),
+
         border: Border.all(
           color: Colors.grey.shade200,
         ),
+
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(
-              alpha: 0.04,
-            ),
+            color: Colors.black
+                .withValues(alpha: 0.04),
+
             blurRadius: 10,
-            offset: const Offset(0, 4),
+
+            offset:
+                const Offset(0, 4),
           ),
         ],
       ),
+
       child: Column(
         children: [
+          // ======================================================
+          // USER HEADER
+          // ======================================================
+
           Row(
+            crossAxisAlignment:
+                CrossAxisAlignment.start,
+
             children: [
               CircleAvatar(
-                radius: context.width < 600
-                    ? 23
-                    : 28,
+                radius:
+                    isMobile ? 23 : 28,
+
                 backgroundColor:
                     AppColors.primaryColor,
+
                 child: const Text(
                   'RS',
                   style: TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    fontWeight:
+                        FontWeight.bold,
+                    color:
+                        Colors.white,
                   ),
                 ),
               ),
 
               SizedBox(
-                width: context.width < 600
-                    ? 10
-                    : 16,
+                width:
+                    isMobile ? 10 : 16,
               ),
 
-              Column(
-                crossAxisAlignment:
-                    CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    name,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start,
 
-                  const SizedBox(
-                    height: 4,
-                  ),
+                  children: [
+                    Text(
+                      name,
+                      maxLines: 1,
+                      overflow:
+                          TextOverflow.ellipsis,
 
-                  Text(
-                    'Citizen · USR-01',
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Color(0xFF64748B),
+                      style:
+                          const TextStyle(
+                        fontSize: 20,
+                        fontWeight:
+                            FontWeight.w600,
+                      ),
                     ),
-                  ),
-                ],
+
+                    const SizedBox(
+                      height: 4,
+                    ),
+
+                    const Text(
+                      'Citizen · USR-01',
+                      style:
+                          TextStyle(
+                        fontSize: 14,
+                        color:
+                            Color(0xFF64748B),
+                      ),
+                    ),
+                  ],
+                ),
               ),
 
-              const Spacer(),
+              const SizedBox(
+                width: 8,
+              ),
 
               Column(
                 crossAxisAlignment:
                     CrossAxisAlignment.end,
+
                 children: [
-                  Text(
+                  const Text(
                     'Account Status',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 13,
-                      color: Color(0xFF64748B),
+                      color:
+                          Color(0xFF64748B),
                     ),
                   ),
 
@@ -564,19 +710,29 @@ class UserDetailScreen extends StatelessWidget {
           ),
 
           SizedBox(
-            height: context.height * 0.025,
+            height:
+                MediaQuery.of(context)
+                    .size
+                    .height *
+                    0.025,
           ),
 
-          if (context.width < 700)
-            Wrap(
-              spacing: 12,
-              runSpacing: 12,
+          // ======================================================
+          // MOBILE INFO BOXES
+          // ======================================================
+
+          if (width < 700)
+            Column(
               children: [
                 _responsiveInfoBox(
                   context,
                   Icons.email_outlined,
                   'Email',
                   email,
+                ),
+
+                const SizedBox(
+                  height: 12,
                 ),
 
                 _responsiveInfoBox(
@@ -586,11 +742,19 @@ class UserDetailScreen extends StatelessWidget {
                   mobile,
                 ),
 
+                const SizedBox(
+                  height: 12,
+                ),
+
                 _responsiveInfoBox(
                   context,
                   Icons.calendar_today_outlined,
                   'Joined Date',
                   joinedDate,
+                ),
+
+                const SizedBox(
+                  height: 12,
                 ),
 
                 _responsiveInfoBox(
@@ -602,6 +766,10 @@ class UserDetailScreen extends StatelessWidget {
               ],
             )
           else
+            // ==================================================
+            // DESKTOP INFO BOXES
+            // ==================================================
+
             Row(
               children: [
                 Expanded(
@@ -658,23 +826,19 @@ class UserDetailScreen extends StatelessWidget {
     );
   }
 
+  // ============================================================
+  // RESPONSIVE INFO BOX
+  // ============================================================
+
   Widget _responsiveInfoBox(
     BuildContext context,
     IconData icon,
     String title,
     String value,
   ) {
-    double boxWidth;
-
-    if (context.width < 450) {
-      boxWidth = double.infinity;
-    } else {
-      boxWidth =
-          (context.width - 110) / 2;
-    }
-
     return SizedBox(
-      width: boxWidth,
+      width: double.infinity,
+
       child: _infoBox(
         context,
         icon,
@@ -684,6 +848,10 @@ class UserDetailScreen extends StatelessWidget {
     );
   }
 
+  // ============================================================
+  // INFO BOX
+  // ============================================================
+
   Widget _infoBox(
     BuildContext context,
     IconData icon,
@@ -692,25 +860,34 @@ class UserDetailScreen extends StatelessWidget {
   ) {
     return Container(
       height: 75,
-      padding: const EdgeInsets.all(14),
+
+      padding:
+          const EdgeInsets.all(14),
+
       decoration: BoxDecoration(
         color: Colors.white,
+
         borderRadius:
             BorderRadius.circular(12),
+
         border: Border.all(
-          color: Colors.grey.shade300,
+          color:
+              Colors.grey.shade300,
         ),
       ),
+
       child: Column(
         crossAxisAlignment:
             CrossAxisAlignment.start,
+
         children: [
           Row(
             children: [
               Icon(
                 icon,
                 size: 16,
-                color: Colors.grey.shade600,
+                color:
+                    Colors.grey.shade600,
               ),
 
               const SizedBox(
@@ -722,9 +899,12 @@ class UserDetailScreen extends StatelessWidget {
                   title,
                   overflow:
                       TextOverflow.ellipsis,
-                  style: const TextStyle(
+
+                  style:
+                      const TextStyle(
                     fontSize: 12,
-                    color: Color(0xFF64748B),
+                    color:
+                        Color(0xFF64748B),
                   ),
                 ),
               ),
@@ -735,16 +915,25 @@ class UserDetailScreen extends StatelessWidget {
 
           Text(
             value,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
+            maxLines: 1,
+            overflow:
+                TextOverflow.ellipsis,
+
+            style:
+                const TextStyle(
               fontSize: 14,
-              fontWeight: FontWeight.w600,
+              fontWeight:
+                  FontWeight.w600,
             ),
           ),
         ],
       ),
     );
   }
+
+  // ============================================================
+  // STATUS BADGE
+  // ============================================================
 
   Widget _statusBadge(
     BuildContext context,
@@ -755,60 +944,87 @@ class UserDetailScreen extends StatelessWidget {
         horizontal: 12,
         vertical: 5,
       ),
+
       decoration: BoxDecoration(
-        color: const Color(0xFFD9F5DF),
+        color:
+            const Color(0xFFD9F5DF),
+
         borderRadius:
             BorderRadius.circular(20),
       ),
+
       child: Text(
         status,
-        style: const TextStyle(
+        style:
+            const TextStyle(
           fontSize: 12,
-          color: Color(0xFF16833A),
-          fontWeight: FontWeight.w500,
+          color:
+              Color(0xFF16833A),
+          fontWeight:
+              FontWeight.w500,
         ),
       ),
     );
   }
 
+  // ============================================================
   // RECENT COMPLAINTS
+  // ============================================================
 
   Widget _complaintsTable(
     BuildContext context,
   ) {
     return Container(
       width: double.infinity,
+
       decoration: BoxDecoration(
         color: Colors.white,
+
         borderRadius:
             BorderRadius.circular(15),
+
         border: Border.all(
           color: Colors.grey.shade200,
         ),
+
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(
-              alpha: 0.04,
-            ),
+            color: Colors.black
+                .withValues(alpha: 0.04),
+
             blurRadius: 10,
-            offset: const Offset(0, 4),
+
+            offset:
+                const Offset(0, 4),
           ),
         ],
       ),
+
       child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
+        scrollDirection:
+            Axis.horizontal,
+
         child: SizedBox(
-          width: context.width < 700
+          width:
+              MediaQuery.of(context)
+                      .size
+                      .width <
+                  700
               ? 750
-              : context.width,
+              : MediaQuery.of(context)
+                  .size
+                  .width,
+
           child: Column(
             children: [
               _tableRow(
                 context,
                 isHeader: true,
-                complaintId: 'COMPLAINT ID',
+                complaintId:
+                    'COMPLAINT ID',
                 title: 'TITLE',
-                wasteType: 'WASTE TYPE',
+                wasteType:
+                    'WASTE TYPE',
                 date: 'DATE',
                 status: 'STATUS',
                 action: 'ACTION',
@@ -816,11 +1032,16 @@ class UserDetailScreen extends StatelessWidget {
 
               _tableRow(
                 context,
-                complaintId: 'ECO-1042',
-                title: 'Household Waste',
-                wasteType: 'Household Waste',
-                date: '12 Mar 2026',
-                status: 'In Progress',
+                complaintId:
+                    'ECO-1042',
+                title:
+                    'Household Waste',
+                wasteType:
+                    'Household Waste',
+                date:
+                    '12 Mar 2026',
+                status:
+                    'In Progress',
                 action: 'View',
               ),
             ],
@@ -829,6 +1050,10 @@ class UserDetailScreen extends StatelessWidget {
       ),
     );
   }
+
+  // ============================================================
+  // TABLE ROW
+  // ============================================================
 
   Widget _tableRow(
     BuildContext context, {
@@ -846,16 +1071,20 @@ class UserDetailScreen extends StatelessWidget {
         horizontal: 16,
         vertical: 14,
       ),
+
       decoration: BoxDecoration(
         color: isHeader
             ? const Color(0xFFF7F9F8)
             : Colors.white,
+
         border: Border(
           bottom: BorderSide(
-            color: Colors.grey.shade200,
+            color:
+                Colors.grey.shade200,
           ),
         ),
       ),
+
       child: Row(
         children: [
           Expanded(
@@ -905,6 +1134,7 @@ class UserDetailScreen extends StatelessWidget {
                 : Align(
                     alignment:
                         Alignment.centerLeft,
+
                     child: Container(
                       padding:
                           const EdgeInsets
@@ -912,21 +1142,28 @@ class UserDetailScreen extends StatelessWidget {
                         horizontal: 10,
                         vertical: 5,
                       ),
-                      decoration: BoxDecoration(
-                        color: const Color(
+
+                      decoration:
+                          BoxDecoration(
+                        color:
+                            const Color(
                           0xFFE3F2FD,
                         ),
+
                         borderRadius:
-                            BorderRadius.circular(
+                            BorderRadius
+                                .circular(
                           20,
                         ),
                       ),
+
                       child: Text(
                         status,
                         style:
                             const TextStyle(
                           fontSize: 12,
-                          color: Colors.blue,
+                          color:
+                              Colors.blue,
                         ),
                       ),
                     ),
@@ -937,11 +1174,18 @@ class UserDetailScreen extends StatelessWidget {
             flex: 10,
             child: Text(
               action,
+              overflow:
+                  TextOverflow.ellipsis,
+
               style: TextStyle(
                 fontSize: 13,
                 color: isHeader
-                    ? const Color(0xFF64748B)
-                    : AppColors.primaryColor,
+                    ? const Color(
+                        0xFF64748B,
+                      )
+                    : AppColors
+                        .primaryColor,
+
                 fontWeight: isHeader
                     ? FontWeight.w500
                     : FontWeight.w400,
@@ -953,6 +1197,10 @@ class UserDetailScreen extends StatelessWidget {
     );
   }
 
+  // ============================================================
+  // TABLE TEXT
+  // ============================================================
+
   Widget _tableText(
     BuildContext context,
     String text,
@@ -960,12 +1208,21 @@ class UserDetailScreen extends StatelessWidget {
   ) {
     return Text(
       text,
-      overflow: TextOverflow.ellipsis,
+      overflow:
+          TextOverflow.ellipsis,
+
       style: TextStyle(
-        fontSize: isHeader ? 12 : 14,
+        fontSize:
+            isHeader ? 12 : 14,
+
         color: isHeader
-            ? const Color(0xFF64748B)
-            : const Color(0xFF07152B),
+            ? const Color(
+                0xFF64748B,
+              )
+            : const Color(
+                0xFF07152B,
+              ),
+
         fontWeight: isHeader
             ? FontWeight.w500
             : FontWeight.w400,

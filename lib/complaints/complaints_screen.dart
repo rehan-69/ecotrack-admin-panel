@@ -216,136 +216,107 @@ class ComplaintsScreen extends StatelessWidget {
             );
           }
 
-          return SingleChildScrollView(
-            scrollDirection:
-                Axis.horizontal,
-            child: SizedBox(
-              width: 845,
-              child: Column(
-                crossAxisAlignment:
-                    CrossAxisAlignment.start,
+          return Column(
+            crossAxisAlignment:
+                CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: double.infinity,
+                height: 40,
+                child: TextField(
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Color(0xFF334155),
+                  ),
+                  decoration:
+                      InputDecoration(
+                    hintText:
+                        'Search by complaint ID, title or citizen',
+                    hintStyle: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey.shade500,
+                    ),
+                    prefixIcon: const Icon(
+                      Icons.search,
+                      size: 20,
+                      color: Colors.grey,
+                    ),
+                    contentPadding:
+                        EdgeInsets.zero,
+                    border:
+                        OutlineInputBorder(
+                      borderRadius:
+                          BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade300,
+                      ),
+                    ),
+                    enabledBorder:
+                        OutlineInputBorder(
+                      borderRadius:
+                          BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade300,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              const SizedBox(
+                height: 10,
+              ),
+
+              Wrap(
+                spacing: 10,
+                runSpacing: 10,
                 children: [
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 448,
-                        height: 40,
-                        child: TextField(
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color:
-                                Color(0xFF334155),
-                          ),
-                          decoration:
-                              InputDecoration(
-                            hintText:
-                                'Search by complaint ID, title or citizen',
-                            hintStyle:
-                                TextStyle(
-                              fontSize: 14,
-                              color:
-                                  Colors.grey.shade500,
-                            ),
-                            prefixIcon:
-                                const Icon(
-                              Icons.search,
-                              size: 20,
-                              color: Colors.grey,
-                            ),
-                            contentPadding:
-                                EdgeInsets.zero,
-                            border:
-                                OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.circular(
-                                10,
-                              ),
-                              borderSide:
-                                  BorderSide(
-                                color:
-                                    Colors.grey.shade300,
-                              ),
-                            ),
-                            enabledBorder:
-                                OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.circular(
-                                10,
-                              ),
-                              borderSide:
-                                  BorderSide(
-                                color:
-                                    Colors.grey.shade300,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      const Spacer(),
-
-                      _dropdown(
-                        context,
-                        'All Waste Types',
-                      ),
-
-                      const SizedBox(
-                        width: 10,
-                      ),
-
-                      _dropdown(
-                        context,
-                        'All Wards',
-                      ),
-                    ],
+                  _dropdown(
+                    context,
+                    'All Waste Types',
                   ),
 
-                  const SizedBox(
-                    height: 10,
-                  ),
-
-                  Row(
-                    children: [
-                      _filterButton(
-                        context,
-                        'All',
-                        true,
-                      ),
-
-                      const SizedBox(
-                        width: 8,
-                      ),
-
-                      _filterButton(
-                        context,
-                        'Pending',
-                        false,
-                      ),
-
-                      const SizedBox(
-                        width: 8,
-                      ),
-
-                      _filterButton(
-                        context,
-                        'In Progress',
-                        false,
-                      ),
-
-                      const SizedBox(
-                        width: 8,
-                      ),
-
-                      _filterButton(
-                        context,
-                        'Completed',
-                        false,
-                      ),
-                    ],
+                  _dropdown(
+                    context,
+                    'All Wards',
                   ),
                 ],
               ),
-            ),
+
+              const SizedBox(
+                height: 10,
+              ),
+
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  _filterButton(
+                    context,
+                    'All',
+                    true,
+                  ),
+
+                  _filterButton(
+                    context,
+                    'Pending',
+                    false,
+                  ),
+
+                  _filterButton(
+                    context,
+                    'In Progress',
+                    false,
+                  ),
+
+                  _filterButton(
+                    context,
+                    'Completed',
+                    false,
+                  ),
+                ],
+              ),
+            ],
           );
         },
       ),

@@ -1,4 +1,3 @@
-import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:flutter/material.dart';
 
 class DeleteWasteTypeDialog extends StatelessWidget {
@@ -6,24 +5,29 @@ class DeleteWasteTypeDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth =
+        MediaQuery.of(context).size.width;
+
+    final isMobile = screenWidth < 600;
+
     return Dialog(
       backgroundColor: const Color(0xFFF7FAF8),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
       child: Container(
-        width: context.width < 600
-            ? context.width * 0.90
+        width: isMobile
+            ? screenWidth * 0.90
             : 520,
         padding: EdgeInsets.all(
-          context.width < 600 ? 18 : 24,
+          isMobile ? 18 : 24,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment:
               CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Delete Waste Type?',
               style: TextStyle(
                 fontSize: 20,
@@ -67,12 +71,11 @@ class DeleteWasteTypeDialog extends StatelessWidget {
                           BorderRadius.circular(10),
                     ),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Cancel',
                     style: TextStyle(
                       fontSize: 14,
-                      color:
-                          const Color(0xFF1F2937),
+                      color: Color(0xFF1F2937),
                     ),
                   ),
                 ),
@@ -97,7 +100,7 @@ class DeleteWasteTypeDialog extends StatelessWidget {
                           BorderRadius.circular(10),
                     ),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Delete',
                     style: TextStyle(
                       fontSize: 14,

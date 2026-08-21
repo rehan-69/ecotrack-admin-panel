@@ -1,5 +1,4 @@
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
-import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:flutter/material.dart';
 
 class AddWasteTypeDialog extends StatelessWidget {
@@ -7,30 +6,39 @@ class AddWasteTypeDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth =
+        MediaQuery.of(context).size.width;
+
+    final isMobile = screenWidth < 600;
+
     return Dialog(
-      backgroundColor: const Color(0xFFF7FAF8),
+      backgroundColor:
+          const Color(0xFFF7FAF8),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius:
+            BorderRadius.circular(12),
       ),
       child: Container(
-        width: context.width < 600
-            ? context.width * 0.90
+        width: isMobile
+            ? screenWidth * 0.90
             : 520,
         padding: EdgeInsets.all(
-          context.width < 600 ? 18 : 24,
+          isMobile ? 18 : 24,
         ),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize:
+              MainAxisSize.min,
           crossAxisAlignment:
               CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Text(
+                const Text(
                   'Add Waste Type',
                   style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.w600,
+                    fontWeight:
+                        FontWeight.w600,
                   ),
                 ),
 
@@ -40,7 +48,7 @@ class AddWasteTypeDialog extends StatelessWidget {
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.close,
                     size: 20,
                     color: Colors.grey,
@@ -57,7 +65,8 @@ class AddWasteTypeDialog extends StatelessWidget {
               'Create a new waste category for citizen complaints.',
               style: TextStyle(
                 fontSize: 14,
-                color: Colors.grey.shade600,
+                color:
+                    Colors.grey.shade600,
               ),
             ),
 
@@ -65,11 +74,12 @@ class AddWasteTypeDialog extends StatelessWidget {
               height: 20,
             ),
 
-            Text(
+            const Text(
               'Waste Type Name',
               style: TextStyle(
                 fontSize: 14,
-                fontWeight: FontWeight.w500,
+                fontWeight:
+                    FontWeight.w500,
               ),
             ),
 
@@ -78,40 +88,52 @@ class AddWasteTypeDialog extends StatelessWidget {
             ),
 
             TextField(
-              decoration: InputDecoration(
+              decoration:
+                  InputDecoration(
                 hintText:
                     'e.g. Household Waste',
                 hintStyle: TextStyle(
                   fontSize: 14,
-                  color: Colors.grey.shade500,
+                  color:
+                      Colors.grey.shade500,
                 ),
                 contentPadding:
-                    const EdgeInsets.symmetric(
+                    const EdgeInsets
+                        .symmetric(
                   horizontal: 14,
                   vertical: 14,
                 ),
-                border: OutlineInputBorder(
+                border:
+                    OutlineInputBorder(
                   borderRadius:
-                      BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                    color: Colors.grey.shade300,
+                      BorderRadius
+                          .circular(10),
+                  borderSide:
+                      BorderSide(
+                    color: Colors
+                        .grey.shade300,
                   ),
                 ),
                 enabledBorder:
                     OutlineInputBorder(
                   borderRadius:
-                      BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                    color: Colors.grey.shade300,
+                      BorderRadius
+                          .circular(10),
+                  borderSide:
+                      BorderSide(
+                    color: Colors
+                        .grey.shade300,
                   ),
                 ),
                 focusedBorder:
                     OutlineInputBorder(
                   borderRadius:
-                      BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                    color:
-                        AppColors.primaryColor,
+                      BorderRadius
+                          .circular(10),
+                  borderSide:
+                      BorderSide(
+                    color: AppColors
+                        .primaryColor,
                   ),
                 ),
               ),
@@ -121,11 +143,12 @@ class AddWasteTypeDialog extends StatelessWidget {
               height: 18,
             ),
 
-            Text(
+            const Text(
               'Description',
               style: TextStyle(
                 fontSize: 14,
-                fontWeight: FontWeight.w500,
+                fontWeight:
+                    FontWeight.w500,
               ),
             ),
 
@@ -135,37 +158,50 @@ class AddWasteTypeDialog extends StatelessWidget {
 
             TextField(
               maxLines: 3,
-              decoration: InputDecoration(
+              decoration:
+                  InputDecoration(
                 hintText:
                     'Short description of this waste category',
                 hintStyle: TextStyle(
                   fontSize: 14,
-                  color: Colors.grey.shade500,
+                  color:
+                      Colors.grey.shade500,
                 ),
                 contentPadding:
-                    const EdgeInsets.all(14),
-                border: OutlineInputBorder(
+                    const EdgeInsets.all(
+                  14,
+                ),
+                border:
+                    OutlineInputBorder(
                   borderRadius:
-                      BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                    color: Colors.grey.shade300,
+                      BorderRadius
+                          .circular(10),
+                  borderSide:
+                      BorderSide(
+                    color: Colors
+                        .grey.shade300,
                   ),
                 ),
                 enabledBorder:
                     OutlineInputBorder(
                   borderRadius:
-                      BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                    color: Colors.grey.shade300,
+                      BorderRadius
+                          .circular(10),
+                  borderSide:
+                      BorderSide(
+                    color: Colors
+                        .grey.shade300,
                   ),
                 ),
                 focusedBorder:
                     OutlineInputBorder(
                   borderRadius:
-                      BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                    color:
-                        AppColors.primaryColor,
+                      BorderRadius
+                          .circular(10),
+                  borderSide:
+                      BorderSide(
+                    color: AppColors
+                        .primaryColor,
                   ),
                 ),
               ),
@@ -175,11 +211,12 @@ class AddWasteTypeDialog extends StatelessWidget {
               height: 18,
             ),
 
-            Text(
+            const Text(
               'Status',
               style: TextStyle(
                 fontSize: 14,
-                fontWeight: FontWeight.w500,
+                fontWeight:
+                    FontWeight.w500,
               ),
             ),
 
@@ -191,19 +228,25 @@ class AddWasteTypeDialog extends StatelessWidget {
               width: double.infinity,
               height: 38,
               padding:
-                  const EdgeInsets.symmetric(
+                  const EdgeInsets
+                      .symmetric(
                 horizontal: 14,
               ),
-              decoration: BoxDecoration(
+              decoration:
+                  BoxDecoration(
                 color: Colors.white,
                 borderRadius:
-                    BorderRadius.circular(10),
+                    BorderRadius.circular(
+                  10,
+                ),
                 border: Border.all(
-                  color: Colors.grey.shade300,
+                  color:
+                      Colors.grey.shade300,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(
+                    color: Colors.black
+                        .withValues(
                       alpha: 0.04,
                     ),
                     blurRadius: 4,
@@ -214,7 +257,7 @@ class AddWasteTypeDialog extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Text(
+                  const Text(
                     'Active',
                     style: TextStyle(
                       fontSize: 14,
@@ -224,9 +267,11 @@ class AddWasteTypeDialog extends StatelessWidget {
                   const Spacer(),
 
                   Icon(
-                    Icons.keyboard_arrow_down,
+                    Icons
+                        .keyboard_arrow_down,
                     size: 20,
-                    color: Colors.grey.shade600,
+                    color: Colors
+                        .grey.shade600,
                   ),
                 ],
               ),
@@ -247,22 +292,27 @@ class AddWasteTypeDialog extends StatelessWidget {
                   style:
                       OutlinedButton.styleFrom(
                     minimumSize:
-                        const Size(82, 38),
+                        const Size(
+                      82,
+                      38,
+                    ),
                     side: BorderSide(
-                      color:
-                          Colors.grey.shade300,
+                      color: Colors
+                          .grey.shade300,
                     ),
                     shape:
                         RoundedRectangleBorder(
                       borderRadius:
-                          BorderRadius.circular(10),
+                          BorderRadius
+                              .circular(10),
                     ),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Cancel',
                     style: TextStyle(
-                      color:
-                          const Color(0xFF1F2937),
+                      color: Color(
+                        0xFF1F2937,
+                      ),
                       fontSize: 14,
                     ),
                   ),
@@ -279,17 +329,22 @@ class AddWasteTypeDialog extends StatelessWidget {
                   style:
                       ElevatedButton.styleFrom(
                     minimumSize:
-                        const Size(65, 38),
+                        const Size(
+                      65,
+                      38,
+                    ),
                     backgroundColor:
-                        AppColors.primaryColor,
+                        AppColors
+                            .primaryColor,
                     elevation: 0,
                     shape:
                         RoundedRectangleBorder(
                       borderRadius:
-                          BorderRadius.circular(10),
+                          BorderRadius
+                              .circular(10),
                     ),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Save',
                     style: TextStyle(
                       color: Colors.white,

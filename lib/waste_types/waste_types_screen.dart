@@ -1,5 +1,4 @@
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
-import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:ecotrack_admin_panel/waste_types/add_waste_type_dialog.dart';
 import 'package:ecotrack_admin_panel/waste_types/delete_waste_type_dialog.dart';
 import 'package:ecotrack_admin_panel/waste_types/edit_waste_type_dialog.dart';
@@ -9,177 +8,177 @@ class WasteTypesScreen extends StatelessWidget {
   const WasteTypesScreen({super.key});
 
   static const double minTableWidth = 988;
-  static const double minScreenWidth = 1100;
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = context.width - 50;
+    final screenWidth =
+        MediaQuery.of(context).size.width;
 
-    if (screenWidth < minScreenWidth) {
-      screenWidth = minScreenWidth;
-    }
+    final isMobile = screenWidth < 600;
 
     return Container(
       color: const Color(0xFFF8FAF9),
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          physics: const ClampingScrollPhysics(),
-          child: SizedBox(
-            width: screenWidth,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 25,
-                right: 25,
-                top: 17,
-                bottom: 20,
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: isMobile ? 16 : 25,
+            right: isMobile ? 16 : 25,
+            top: 17,
+            bottom: 20,
+          ),
+          child: Column(
+            crossAxisAlignment:
+                CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height:
+                    MediaQuery.of(context).size.height *
+                        0.020,
               ),
-              child: Column(
+
+              Row(
                 crossAxisAlignment:
                     CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: context.height * 0.020,
-                  ),
-
-                  Row(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Waste Types',
-                            style: TextStyle(
-                              fontSize: 27,
-                              fontWeight:
-                                  FontWeight.w600,
-                              color: const Color(
-                                0xFF07152B,
-                              ),
-                              height: 1.1,
-                            ),
-                          ),
-
-                          const SizedBox(
-                            height: 5,
-                          ),
-
-                          Text(
-                            'Manage waste categories used for citizen complaints.',
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight:
-                                  FontWeight.w400,
-                              color: const Color(
-                                0xFF64748B,
-                              ),
-                              height: 1.2,
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      const Spacer(),
-
-                      SizedBox(
-                        width: 164,
-                        height: 36,
-                        child: ElevatedButton.icon(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    AddWasteTypeDialog(),
-                              ),
-                            );
-                          },
-                          icon: const Icon(
-                            Icons.add,
-                            size: 18,
-                          ),
-                          label: Text(
-                            'Add Waste Type',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight:
-                                  FontWeight.w500,
-                            ),
-                          ),
-                          style:
-                              ElevatedButton.styleFrom(
-                            backgroundColor:
-                                AppColors
-                                    .primaryColor,
-                            foregroundColor:
-                                Colors.white,
-                            elevation: 0,
-                            padding:
-                                EdgeInsets.zero,
-                            shape:
-                                RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(
-                                10,
-                              ),
-                            ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment:
+                          CrossAxisAlignment.start,
+                      children: const [
+                        Text(
+                          'Waste Types',
+                          style: TextStyle(
+                            fontSize: 27,
+                            fontWeight:
+                                FontWeight.w600,
+                            color:
+                                Color(0xFF07152B),
+                            height: 1.1,
                           ),
                         ),
-                      ),
-                    ],
+
+                        SizedBox(
+                          height: 5,
+                        ),
+
+                        Text(
+                          'Manage waste categories used for citizen complaints.',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight:
+                                FontWeight.w400,
+                            color:
+                                Color(0xFF64748B),
+                            height: 1.2,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
 
                   const SizedBox(
-                    height: 23,
+                    width: 15,
                   ),
 
-                  _wasteTypeTable(),
+                  SizedBox(
+                    width: 164,
+                    height: 36,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const AddWasteTypeDialog(),
+                          ),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.add,
+                        size: 18,
+                      ),
+                      label: const Text(
+                        'Add Waste Type',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight:
+                              FontWeight.w500,
+                        ),
+                      ),
+                      style:
+                          ElevatedButton.styleFrom(
+                        backgroundColor:
+                            AppColors
+                                .primaryColor,
+                        foregroundColor:
+                            Colors.white,
+                        elevation: 0,
+                        padding:
+                            EdgeInsets.zero,
+                        shape:
+                            RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(
+                            10,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
-            ),
+
+              const SizedBox(
+                height: 23,
+              ),
+
+              _wasteTypeTable(context),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget _wasteTypeTable() {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final double tableWidth =
-            constraints.maxWidth < minTableWidth
-                ? minTableWidth
-                : constraints.maxWidth;
-
-        return Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius:
-                BorderRadius.circular(15),
-            border: Border.all(
-              color: const Color(0xFFDCE3E7),
-              width: 1,
+  Widget _wasteTypeTable(
+    BuildContext context,
+  ) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius:
+            BorderRadius.circular(15),
+        border: Border.all(
+          color: const Color(0xFFDCE3E7),
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(
+              alpha: 0.035,
             ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(
-                  alpha: 0.035,
-                ),
-                blurRadius: 7,
-                offset: const Offset(0, 2),
-              ),
-            ],
+            blurRadius: 7,
+            offset: const Offset(0, 2),
           ),
-          child: ClipRRect(
-            borderRadius:
-                BorderRadius.circular(15),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius:
+            BorderRadius.circular(15),
+        child: LayoutBuilder(
+          builder:
+              (context, constraints) {
+            final tableWidth =
+                constraints.maxWidth <
+                        minTableWidth
+                    ? minTableWidth
+                    : constraints.maxWidth;
+
+            return SingleChildScrollView(
+              scrollDirection:
+                  Axis.horizontal,
               physics:
                   const ClampingScrollPhysics(),
               child: SizedBox(
@@ -253,10 +252,10 @@ class WasteTypesScreen extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
-          ),
-        );
-      },
+            );
+          },
+        ),
+      ),
     );
   }
 
@@ -326,15 +325,16 @@ class WasteTypesScreen extends StatelessWidget {
           horizontal: 16,
         ),
         child: Align(
-          alignment: Alignment.centerLeft,
+          alignment:
+              Alignment.centerLeft,
           child: Text(
             text,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 12,
-              fontWeight: FontWeight.w400,
-              color: const Color(
-                0xFF64748B,
-              ),
+              fontWeight:
+                  FontWeight.w400,
+              color:
+                  Color(0xFF64748B),
             ),
           ),
         ),
@@ -426,7 +426,8 @@ class WasteTypesScreen extends StatelessWidget {
                       fontSize: 12,
                       fontWeight:
                           FontWeight.w400,
-                      color: status == 'Active'
+                      color: status ==
+                              'Active'
                           ? const Color(
                               0xFF16803C,
                             )
@@ -458,10 +459,10 @@ class WasteTypesScreen extends StatelessWidget {
                             builder: (context) =>
                                 EditWasteTypeDialog(
                               wasteType:
-                                  'Household Waste',
+                                  wasteType,
                               description:
-                                  'Daily kitchen and domestic waste from homes.',
-                              status: 'Active',
+                                  description,
+                              status: status,
                             ),
                           ),
                         );
@@ -470,7 +471,7 @@ class WasteTypesScreen extends StatelessWidget {
                         Icons.edit_outlined,
                         size: 16,
                       ),
-                      label: Text(
+                      label: const Text(
                         'Edit',
                         style: TextStyle(
                           fontSize: 13,
@@ -490,16 +491,14 @@ class WasteTypesScreen extends StatelessWidget {
                             EdgeInsets.zero,
                         side:
                             const BorderSide(
-                          color: Color(
-                            0xFFDCE3E7,
-                          ),
+                          color:
+                              Color(0xFFDCE3E7),
                           width: 1,
                         ),
                         shape:
                             RoundedRectangleBorder(
                           borderRadius:
-                              BorderRadius
-                                  .circular(
+                              BorderRadius.circular(
                             10,
                           ),
                         ),
@@ -521,7 +520,7 @@ class WasteTypesScreen extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                DeleteWasteTypeDialog(),
+                                const DeleteWasteTypeDialog(),
                           ),
                         );
                       },
@@ -529,7 +528,7 @@ class WasteTypesScreen extends StatelessWidget {
                         Icons.delete_outline,
                         size: 16,
                       ),
-                      label: Text(
+                      label: const Text(
                         'Delete',
                         style: TextStyle(
                           fontSize: 13,
@@ -548,16 +547,14 @@ class WasteTypesScreen extends StatelessWidget {
                             EdgeInsets.zero,
                         side:
                             const BorderSide(
-                          color: Color(
-                            0xFFDCE3E7,
-                          ),
+                          color:
+                              Color(0xFFDCE3E7),
                           width: 1,
                         ),
                         shape:
                             RoundedRectangleBorder(
                           borderRadius:
-                              BorderRadius
-                                  .circular(
+                              BorderRadius.circular(
                             10,
                           ),
                         ),
@@ -588,7 +585,8 @@ class WasteTypesScreen extends StatelessWidget {
           horizontal: 16,
         ),
         child: Align(
-          alignment: Alignment.centerLeft,
+          alignment:
+              Alignment.centerLeft,
           child: Text(
             text,
             maxLines: 1,

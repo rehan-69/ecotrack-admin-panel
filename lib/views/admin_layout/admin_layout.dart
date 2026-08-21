@@ -15,6 +15,32 @@ class AdminLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<AdminProvider>(
       builder: (context, value, child) {
+        final bool isMobile = context.width < 900;
+
+        if (isMobile) {
+          return Scaffold(
+            backgroundColor: const Color(0xFFFDF7FD),
+
+            drawer: Drawer(
+              width: 280,
+              backgroundColor: Colors.white,
+              child: SideBar(
+                selectedIndex: value.selectedIndex,
+                onItemSelected: (index) {
+                  value.changeIndex(index);
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+
+            appBar: _mobileHeader(context),
+
+            body: _getScreen(
+              value.selectedIndex,
+            ),
+          );
+        }
+
         return Scaffold(
           body: Row(
             children: [
@@ -28,7 +54,7 @@ class AdminLayout extends StatelessWidget {
               Expanded(
                 child: Column(
                   children: [
-                    _header(context),
+                    _desktopHeader(context),
 
                     Expanded(
                       child: _getScreen(
@@ -45,7 +71,11 @@ class AdminLayout extends StatelessWidget {
     );
   }
 
-  Widget _header(BuildContext context) {
+  // ------------------------------------------------------------
+  // DESKTOP HEADER
+  // ------------------------------------------------------------
+
+  Widget _desktopHeader(BuildContext context) {
     return Container(
       height: context.height * 0.09,
       padding: EdgeInsets.symmetric(
@@ -72,10 +102,8 @@ class AdminLayout extends StatelessWidget {
           const Spacer(),
 
           Column(
-            mainAxisAlignment:
-                MainAxisAlignment.center,
-            crossAxisAlignment:
-                CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
                 'Admin',
@@ -95,21 +123,17 @@ class AdminLayout extends StatelessWidget {
             ],
           ),
 
-          SizedBox(
-            width: context.width * 0.01,
-          ),
+          const SizedBox(width: 12),
 
-          CircleAvatar(
-            radius: context.width * 0.014,
-            backgroundColor:
-                const Color(0xFFE8F5E9),
+          const CircleAvatar(
+            radius: 14,
+            backgroundColor: Color(0xFFE8F5E9),
             child: Text(
               'AD',
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 10,
                 fontWeight: FontWeight.bold,
-                color:
-                    const Color(0xFF2E7D32),
+                color: Color(0xFF2E7D32),
               ),
             ),
           ),
@@ -117,6 +141,52 @@ class AdminLayout extends StatelessWidget {
       ),
     );
   }
+
+  // ------------------------------------------------------------
+  // MOBILE HEADER
+  // ------------------------------------------------------------
+
+  PreferredSizeWidget _mobileHeader(
+    BuildContext context,
+  ) {
+    return AppBar(
+      automaticallyImplyLeading: false,
+      backgroundColor: const Color(0xFF1B1B27),
+      elevation: 0,
+
+      toolbarHeight: 64,
+
+      leading: Builder(
+        builder: (context) {
+          return IconButton(
+            icon: const Icon(
+              Icons.menu,
+              color: Colors.white,
+              size: 28,
+            ),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+          );
+        },
+      ),
+
+      title: const Text(
+        'Admin Panel',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 21,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+
+      titleSpacing: 0,
+    );
+  }
+
+  // ------------------------------------------------------------
+  // SCREEN SWITCHING
+  // ------------------------------------------------------------
 
   Widget _getScreen(int selectedIndex) {
     if (selectedIndex == 0) {
@@ -135,7 +205,7 @@ class AdminLayout extends StatelessWidget {
       return const WasteTypesScreen();
     }
 
-    return Center(
+    return const Center(
       child: Text(
         'Coming Soon',
         style: TextStyle(
