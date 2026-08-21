@@ -15,7 +15,7 @@ class UsersScreen extends StatelessWidget {
           Text(
             'Users',
             style: TextStyle(
-              fontSize: context.responsiveFont(28),
+              fontSize: 28,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -25,7 +25,7 @@ class UsersScreen extends StatelessWidget {
           Text(
             'Manage registered EcoTrack citizens.',
             style: TextStyle(
-              fontSize: context.responsiveFont(14),
+              fontSize: 14,
               color: Colors.grey.shade600,
             ),
           ),
@@ -62,21 +62,28 @@ class UsersScreen extends StatelessWidget {
         width: 450,
         height: 48,
         child: TextField(
-          style: TextStyle(fontSize: context.responsiveFont(14)),
+          style: TextStyle(fontSize: 14),
           decoration: InputDecoration(
             hintText: 'Search user',
             hintStyle: TextStyle(
-              fontSize: context.responsiveFont(14),
+              fontSize: 14,
               color: Colors.grey.shade500,
             ),
-            prefixIcon: const Icon(Icons.search, color: Colors.grey),
+            prefixIcon: const Icon(
+              Icons.search,
+              color: Colors.grey,
+            ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.grey.shade300),
+              borderSide: BorderSide(
+                color: Colors.grey.shade300,
+              ),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.grey.shade300),
+              borderSide: BorderSide(
+                color: Colors.grey.shade300,
+              ),
             ),
           ),
         ),
@@ -181,39 +188,76 @@ class UsersScreen extends StatelessWidget {
     );
   }
 
-  Widget _tableHeader(BuildContext context, double tableWidth) {
+  Widget _tableHeader(
+    BuildContext context,
+    double tableWidth,
+  ) {
     return Container(
       height: 40,
       color: const Color(0xFFF8FAFA),
       child: Row(
         children: [
-          _headerCell(context, 'NAME', tableWidth * 0.14),
+          _headerCell(
+            context,
+            'NAME',
+            tableWidth * 0.14,
+          ),
 
-          _headerCell(context, 'EMAIL', tableWidth * 0.22),
+          _headerCell(
+            context,
+            'EMAIL',
+            tableWidth * 0.22,
+          ),
 
-          _headerCell(context, 'MOBILE', tableWidth * 0.15),
+          _headerCell(
+            context,
+            'MOBILE',
+            tableWidth * 0.15,
+          ),
 
-          _headerCell(context, 'TOTAL COMPLAINTS', tableWidth * 0.15),
+          _headerCell(
+            context,
+            'TOTAL COMPLAINTS',
+            tableWidth * 0.15,
+          ),
 
-          _headerCell(context, 'JOINED DATE', tableWidth * 0.12),
+          _headerCell(
+            context,
+            'JOINED DATE',
+            tableWidth * 0.12,
+          ),
 
-          _headerCell(context, 'STATUS', tableWidth * 0.10),
+          _headerCell(
+            context,
+            'STATUS',
+            tableWidth * 0.10,
+          ),
 
-          _headerCell(context, 'ACTION', tableWidth * 0.08),
+          _headerCell(
+            context,
+            'ACTION',
+            tableWidth * 0.08,
+          ),
         ],
       ),
     );
   }
 
-  Widget _headerCell(BuildContext context, String text, double width) {
+  Widget _headerCell(
+    BuildContext context,
+    String text,
+    double width,
+  ) {
     return SizedBox(
       width: width,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16,
+        ),
         child: Text(
           text,
           style: TextStyle(
-            fontSize: context.responsiveFont(12),
+            fontSize: 12,
             color: Colors.grey.shade600,
             fontWeight: FontWeight.w500,
           ),
@@ -235,19 +279,44 @@ class UsersScreen extends StatelessWidget {
     return Container(
       height: 65,
       decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.grey.shade200,
+          ),
+        ),
       ),
       child: Row(
         children: [
-          _dataCell(context, name, tableWidth * 0.14, bold: true),
+          _dataCell(
+            context,
+            name,
+            tableWidth * 0.14,
+            bold: true,
+          ),
 
-          _dataCell(context, email, tableWidth * 0.22),
+          _dataCell(
+            context,
+            email,
+            tableWidth * 0.22,
+          ),
 
-          _dataCell(context, mobile, tableWidth * 0.15),
+          _dataCell(
+            context,
+            mobile,
+            tableWidth * 0.15,
+          ),
 
-          _dataCell(context, complaints, tableWidth * 0.15),
+          _dataCell(
+            context,
+            complaints,
+            tableWidth * 0.15,
+          ),
 
-          _dataCell(context, joinedDate, tableWidth * 0.12),
+          _dataCell(
+            context,
+            joinedDate,
+            tableWidth * 0.12,
+          ),
 
           SizedBox(
             width: tableWidth * 0.10,
@@ -262,12 +331,13 @@ class UsersScreen extends StatelessWidget {
                   color: status == 'Active'
                       ? const Color(0xFFDDF5E2)
                       : const Color(0xFFF1F3F3),
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius:
+                      BorderRadius.circular(20),
                 ),
                 child: Text(
                   status,
                   style: TextStyle(
-                    fontSize: context.responsiveFont(12),
+                    fontSize: 12,
                     color: status == 'Active'
                         ? Colors.green.shade700
                         : Colors.grey.shade700,
@@ -285,7 +355,10 @@ class UsersScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => UserDetailScreen()),
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          UserDetailScreen(),
+                    ),
                   );
                 },
                 style: OutlinedButton.styleFrom(
@@ -293,15 +366,18 @@ class UsersScreen extends StatelessWidget {
                     horizontal: 14,
                     vertical: 8,
                   ),
-                  side: BorderSide(color: Colors.grey.shade300),
+                  side: BorderSide(
+                    color: Colors.grey.shade300,
+                  ),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius:
+                        BorderRadius.circular(10),
                   ),
                 ),
                 child: Text(
                   'View',
                   style: TextStyle(
-                    fontSize: context.responsiveFont(14),
+                    fontSize: 14,
                     color: Colors.grey.shade800,
                   ),
                 ),
@@ -322,15 +398,19 @@ class UsersScreen extends StatelessWidget {
     return SizedBox(
       width: width,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16,
+        ),
         child: Text(
           text,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
-            fontSize: context.responsiveFont(14),
+            fontSize: 14,
             color: Colors.black87,
-            fontWeight: bold ? FontWeight.w600 : FontWeight.w400,
+            fontWeight: bold
+                ? FontWeight.w600
+                : FontWeight.w400,
           ),
         ),
       ),

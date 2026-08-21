@@ -1,6 +1,6 @@
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
-import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:ecotrack_admin_panel/complaints/complaints_detail_screen.dart';
+import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:flutter/material.dart';
 
 class ComplaintsScreen extends StatelessWidget {
@@ -18,9 +18,8 @@ class ComplaintsScreen extends StatelessWidget {
         children: [
           Text(
             'Complaints',
-            style: TextStyle(
-              fontSize:
-                  context.responsiveFont(28),
+            style: const TextStyle(
+              fontSize: 28,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -32,8 +31,7 @@ class ComplaintsScreen extends StatelessWidget {
           Text(
             'View and manage citizen waste complaints.',
             style: TextStyle(
-              fontSize:
-                  context.responsiveFont(14),
+              fontSize: 14,
               color: Colors.grey.shade600,
             ),
           ),
@@ -88,19 +86,16 @@ class ComplaintsScreen extends StatelessWidget {
                       width: 448,
                       height: 40,
                       child: TextField(
-                        style: TextStyle(
-                          fontSize:
-                              context.responsiveFont(14),
-                          color:
-                              const Color(0xFF334155),
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Color(0xFF334155),
                         ),
                         decoration:
                             InputDecoration(
                           hintText:
                               'Search by complaint ID, title or citizen',
                           hintStyle: TextStyle(
-                            fontSize:
-                                context.responsiveFont(14),
+                            fontSize: 14,
                             color:
                                 Colors.grey.shade500,
                           ),
@@ -113,8 +108,7 @@ class ComplaintsScreen extends StatelessWidget {
                           contentPadding:
                               EdgeInsets.zero,
                           filled: true,
-                          fillColor:
-                              Colors.white,
+                          fillColor: Colors.white,
                           border:
                               OutlineInputBorder(
                             borderRadius:
@@ -237,11 +231,10 @@ class ComplaintsScreen extends StatelessWidget {
                         width: 448,
                         height: 40,
                         child: TextField(
-                          style: TextStyle(
-                            fontSize:
-                                context.responsiveFont(14),
+                          style: const TextStyle(
+                            fontSize: 14,
                             color:
-                                const Color(0xFF334155),
+                                Color(0xFF334155),
                           ),
                           decoration:
                               InputDecoration(
@@ -249,8 +242,7 @@ class ComplaintsScreen extends StatelessWidget {
                                 'Search by complaint ID, title or citizen',
                             hintStyle:
                                 TextStyle(
-                              fontSize:
-                                  context.responsiveFont(14),
+                              fontSize: 14,
                               color:
                                   Colors.grey.shade500,
                             ),
@@ -387,8 +379,7 @@ class ComplaintsScreen extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-          fontSize:
-              context.responsiveFont(14),
+          fontSize: 14,
           color: selected
               ? Colors.white
               : Colors.grey.shade700,
@@ -424,8 +415,7 @@ class ComplaintsScreen extends StatelessWidget {
           Text(
             text,
             style: TextStyle(
-              fontSize:
-                  context.responsiveFont(14),
+              fontSize: 14,
               color: Colors.grey.shade700,
             ),
           ),
@@ -649,8 +639,7 @@ class ComplaintsScreen extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(
-            fontSize:
-                context.responsiveFont(12),
+            fontSize: 12,
             color: Colors.grey.shade600,
             fontWeight: FontWeight.w500,
           ),
@@ -756,8 +745,7 @@ class ComplaintsScreen extends StatelessWidget {
                 child: Text(
                   status,
                   style: TextStyle(
-                    fontSize:
-                        context.responsiveFont(12),
+                    fontSize: 12,
                     color: statusColor,
                     fontWeight:
                         FontWeight.w500,
@@ -791,8 +779,7 @@ class ComplaintsScreen extends StatelessWidget {
               child: Text(
                 'View',
                 style: TextStyle(
-                  fontSize:
-                      context.responsiveFont(14),
+                  fontSize: 14,
                   color:
                       AppColors.primaryColor,
                 ),
@@ -821,11 +808,9 @@ class ComplaintsScreen extends StatelessWidget {
           maxLines: 2,
           overflow:
               TextOverflow.ellipsis,
-          style: TextStyle(
-            fontSize:
-                context.responsiveFont(14),
-            color:
-                const Color(0xFF0F172A),
+          style: const TextStyle(
+            fontSize: 14,
+            color: Color(0xFF0F172A),
           ),
         ),
       ),

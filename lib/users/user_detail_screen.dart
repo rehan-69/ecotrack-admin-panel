@@ -50,9 +50,8 @@ class UserDetailScreen extends StatelessWidget {
 
                         Text(
                           'User Details',
-                          style: TextStyle(
-                            fontSize:
-                                context.responsiveFont(26),
+                          style: const TextStyle(
+                            fontSize: 26,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -69,9 +68,8 @@ class UserDetailScreen extends StatelessWidget {
 
                         Text(
                           'Recent Complaints',
-                          style: TextStyle(
-                            fontSize:
-                                context.responsiveFont(17),
+                          style: const TextStyle(
+                            fontSize: 17,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -163,22 +161,17 @@ class UserDetailScreen extends StatelessWidget {
                         children: [
                           Text(
                             'EcoTrack',
-                            style: TextStyle(
-                              fontSize:
-                                  context.responsiveFont(
-                                16,
-                              ),
+                            style: const TextStyle(
+                              fontSize: 16,
                               fontWeight:
                                   FontWeight.bold,
                             ),
                           ),
+
                           Text(
                             'Admin Panel',
-                            style: TextStyle(
-                              fontSize:
-                                  context.responsiveFont(
-                                12,
-                              ),
+                            style: const TextStyle(
+                              fontSize: 12,
                               color: Colors.grey,
                             ),
                           ),
@@ -198,18 +191,17 @@ class UserDetailScreen extends StatelessWidget {
 
           if (context.width >= 600)
             Padding(
-              padding: const EdgeInsets.symmetric(
+              padding:
+                  const EdgeInsets.symmetric(
                 horizontal: 20,
               ),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'MANAGEMENT',
-                  style: TextStyle(
-                    fontSize:
-                        context.responsiveFont(11),
-                    color:
-                        const Color(0xFF64748B),
+                  style: const TextStyle(
+                    fontSize: 11,
+                    color: Color(0xFF64748B),
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -282,11 +274,9 @@ class UserDetailScreen extends StatelessWidget {
 
                       Text(
                         'Logout',
-                        style: TextStyle(
-                          fontSize:
-                              context.responsiveFont(15),
-                          color:
-                              Colors.grey.shade700,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          color: Colors.grey,
                         ),
                       ),
                     ],
@@ -309,8 +299,7 @@ class UserDetailScreen extends StatelessWidget {
         vertical: 3,
       ),
       padding: EdgeInsets.symmetric(
-        horizontal:
-            context.width < 600 ? 8 : 14,
+        horizontal: context.width < 600 ? 8 : 14,
         vertical: 12,
       ),
       decoration: BoxDecoration(
@@ -346,8 +335,7 @@ class UserDetailScreen extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
-                    fontSize:
-                        context.responsiveFont(15),
+                    fontSize: 15,
                     color: selected
                         ? Colors.white
                         : Colors.grey.shade700,
@@ -382,9 +370,8 @@ class UserDetailScreen extends StatelessWidget {
         children: [
           Text(
             'Nashik Municipal Corporation',
-            style: TextStyle(
-              fontSize:
-                  context.responsiveFont(16),
+            style: const TextStyle(
+              fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -399,18 +386,16 @@ class UserDetailScreen extends StatelessWidget {
             children: [
               Text(
                 'Admin',
-                style: TextStyle(
-                  fontSize:
-                      context.responsiveFont(15),
+                style: const TextStyle(
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),
               ),
 
               Text(
                 'admin@ecotrack.gov.in',
-                style: TextStyle(
-                  fontSize:
-                      context.responsiveFont(12),
+                style: const TextStyle(
+                  fontSize: 12,
                   color: Colors.grey,
                 ),
               ),
@@ -427,14 +412,12 @@ class UserDetailScreen extends StatelessWidget {
                 : 18,
             backgroundColor:
                 const Color(0xFFE8F5E9),
-            child: Text(
+            child: const Text(
               'AD',
               style: TextStyle(
-                fontSize:
-                    context.responsiveFont(12),
+                fontSize: 12,
                 fontWeight: FontWeight.bold,
-                color:
-                    const Color(0xFF2E7D32),
+                color: Color(0xFF2E7D32),
               ),
             ),
           ),
@@ -455,10 +438,10 @@ class UserDetailScreen extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
+          const Icon(
             Icons.arrow_back,
-            size: context.responsiveFont(20),
-            color: const Color(0xFF64748B),
+            size: 20,
+            color: Color(0xFF64748B),
           ),
 
           const SizedBox(
@@ -467,10 +450,9 @@ class UserDetailScreen extends StatelessWidget {
 
           Text(
             'Back',
-            style: TextStyle(
-              fontSize:
-                  context.responsiveFont(14),
-              color: const Color(0xFF64748B),
+            style: const TextStyle(
+              fontSize: 14,
+              color: Color(0xFF64748B),
             ),
           ),
         ],
@@ -490,7 +472,8 @@ class UserDetailScreen extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius:
+            BorderRadius.circular(15),
         border: Border.all(
           color: Colors.grey.shade200,
         ),
@@ -514,11 +497,10 @@ class UserDetailScreen extends StatelessWidget {
                     : 28,
                 backgroundColor:
                     AppColors.primaryColor,
-                child: Text(
+                child: const Text(
                   'RS',
                   style: TextStyle(
-                    fontSize:
-                        context.responsiveFont(16),
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
@@ -537,11 +519,9 @@ class UserDetailScreen extends StatelessWidget {
                 children: [
                   Text(
                     name,
-                    style: TextStyle(
-                      fontSize:
-                          context.responsiveFont(20),
-                      fontWeight:
-                          FontWeight.w600,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
 
@@ -551,11 +531,9 @@ class UserDetailScreen extends StatelessWidget {
 
                   Text(
                     'Citizen · USR-01',
-                    style: TextStyle(
-                      fontSize:
-                          context.responsiveFont(14),
-                      color:
-                          const Color(0xFF64748B),
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFF64748B),
                     ),
                   ),
                 ],
@@ -569,11 +547,9 @@ class UserDetailScreen extends StatelessWidget {
                 children: [
                   Text(
                     'Account Status',
-                    style: TextStyle(
-                      fontSize:
-                          context.responsiveFont(13),
-                      color:
-                          const Color(0xFF64748B),
+                    style: const TextStyle(
+                      fontSize: 13,
+                      color: Color(0xFF64748B),
                     ),
                   ),
 
@@ -719,7 +695,8 @@ class UserDetailScreen extends StatelessWidget {
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius:
+            BorderRadius.circular(12),
         border: Border.all(
           color: Colors.grey.shade300,
         ),
@@ -732,7 +709,7 @@ class UserDetailScreen extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                size: context.responsiveFont(16),
+                size: 16,
                 color: Colors.grey.shade600,
               ),
 
@@ -743,12 +720,11 @@ class UserDetailScreen extends StatelessWidget {
               Expanded(
                 child: Text(
                   title,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize:
-                        context.responsiveFont(12),
-                    color:
-                        const Color(0xFF64748B),
+                  overflow:
+                      TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Color(0xFF64748B),
                   ),
                 ),
               ),
@@ -760,9 +736,8 @@ class UserDetailScreen extends StatelessWidget {
           Text(
             value,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontSize:
-                  context.responsiveFont(14),
+            style: const TextStyle(
+              fontSize: 14,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -775,11 +750,10 @@ class UserDetailScreen extends StatelessWidget {
     BuildContext context,
   ) {
     return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal:
-            context.responsiveFont(12),
-        vertical:
-            context.responsiveFont(5),
+      padding:
+          const EdgeInsets.symmetric(
+        horizontal: 12,
+        vertical: 5,
       ),
       decoration: BoxDecoration(
         color: const Color(0xFFD9F5DF),
@@ -788,10 +762,9 @@ class UserDetailScreen extends StatelessWidget {
       ),
       child: Text(
         status,
-        style: TextStyle(
-          fontSize:
-              context.responsiveFont(12),
-          color: const Color(0xFF16833A),
+        style: const TextStyle(
+          fontSize: 12,
+          color: Color(0xFF16833A),
           fontWeight: FontWeight.w500,
         ),
       ),
@@ -807,7 +780,8 @@ class UserDetailScreen extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius:
+            BorderRadius.circular(15),
         border: Border.all(
           color: Colors.grey.shade200,
         ),
@@ -867,10 +841,10 @@ class UserDetailScreen extends StatelessWidget {
     required String action,
   }) {
     return Container(
-      padding: EdgeInsets.symmetric(
+      padding:
+          const EdgeInsets.symmetric(
         horizontal: 16,
-        vertical:
-            context.responsiveFont(14),
+        vertical: 14,
       ),
       decoration: BoxDecoration(
         color: isHeader
@@ -933,15 +907,10 @@ class UserDetailScreen extends StatelessWidget {
                         Alignment.centerLeft,
                     child: Container(
                       padding:
-                          EdgeInsets.symmetric(
-                        horizontal:
-                            context.responsiveFont(
-                          10,
-                        ),
-                        vertical:
-                            context.responsiveFont(
-                          5,
-                        ),
+                          const EdgeInsets
+                              .symmetric(
+                        horizontal: 10,
+                        vertical: 5,
                       ),
                       decoration: BoxDecoration(
                         color: const Color(
@@ -954,11 +923,9 @@ class UserDetailScreen extends StatelessWidget {
                       ),
                       child: Text(
                         status,
-                        style: TextStyle(
-                          fontSize:
-                              context.responsiveFont(
-                            12,
-                          ),
+                        style:
+                            const TextStyle(
+                          fontSize: 12,
                           color: Colors.blue,
                         ),
                       ),
@@ -971,8 +938,7 @@ class UserDetailScreen extends StatelessWidget {
             child: Text(
               action,
               style: TextStyle(
-                fontSize:
-                    context.responsiveFont(13),
+                fontSize: 13,
                 color: isHeader
                     ? const Color(0xFF64748B)
                     : AppColors.primaryColor,
@@ -996,9 +962,7 @@ class UserDetailScreen extends StatelessWidget {
       text,
       overflow: TextOverflow.ellipsis,
       style: TextStyle(
-        fontSize: context.responsiveFont(
-          isHeader ? 12 : 14,
-        ),
+        fontSize: isHeader ? 12 : 14,
         color: isHeader
             ? const Color(0xFF64748B)
             : const Color(0xFF07152B),

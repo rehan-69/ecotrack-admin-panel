@@ -64,8 +64,7 @@ class AdminLayout extends StatelessWidget {
           Text(
             'Nashik Municipal Corporation',
             style: TextStyle(
-              fontSize:
-                  context.responsiveFont(16),
+              fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -81,8 +80,7 @@ class AdminLayout extends StatelessWidget {
               Text(
                 'Admin',
                 style: TextStyle(
-                  fontSize:
-                      context.responsiveFont(15),
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -90,8 +88,7 @@ class AdminLayout extends StatelessWidget {
               Text(
                 'admin@ecotrack.gov.in',
                 style: TextStyle(
-                  fontSize:
-                      context.responsiveFont(12),
+                  fontSize: 12,
                   color: Colors.grey,
                 ),
               ),
@@ -109,8 +106,7 @@ class AdminLayout extends StatelessWidget {
             child: Text(
               'AD',
               style: TextStyle(
-                fontSize:
-                    context.responsiveFont(12),
+                fontSize: 12,
                 fontWeight: FontWeight.bold,
                 color:
                     const Color(0xFF2E7D32),
@@ -140,17 +136,12 @@ class AdminLayout extends StatelessWidget {
     }
 
     return Center(
-      child: Builder(
-        builder: (context) {
-          return Text(
-            'Coming Soon',
-            style: TextStyle(
-              fontSize:
-                  context.responsiveFont(25),
-              fontWeight: FontWeight.bold,
-            ),
-          );
-        },
+      child: Text(
+        'Coming Soon',
+        style: TextStyle(
+          fontSize: 25,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

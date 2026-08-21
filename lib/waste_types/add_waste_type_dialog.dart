@@ -21,15 +21,15 @@ class AddWasteTypeDialog extends StatelessWidget {
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment:
+              CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Text(
                   'Add Waste Type',
                   style: TextStyle(
-                    fontSize:
-                        context.responsiveFont(20),
+                    fontSize: 20,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -42,8 +42,7 @@ class AddWasteTypeDialog extends StatelessWidget {
                   },
                   child: Icon(
                     Icons.close,
-                    size:
-                        context.responsiveFont(20),
+                    size: 20,
                     color: Colors.grey,
                   ),
                 ),
@@ -57,8 +56,7 @@ class AddWasteTypeDialog extends StatelessWidget {
             Text(
               'Create a new waste category for citizen complaints.',
               style: TextStyle(
-                fontSize:
-                    context.responsiveFont(14),
+                fontSize: 14,
                 color: Colors.grey.shade600,
               ),
             ),
@@ -70,8 +68,7 @@ class AddWasteTypeDialog extends StatelessWidget {
             Text(
               'Waste Type Name',
               style: TextStyle(
-                fontSize:
-                    context.responsiveFont(14),
+                fontSize: 14,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -85,8 +82,7 @@ class AddWasteTypeDialog extends StatelessWidget {
                 hintText:
                     'e.g. Household Waste',
                 hintStyle: TextStyle(
-                  fontSize:
-                      context.responsiveFont(14),
+                  fontSize: 14,
                   color: Colors.grey.shade500,
                 ),
                 contentPadding:
@@ -128,8 +124,7 @@ class AddWasteTypeDialog extends StatelessWidget {
             Text(
               'Description',
               style: TextStyle(
-                fontSize:
-                    context.responsiveFont(14),
+                fontSize: 14,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -144,8 +139,7 @@ class AddWasteTypeDialog extends StatelessWidget {
                 hintText:
                     'Short description of this waste category',
                 hintStyle: TextStyle(
-                  fontSize:
-                      context.responsiveFont(14),
+                  fontSize: 14,
                   color: Colors.grey.shade500,
                 ),
                 contentPadding:
@@ -184,8 +178,7 @@ class AddWasteTypeDialog extends StatelessWidget {
             Text(
               'Status',
               style: TextStyle(
-                fontSize:
-                    context.responsiveFont(14),
+                fontSize: 14,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -224,10 +217,7 @@ class AddWasteTypeDialog extends StatelessWidget {
                   Text(
                     'Active',
                     style: TextStyle(
-                      fontSize:
-                          context.responsiveFont(
-                        14,
-                      ),
+                      fontSize: 14,
                     ),
                   ),
 
@@ -235,8 +225,7 @@ class AddWasteTypeDialog extends StatelessWidget {
 
                   Icon(
                     Icons.keyboard_arrow_down,
-                    size:
-                        context.responsiveFont(20),
+                    size: 20,
                     color: Colors.grey.shade600,
                   ),
                 ],
@@ -274,10 +263,7 @@ class AddWasteTypeDialog extends StatelessWidget {
                     style: TextStyle(
                       color:
                           const Color(0xFF1F2937),
-                      fontSize:
-                          context.responsiveFont(
-                        14,
-                      ),
+                      fontSize: 14,
                     ),
                   ),
                 ),
@@ -307,10 +293,7 @@ class AddWasteTypeDialog extends StatelessWidget {
                     'Save',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize:
-                          context.responsiveFont(
-                        14,
-                      ),
+                      fontSize: 14,
                       fontWeight:
                           FontWeight.w500,
                     ),

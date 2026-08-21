@@ -60,6 +60,7 @@ class ComplaintDetailScreen extends StatelessWidget {
   }
 
   // HEADER
+
   Widget _header(BuildContext context) {
     return Container(
       height: 64,
@@ -76,10 +77,10 @@ class ComplaintDetailScreen extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Text(
+          const Text(
             'Nashik Municipal Corporation',
             style: TextStyle(
-              fontSize: context.responsiveFont(16),
+              fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -87,13 +88,15 @@ class ComplaintDetailScreen extends StatelessWidget {
           const Spacer(),
 
           Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment:
+                MainAxisAlignment.center,
+            crossAxisAlignment:
+                CrossAxisAlignment.end,
             children: [
-              Text(
+              const Text(
                 'Admin',
                 style: TextStyle(
-                  fontSize: context.responsiveFont(15),
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -101,7 +104,7 @@ class ComplaintDetailScreen extends StatelessWidget {
               Text(
                 'admin@ecotrack.gov.in',
                 style: TextStyle(
-                  fontSize: context.responsiveFont(12),
+                  fontSize: 12,
                   color: Colors.grey.shade500,
                 ),
               ),
@@ -112,15 +115,15 @@ class ComplaintDetailScreen extends StatelessWidget {
             width: context.width * 0.01,
           ),
 
-          CircleAvatar(
+          const CircleAvatar(
             radius: 18,
-            backgroundColor: const Color(0xFFE8F5E9),
+            backgroundColor: Color(0xFFE8F5E9),
             child: Text(
               'AD',
               style: TextStyle(
-                fontSize: context.responsiveFont(12),
+                fontSize: 12,
                 fontWeight: FontWeight.bold,
-                color: const Color(0xFF2E7D32),
+                color: Color(0xFF2E7D32),
               ),
             ),
           ),
@@ -130,6 +133,7 @@ class ComplaintDetailScreen extends StatelessWidget {
   }
 
   // MAIN CONTENT
+
   Widget _content(BuildContext context) {
     final bool isMobile = context.width < 900;
 
@@ -140,9 +144,11 @@ class ComplaintDetailScreen extends StatelessWidget {
           isMobile ? 16 : 26,
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment:
+              CrossAxisAlignment.start,
           children: [
             // BACK
+
             InkWell(
               onTap: () {
                 Navigator.pop(context);
@@ -150,21 +156,21 @@ class ComplaintDetailScreen extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.arrow_back,
-                    size: context.responsiveFont(20),
-                    color: const Color(0xFF64748B),
+                    size: 20,
+                    color: Color(0xFF64748B),
                   ),
 
                   const SizedBox(
                     width: 8,
                   ),
 
-                  Text(
+                  const Text(
                     'Back',
                     style: TextStyle(
-                      fontSize: context.responsiveFont(14),
-                      color: const Color(0xFF64748B),
+                      fontSize: 14,
+                      color: Color(0xFF64748B),
                     ),
                   ),
                 ],
@@ -176,14 +182,15 @@ class ComplaintDetailScreen extends StatelessWidget {
             ),
 
             // TITLE
+
             Row(
               children: [
-                Text(
+                const Text(
                   'Complaint Details',
                   style: TextStyle(
-                    fontSize: context.responsiveFont(26),
+                    fontSize: 26,
                     fontWeight: FontWeight.bold,
-                    color: const Color(0xFF07152B),
+                    color: Color(0xFF07152B),
                   ),
                 ),
 
@@ -203,9 +210,11 @@ class ComplaintDetailScreen extends StatelessWidget {
             ),
 
             // DESKTOP
+
             if (!isMobile)
               Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment:
+                    CrossAxisAlignment.start,
                 children: [
                   Expanded(
                     child: Column(
@@ -249,6 +258,7 @@ class ComplaintDetailScreen extends StatelessWidget {
               ),
 
             // MOBILE / TABLET
+
             if (isMobile)
               Column(
                 children: [
@@ -286,14 +296,17 @@ class ComplaintDetailScreen extends StatelessWidget {
   }
 
   // COMPLAINT IMAGE
+
   Widget _complaintImage(
     BuildContext context,
   ) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(15),
+      borderRadius:
+          BorderRadius.circular(15),
       child: SizedBox(
         width: double.infinity,
-        height: context.width < 600 ? 250 : 385,
+        height:
+            context.width < 600 ? 250 : 385,
         child: Image.asset(
           image,
           fit: BoxFit.cover,
@@ -303,6 +316,7 @@ class ComplaintDetailScreen extends StatelessWidget {
   }
 
   // CURRENT STATUS
+
   Widget _currentStatusCard(
     BuildContext context,
   ) {
@@ -311,7 +325,8 @@ class ComplaintDetailScreen extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius:
+            BorderRadius.circular(15),
         border: Border.all(
           color: Colors.grey.shade200,
         ),
@@ -326,12 +341,13 @@ class ComplaintDetailScreen extends StatelessWidget {
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment:
+            CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Current Status',
             style: TextStyle(
-              fontSize: context.responsiveFont(17),
+              fontSize: 17,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -351,10 +367,10 @@ class ComplaintDetailScreen extends StatelessWidget {
             height: 25,
           ),
 
-          Text(
+          const Text(
             'Update Complaint Status',
             style: TextStyle(
-              fontSize: context.responsiveFont(15),
+              fontSize: 15,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -366,12 +382,14 @@ class ComplaintDetailScreen extends StatelessWidget {
           Container(
             width: double.infinity,
             height: 38,
-            padding: const EdgeInsets.symmetric(
+            padding:
+                const EdgeInsets.symmetric(
               horizontal: 12,
             ),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(9),
+              borderRadius:
+                  BorderRadius.circular(9),
               border: Border.all(
                 color: Colors.grey.shade300,
               ),
@@ -380,16 +398,16 @@ class ComplaintDetailScreen extends StatelessWidget {
               children: [
                 Text(
                   status,
-                  style: TextStyle(
-                    fontSize: context.responsiveFont(14),
+                  style: const TextStyle(
+                    fontSize: 14,
                   ),
                 ),
 
                 const Spacer(),
 
-                Icon(
+                const Icon(
                   Icons.keyboard_arrow_down,
-                  size: context.responsiveFont(20),
+                  size: 20,
                   color: Colors.grey,
                 ),
               ],
@@ -406,17 +424,21 @@ class ComplaintDetailScreen extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primaryColor,
-                foregroundColor: Colors.white,
+                backgroundColor:
+                    AppColors.primaryColor,
+                foregroundColor:
+                    Colors.white,
                 elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(9),
+                shape:
+                    RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.circular(9),
                 ),
               ),
-              child: Text(
+              child: const Text(
                 'Update Status',
                 style: TextStyle(
-                  fontSize: context.responsiveFont(14),
+                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -428,17 +450,20 @@ class ComplaintDetailScreen extends StatelessWidget {
   }
 
   // COMPLAINT INFORMATION
+
   Widget _complaintInformation(
     BuildContext context,
   ) {
-    final bool isMobile = context.width < 600;
+    final bool isMobile =
+        context.width < 600;
 
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius:
+            BorderRadius.circular(15),
         border: Border.all(
           color: Colors.grey.shade200,
         ),
@@ -453,12 +478,13 @@ class ComplaintDetailScreen extends StatelessWidget {
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment:
+            CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Complaint Information',
             style: TextStyle(
-              fontSize: context.responsiveFont(17),
+              fontSize: 17,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -469,10 +495,13 @@ class ComplaintDetailScreen extends StatelessWidget {
 
           if (!isMobile)
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment:
+                  CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  child: _leftInformation(context),
+                  child: _leftInformation(
+                    context,
+                  ),
                 ),
 
                 const SizedBox(
@@ -480,7 +509,9 @@ class ComplaintDetailScreen extends StatelessWidget {
                 ),
 
                 Expanded(
-                  child: _rightInformation(context),
+                  child: _rightInformation(
+                    context,
+                  ),
                 ),
               ],
             ),
@@ -504,19 +535,24 @@ class ComplaintDetailScreen extends StatelessWidget {
 
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.all(16),
+            padding:
+                const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: const Color(0xFFF7F9F8),
-              borderRadius: BorderRadius.circular(12),
+              color:
+                  const Color(0xFFF7F9F8),
+              borderRadius:
+                  BorderRadius.circular(12),
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment:
+                  CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Description',
                   style: TextStyle(
-                    fontSize: context.responsiveFont(13),
-                    color: const Color(0xFF64748B),
+                    fontSize: 13,
+                    color:
+                        Color(0xFF64748B),
                   ),
                 ),
 
@@ -524,11 +560,12 @@ class ComplaintDetailScreen extends StatelessWidget {
                   height: 7,
                 ),
 
-                Text(
+                const Text(
                   'Garbage bin near the bus stop has been overflowing for three days.',
                   style: TextStyle(
-                    fontSize: context.responsiveFont(14),
-                    color: const Color(0xFF07152B),
+                    fontSize: 14,
+                    color:
+                        Color(0xFF07152B),
                   ),
                 ),
               ],
@@ -631,18 +668,21 @@ class ComplaintDetailScreen extends StatelessWidget {
     String value,
   ) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment:
+          CrossAxisAlignment.start,
       children: [
         Container(
           width: 34,
           height: 34,
           decoration: BoxDecoration(
-            color: const Color(0xFFEAF7EE),
-            borderRadius: BorderRadius.circular(10),
+            color:
+                const Color(0xFFEAF7EE),
+            borderRadius:
+                BorderRadius.circular(10),
           ),
           child: Icon(
             icon,
-            size: context.responsiveFont(18),
+            size: 18,
             color: AppColors.primaryColor,
           ),
         ),
@@ -653,13 +693,15 @@ class ComplaintDetailScreen extends StatelessWidget {
 
         Expanded(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment:
+                CrossAxisAlignment.start,
             children: [
               Text(
                 label,
-                style: TextStyle(
-                  fontSize: context.responsiveFont(12),
-                  color: const Color(0xFF64748B),
+                style: const TextStyle(
+                  fontSize: 12,
+                  color:
+                      Color(0xFF64748B),
                 ),
               ),
 
@@ -669,10 +711,12 @@ class ComplaintDetailScreen extends StatelessWidget {
 
               Text(
                 value,
-                style: TextStyle(
-                  fontSize: context.responsiveFont(14),
-                  fontWeight: FontWeight.w500,
-                  color: const Color(0xFF07152B),
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight:
+                      FontWeight.w500,
+                  color:
+                      Color(0xFF07152B),
                 ),
               ),
             ],
@@ -683,6 +727,7 @@ class ComplaintDetailScreen extends StatelessWidget {
   }
 
   // STATUS TIMELINE
+
   Widget _statusTimeline(
     BuildContext context,
   ) {
@@ -691,7 +736,8 @@ class ComplaintDetailScreen extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius:
+            BorderRadius.circular(15),
         border: Border.all(
           color: Colors.grey.shade200,
         ),
@@ -706,12 +752,13 @@ class ComplaintDetailScreen extends StatelessWidget {
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment:
+            CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Status Timeline',
             style: TextStyle(
-              fontSize: context.responsiveFont(17),
+              fontSize: 17,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -766,7 +813,8 @@ class ComplaintDetailScreen extends StatelessWidget {
     return SizedBox(
       height: 64,
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment:
+            CrossAxisAlignment.start,
         children: [
           Column(
             children: [
@@ -777,31 +825,42 @@ class ComplaintDetailScreen extends StatelessWidget {
                   color: current
                       ? AppColors.primaryColor
                       : completed
-                          ? const Color(0xFFF4FBF6)
-                          : const Color(0xFFF3F5F6),
+                          ? const Color(
+                              0xFFF4FBF6,
+                            )
+                          : const Color(
+                              0xFFF3F5F6,
+                            ),
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: current
                         ? AppColors.primaryColor
                         : completed
-                            ? AppColors.primaryColor
-                            : const Color(0xFFDCE3E7),
+                            ? AppColors
+                                .primaryColor
+                            : const Color(
+                                0xFFDCE3E7,
+                              ),
                   ),
                 ),
                 child: Center(
                   child: completed
                       ? Icon(
                           Icons.check,
-                          size: context.responsiveFont(16),
+                          size: 16,
                           color: current
                               ? Colors.white
-                              : AppColors.primaryColor,
+                              : AppColors
+                                  .primaryColor,
                         )
                       : Text(
                           number,
-                          style: TextStyle(
-                            fontSize: context.responsiveFont(12),
-                            color: const Color(0xFF64748B),
+                          style:
+                              const TextStyle(
+                            fontSize: 12,
+                            color: Color(
+                              0xFF64748B,
+                            ),
                           ),
                         ),
                 ),
@@ -811,7 +870,8 @@ class ComplaintDetailScreen extends StatelessWidget {
                 Expanded(
                   child: Container(
                     width: 1,
-                    color: AppColors.primaryColor,
+                    color:
+                        AppColors.primaryColor,
                   ),
                 ),
             ],
@@ -822,31 +882,37 @@ class ComplaintDetailScreen extends StatelessWidget {
           ),
 
           Padding(
-            padding: const EdgeInsets.only(
+            padding:
+                const EdgeInsets.only(
               top: 5,
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment:
+                  CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
                   style: TextStyle(
-                    fontSize: context.responsiveFont(14),
+                    fontSize: 14,
                     fontWeight: current
                         ? FontWeight.w500
                         : FontWeight.w400,
                     color: current
-                        ? AppColors.primaryColor
-                        : const Color(0xFF334155),
+                        ? AppColors
+                            .primaryColor
+                        : const Color(
+                            0xFF334155,
+                          ),
                   ),
                 ),
 
                 if (current)
-                  Text(
+                  const Text(
                     'Current status',
                     style: TextStyle(
-                      fontSize: context.responsiveFont(12),
-                      color: const Color(0xFF94A3B8),
+                      fontSize: 12,
+                      color:
+                          Color(0xFF94A3B8),
                     ),
                   ),
               ],
@@ -864,18 +930,20 @@ class ComplaintDetailScreen extends StatelessWidget {
     Color textColor,
   ) {
     return Container(
-      padding: const EdgeInsets.symmetric(
+      padding:
+          const EdgeInsets.symmetric(
         horizontal: 12,
         vertical: 5,
       ),
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius:
+            BorderRadius.circular(20),
       ),
       child: Text(
         text,
         style: TextStyle(
-          fontSize: context.responsiveFont(12),
+          fontSize: 12,
           color: textColor,
           fontWeight: FontWeight.w500,
         ),

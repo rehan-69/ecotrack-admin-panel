@@ -22,8 +22,7 @@ class AdminLoginScreen extends StatelessWidget {
               Text(
                 'EcoTrack',
                 style: TextStyle(
-                  fontSize:
-                      context.responsiveFont(32),
+                  fontSize: 32,
                   fontWeight: FontWeight.bold,
                   color: const Color(0xFF2E7D32),
                 ),
@@ -36,8 +35,7 @@ class AdminLoginScreen extends StatelessWidget {
               Text(
                 'Admin Panel',
                 style: TextStyle(
-                  fontSize:
-                      context.responsiveFont(20),
+                  fontSize: 20,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -50,8 +48,7 @@ class AdminLoginScreen extends StatelessWidget {
                 title: 'Admin Email',
                 width: context.width * 0.35,
                 height: context.height * 0.065,
-                fontSize:
-                    context.responsiveFont(16),
+                fontSize: 16,
                 borderRadius:
                     context.width * 0.008,
                 keyboardType:
@@ -68,8 +65,7 @@ class AdminLoginScreen extends StatelessWidget {
                 title: 'Password',
                 width: context.width * 0.35,
                 height: context.height * 0.065,
-                fontSize:
-                    context.responsiveFont(16),
+                fontSize: 16,
                 borderRadius:
                     context.width * 0.008,
                 obscureText: true,
@@ -96,8 +92,7 @@ class AdminLoginScreen extends StatelessWidget {
                 height: context.height * 0.065,
                 borderRadius:
                     context.width * 0.008,
-                fontSize:
-                    context.responsiveFont(16),
+                fontSize: 16,
                 fontWeight:
                     FontWeight.w600,
               ),

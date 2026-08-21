@@ -20,12 +20,13 @@ class DeleteWasteTypeDialog extends StatelessWidget {
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment:
+              CrossAxisAlignment.start,
           children: [
             Text(
               'Delete Waste Type?',
               style: TextStyle(
-                fontSize: context.responsiveFont(20),
+                fontSize: 20,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -37,7 +38,7 @@ class DeleteWasteTypeDialog extends StatelessWidget {
             Text(
               'Are you sure you want to delete this waste type?',
               style: TextStyle(
-                fontSize: context.responsiveFont(14),
+                fontSize: 14,
                 color: Colors.grey.shade600,
               ),
             ),
@@ -69,8 +70,7 @@ class DeleteWasteTypeDialog extends StatelessWidget {
                   child: Text(
                     'Cancel',
                     style: TextStyle(
-                      fontSize:
-                          context.responsiveFont(14),
+                      fontSize: 14,
                       color:
                           const Color(0xFF1F2937),
                     ),
@@ -100,8 +100,7 @@ class DeleteWasteTypeDialog extends StatelessWidget {
                   child: Text(
                     'Delete',
                     style: TextStyle(
-                      fontSize:
-                          context.responsiveFont(14),
+                      fontSize: 14,
                       color: Colors.white,
                       fontWeight:
                           FontWeight.w500,

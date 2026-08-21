@@ -1,5 +1,4 @@
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
-import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -30,9 +29,8 @@ class DashboardScreen extends StatelessWidget {
                 children: [
                   Text(
                     'Dashboard',
-                    style: TextStyle(
-                      fontSize:
-                          context.responsiveFont(30),
+                    style: const TextStyle(
+                      fontSize: 30,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
@@ -44,15 +42,14 @@ class DashboardScreen extends StatelessWidget {
 
                   Text(
                     'Monitor and manage waste complaints across your city.',
-                    style: TextStyle(
-                      fontSize:
-                          context.responsiveFont(16),
+                    style: const TextStyle(
+                      fontSize: 16,
                       color: Colors.grey,
                     ),
                   ),
 
                   SizedBox(
-                    height: context.height * 0.035,
+                    height: dashboardWidth * 0.035,
                   ),
 
                   Row(
@@ -116,13 +113,13 @@ class DashboardScreen extends StatelessWidget {
                   ),
 
                   SizedBox(
-                    height: context.height * 0.035,
+                    height: dashboardWidth * 0.035,
                   ),
 
                   _complaintStatus(context),
 
                   SizedBox(
-                    height: context.height * 0.035,
+                    height: dashboardWidth * 0.035,
                   ),
 
                   _recentComplaints(context),
@@ -168,7 +165,8 @@ class DashboardScreen extends StatelessWidget {
             height: 44,
             decoration: BoxDecoration(
               color: iconBackground,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius:
+                  BorderRadius.circular(12),
             ),
             child: Icon(
               icon,
@@ -187,9 +185,8 @@ class DashboardScreen extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: TextStyle(
-                  fontSize:
-                      context.responsiveFont(15),
+                style: const TextStyle(
+                  fontSize: 15,
                   color: Colors.grey,
                 ),
               ),
@@ -200,9 +197,8 @@ class DashboardScreen extends StatelessWidget {
 
               Text(
                 value,
-                style: TextStyle(
-                  fontSize:
-                      context.responsiveFont(24),
+                style: const TextStyle(
+                  fontSize: 24,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
@@ -240,11 +236,10 @@ class DashboardScreen extends StatelessWidget {
         crossAxisAlignment:
             CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Complaint Status Overview',
             style: TextStyle(
-              fontSize:
-                  context.responsiveFont(18),
+              fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
@@ -254,11 +249,10 @@ class DashboardScreen extends StatelessWidget {
             height: 6,
           ),
 
-          Text(
+          const Text(
             'Distribution of complaints by current status.',
             style: TextStyle(
-              fontSize:
-                  context.responsiveFont(14),
+              fontSize: 14,
               color: Colors.grey,
             ),
           ),
@@ -311,10 +305,9 @@ class DashboardScreen extends StatelessWidget {
                         rod.toY
                             .toInt()
                             .toString(),
-                        TextStyle(
+                        const TextStyle(
                           color: Colors.white,
-                          fontSize:
-                              context.responsiveFont(14),
+                          fontSize: 14,
                           fontWeight:
                               FontWeight.bold,
                         ),
@@ -324,14 +317,18 @@ class DashboardScreen extends StatelessWidget {
                 ),
 
                 titlesData: FlTitlesData(
-                  topTitles: const AxisTitles(
-                    sideTitles: SideTitles(
+                  topTitles:
+                      const AxisTitles(
+                    sideTitles:
+                        SideTitles(
                       showTitles: false,
                     ),
                   ),
 
-                  rightTitles: const AxisTitles(
-                    sideTitles: SideTitles(
+                  rightTitles:
+                      const AxisTitles(
+                    sideTitles:
+                        SideTitles(
                       showTitles: false,
                     ),
                   ),
@@ -343,20 +340,17 @@ class DashboardScreen extends StatelessWidget {
                       reservedSize: 40,
                       getTitlesWidget:
                           (value, meta) {
-                        return Text(
-                          value.toInt().toString(),
-                          style: TextStyle(
-                            fontSize:
-                                context.responsiveFont(13),
-                            color: Colors.grey,
-                          ),
+                        return const Text(
+                          '',
                         );
                       },
                     ),
                   ),
 
-                  bottomTitles: AxisTitles(
-                    sideTitles: SideTitles(
+                  bottomTitles:
+                      AxisTitles(
+                    sideTitles:
+                        SideTitles(
                       showTitles: true,
                       reservedSize: 30,
                       getTitlesWidget:
@@ -373,9 +367,9 @@ class DashboardScreen extends StatelessWidget {
 
                         return Text(
                           title,
-                          style: TextStyle(
-                            fontSize:
-                                context.responsiveFont(13),
+                          style:
+                              const TextStyle(
+                            fontSize: 13,
                             color: Colors.grey,
                           ),
                         );
@@ -442,22 +436,20 @@ class DashboardScreen extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(
+            const Text(
               'Recent Complaints',
               style: TextStyle(
-                fontSize:
-                    context.responsiveFont(18),
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
 
             const Spacer(),
 
-            Text(
+            const Text(
               'View All Complaints',
               style: TextStyle(
-                fontSize:
-                    context.responsiveFont(14),
+                fontSize: 14,
                 color: AppColors.primaryColor,
                 fontWeight: FontWeight.w500,
               ),
@@ -616,9 +608,8 @@ class DashboardScreen extends StatelessWidget {
       flex: flex,
       child: Text(
         title,
-        style: TextStyle(
-          fontSize:
-              context.responsiveFont(12),
+        style: const TextStyle(
+          fontSize: 12,
           color: Colors.grey,
           fontWeight: FontWeight.w500,
         ),
@@ -701,8 +692,7 @@ class DashboardScreen extends StatelessWidget {
                 child: Text(
                   status,
                   style: TextStyle(
-                    fontSize:
-                        context.responsiveFont(12),
+                    fontSize: 12,
                     color: statusColor,
                     fontWeight:
                         FontWeight.w500,
@@ -716,11 +706,12 @@ class DashboardScreen extends StatelessWidget {
             flex: 7,
             child: Text(
               'View',
-              style: TextStyle(
-                fontSize:
-                    context.responsiveFont(14),
-                color: AppColors.primaryColor,
-                fontWeight: FontWeight.w500,
+              style: const TextStyle(
+                fontSize: 14,
+                color:
+                    AppColors.primaryColor,
+                fontWeight:
+                    FontWeight.w500,
               ),
             ),
           ),
@@ -740,9 +731,8 @@ class DashboardScreen extends StatelessWidget {
         text,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: TextStyle(
-          fontSize:
-              context.responsiveFont(14),
+        style: const TextStyle(
+          fontSize: 14,
           color: Colors.black87,
         ),
       ),

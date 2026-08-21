@@ -30,14 +30,15 @@ class EditWasteTypeDialog extends StatelessWidget {
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment:
+              CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Text(
                   'Edit Waste Type',
                   style: TextStyle(
-                    fontSize: context.responsiveFont(20),
+                    fontSize: 20,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -50,7 +51,7 @@ class EditWasteTypeDialog extends StatelessWidget {
                   },
                   child: Icon(
                     Icons.close,
-                    size: context.responsiveFont(20),
+                    size: 20,
                     color: Colors.grey,
                   ),
                 ),
@@ -64,7 +65,7 @@ class EditWasteTypeDialog extends StatelessWidget {
             Text(
               'Update the details of this waste category.',
               style: TextStyle(
-                fontSize: context.responsiveFont(14),
+                fontSize: 14,
                 color: Colors.grey.shade600,
               ),
             ),
@@ -76,7 +77,7 @@ class EditWasteTypeDialog extends StatelessWidget {
             Text(
               'Waste Type Name',
               style: TextStyle(
-                fontSize: context.responsiveFont(14),
+                fontSize: 14,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -92,7 +93,7 @@ class EditWasteTypeDialog extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: 'e.g. Household Waste',
                 hintStyle: TextStyle(
-                  fontSize: context.responsiveFont(14),
+                  fontSize: 14,
                   color: Colors.grey.shade500,
                 ),
                 contentPadding:
@@ -101,21 +102,25 @@ class EditWasteTypeDialog extends StatelessWidget {
                   vertical: 14,
                 ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius:
+                      BorderRadius.circular(10),
                   borderSide: BorderSide(
                     color: Colors.grey.shade300,
                   ),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius:
+                      BorderRadius.circular(10),
                   borderSide: BorderSide(
                     color: Colors.grey.shade300,
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius:
+                      BorderRadius.circular(10),
                   borderSide: BorderSide(
-                    color: AppColors.primaryColor,
+                    color:
+                        AppColors.primaryColor,
                   ),
                 ),
               ),
@@ -128,7 +133,7 @@ class EditWasteTypeDialog extends StatelessWidget {
             Text(
               'Description',
               style: TextStyle(
-                fontSize: context.responsiveFont(14),
+                fontSize: 14,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -146,27 +151,31 @@ class EditWasteTypeDialog extends StatelessWidget {
                 hintText:
                     'Short description of this waste category',
                 hintStyle: TextStyle(
-                  fontSize: context.responsiveFont(14),
+                  fontSize: 14,
                   color: Colors.grey.shade500,
                 ),
                 contentPadding:
                     const EdgeInsets.all(14),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius:
+                      BorderRadius.circular(10),
                   borderSide: BorderSide(
                     color: Colors.grey.shade300,
                   ),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius:
+                      BorderRadius.circular(10),
                   borderSide: BorderSide(
                     color: Colors.grey.shade300,
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius:
+                      BorderRadius.circular(10),
                   borderSide: BorderSide(
-                    color: AppColors.primaryColor,
+                    color:
+                        AppColors.primaryColor,
                   ),
                 ),
               ),
@@ -179,7 +188,7 @@ class EditWasteTypeDialog extends StatelessWidget {
             Text(
               'Status',
               style: TextStyle(
-                fontSize: context.responsiveFont(14),
+                fontSize: 14,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -208,7 +217,8 @@ class EditWasteTypeDialog extends StatelessWidget {
                       alpha: 0.04,
                     ),
                     blurRadius: 4,
-                    offset: const Offset(0, 2),
+                    offset:
+                        const Offset(0, 2),
                   ),
                 ],
               ),
@@ -217,8 +227,7 @@ class EditWasteTypeDialog extends StatelessWidget {
                   Text(
                     status,
                     style: TextStyle(
-                      fontSize:
-                          context.responsiveFont(14),
+                      fontSize: 14,
                     ),
                   ),
 
@@ -226,8 +235,7 @@ class EditWasteTypeDialog extends StatelessWidget {
 
                   Icon(
                     Icons.keyboard_arrow_down,
-                    size:
-                        context.responsiveFont(20),
+                    size: 20,
                     color: Colors.grey.shade600,
                   ),
                 ],
@@ -246,11 +254,13 @@ class EditWasteTypeDialog extends StatelessWidget {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  style: OutlinedButton.styleFrom(
+                  style:
+                      OutlinedButton.styleFrom(
                     minimumSize:
                         const Size(82, 38),
                     side: BorderSide(
-                      color: Colors.grey.shade300,
+                      color:
+                          Colors.grey.shade300,
                     ),
                     shape:
                         RoundedRectangleBorder(
@@ -261,9 +271,9 @@ class EditWasteTypeDialog extends StatelessWidget {
                   child: Text(
                     'Cancel',
                     style: TextStyle(
-                      color: const Color(0xFF1F2937),
-                      fontSize:
-                          context.responsiveFont(14),
+                      color:
+                          const Color(0xFF1F2937),
+                      fontSize: 14,
                     ),
                   ),
                 ),
@@ -276,7 +286,8 @@ class EditWasteTypeDialog extends StatelessWidget {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  style: ElevatedButton.styleFrom(
+                  style:
+                      ElevatedButton.styleFrom(
                     minimumSize:
                         const Size(65, 38),
                     backgroundColor:
@@ -292,9 +303,9 @@ class EditWasteTypeDialog extends StatelessWidget {
                     'Save',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize:
-                          context.responsiveFont(14),
-                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                      fontWeight:
+                          FontWeight.w500,
                     ),
                   ),
                 ),
