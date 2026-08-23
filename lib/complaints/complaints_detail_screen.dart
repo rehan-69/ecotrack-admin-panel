@@ -1,7 +1,7 @@
-import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
+import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:ecotrack_admin_panel/views/widgets/side_bar.dart';
 import 'package:ecotrack_admin_panel/viewmodel/admin_provider.dart';
 
@@ -81,9 +81,7 @@ class ComplaintDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // DESKTOP HEADER
-  // ============================================================
 
   Widget _header(BuildContext context) {
     return Container(
@@ -137,9 +135,7 @@ class ComplaintDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // MOBILE HEADER
-  // ============================================================
 
   PreferredSizeWidget _mobileHeader(BuildContext context) {
     return AppBar(
@@ -192,9 +188,7 @@ class ComplaintDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // MAIN CONTENT
-  // ============================================================
 
   Widget _content(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
@@ -212,9 +206,7 @@ class ComplaintDetailScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
 
           children: [
-            // ====================================================
             // BACK
-            // ====================================================
             InkWell(
               onTap: () {
                 Navigator.pop(context);
@@ -242,9 +234,7 @@ class ComplaintDetailScreen extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            // ====================================================
             // TITLE
-            // ====================================================
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
 
@@ -276,9 +266,7 @@ class ComplaintDetailScreen extends StatelessWidget {
 
             const SizedBox(height: 24),
 
-            // ====================================================
             // DESKTOP
-            // ====================================================
             if (!isMobile)
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -313,9 +301,7 @@ class ComplaintDetailScreen extends StatelessWidget {
                 ],
               ),
 
-            // ====================================================
             // MOBILE / TABLET
-            // ====================================================
             if (isMobile)
               Column(
                 children: [
@@ -340,9 +326,7 @@ class ComplaintDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // COMPLAINT IMAGE
-  // ============================================================
 
   Widget _complaintImage(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
@@ -360,9 +344,7 @@ class ComplaintDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // CURRENT STATUS
-  // ============================================================
 
   Widget _currentStatusCard(BuildContext context) {
     return Container(
@@ -468,9 +450,7 @@ class ComplaintDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // COMPLAINT INFORMATION
-  // ============================================================
 
   Widget _complaintInformation(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
@@ -565,9 +545,7 @@ class ComplaintDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // LEFT INFORMATION
-  // ============================================================
 
   Widget _leftInformation(BuildContext context) {
     return Column(
@@ -604,9 +582,7 @@ class ComplaintDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // RIGHT INFORMATION
-  // ============================================================
 
   Widget _rightInformation(BuildContext context) {
     return Column(
@@ -639,9 +615,7 @@ class ComplaintDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // INFORMATION ITEM
-  // ============================================================
 
   Widget _informationItem(
     BuildContext context,
@@ -697,9 +671,7 @@ class ComplaintDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // STATUS TIMELINE
-  // ============================================================
 
   Widget _statusTimeline(BuildContext context) {
     return Container(
@@ -744,9 +716,7 @@ class ComplaintDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // TIMELINE ITEM
-  // ============================================================
 
   Widget _timelineItem(
     BuildContext context,
@@ -845,9 +815,7 @@ class ComplaintDetailScreen extends StatelessWidget {
     );
   }
 
-  // ============================================================
   // STATUS BADGE
-  // ============================================================
 
   Widget _statusBadge(
     BuildContext context,

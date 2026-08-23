@@ -65,9 +65,7 @@ class AdminLayout extends StatelessWidget {
     );
   }
 
-  // ------------------------------------------------------------
   // DESKTOP HEADER
-  // ------------------------------------------------------------
 
   Widget _desktopHeader(BuildContext context) {
     return Container(
@@ -121,9 +119,7 @@ class AdminLayout extends StatelessWidget {
     );
   }
 
-  // ------------------------------------------------------------
   // MOBILE HEADER
-  // ------------------------------------------------------------
 
   PreferredSizeWidget _mobileHeader(BuildContext context) {
     return AppBar(
@@ -176,9 +172,7 @@ class AdminLayout extends StatelessWidget {
     );
   }
 
-  // ------------------------------------------------------------
   // SCREEN SWITCHING
-  // ------------------------------------------------------------
 
   Widget _getScreen(int selectedIndex) {
     if (selectedIndex == 0) {
