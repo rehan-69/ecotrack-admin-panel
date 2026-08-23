@@ -1,3 +1,4 @@
+import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
 import 'package:ecotrack_admin_panel/complaints/complaints_detail_screen.dart';
@@ -107,31 +108,51 @@ class UserDetailScreen extends StatelessWidget {
   PreferredSizeWidget _mobileHeader(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: const Color(0xFF1B1B27),
+      backgroundColor: Colors.white,
       elevation: 0,
       toolbarHeight: 64,
 
       leading: Builder(
         builder: (context) {
           return IconButton(
+            icon: const Icon(Icons.menu, color: Colors.black54, size: 28),
             onPressed: () {
               Scaffold.of(context).openDrawer();
             },
-            icon: const Icon(Icons.menu, color: Colors.white, size: 28),
           );
         },
       ),
 
-      titleSpacing: 0,
+      title: Row(
+        children: [
+          const Text(
+            'Nashik Municipal Corporation',
+            style: TextStyle(
+              color: Color(0xFF1F2937),
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
 
-      title: const Text(
-        'Admin Panel',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 21,
-          fontWeight: FontWeight.bold,
-        ),
+          const Spacer(),
+          SizedBox(width: context.width * 0.005),
+
+          const CircleAvatar(
+            radius: 15,
+            backgroundColor: Color(0xFF2E8B45),
+            child: Text(
+              'AD',
+              style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
       ),
+
+      titleSpacing: 0,
     );
   }
 

@@ -127,57 +127,53 @@ class AdminLayout extends StatelessWidget {
 
   PreferredSizeWidget _mobileHeader(BuildContext context) {
     return AppBar(
-  automaticallyImplyLeading: false,
-  backgroundColor: Colors.white,
-  elevation: 0,
-  toolbarHeight: 64,
+      automaticallyImplyLeading: false,
+      backgroundColor: Colors.white,
+      elevation: 0,
+      toolbarHeight: 64,
 
-  leading: Builder(
-    builder: (context) {
-      return IconButton(
-        icon: const Icon(
-          Icons.menu,
-          color: Colors.black54,
-          size: 28,
-        ),
-        onPressed: () {
-          Scaffold.of(context).openDrawer();
+      leading: Builder(
+        builder: (context) {
+          return IconButton(
+            icon: const Icon(Icons.menu, color: Colors.black54, size: 28),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+          );
         },
-      );
-    },
-  ),
-
-  title: Row(
-    children: [
-      const Text(
-        'Nashik Municipal Corporation',
-        style: TextStyle(
-          color: Color(0xFF1F2937),
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-        ),
       ),
 
-      // const Spacer(),
-      SizedBox(width: context.width * 0.14,),
-
-      const CircleAvatar(
-        radius: 15,
-        backgroundColor: Color(0xFF2E8B45),
-        child: Text(
-          'AD',
-          style: TextStyle(
-            fontSize: 10,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+      title: Row(
+        children: [
+          const Text(
+            'Nashik Municipal Corporation',
+            style: TextStyle(
+              color: Color(0xFF1F2937),
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
           ),
-        ),
-      ),
-    ],
-  ),
 
-  titleSpacing: 0,
-);
+          const Spacer(),
+          SizedBox(width: context.width * 0.005),
+
+          const CircleAvatar(
+            radius: 15,
+            backgroundColor: Color(0xFF2E8B45),
+            child: Text(
+              'AD',
+              style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      ),
+
+      titleSpacing: 0,
+    );
   }
 
   // ------------------------------------------------------------
