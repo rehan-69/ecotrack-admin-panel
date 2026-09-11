@@ -1,151 +1,164 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:provider/provider.dart';
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
+import 'package:ecotrack_admin_panel/viewmodel/admin_provider.dart';
 import 'package:ecotrack_admin_panel/complaints/complaints_detail_screen.dart';
+
+
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final double dashboardWidth = constraints.maxWidth;
-        final bool isMobile = dashboardWidth < 700;
+    return Consumer<AdminProvider>(
+      builder: (context, provider, child) {
+        if (!provider.dashboardLoaded && !provider.dashboardLoading) {
+          Future.microtask(() {
+            provider.loadDashboard();
+          });
+        }
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            final double dashboardWidth = constraints.maxWidth;
+            final bool isMobile = dashboardWidth < 700;
 
-        return SingleChildScrollView(
-          padding: EdgeInsets.all(dashboardWidth * 0.025),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Dashboard',
-                style: const TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+            return SingleChildScrollView(
+              padding: EdgeInsets.all(dashboardWidth * 0.025),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Dashboard',
+                    style: const TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  Text(
+                    'Monitor and manage waste complaints across your city.',
+                    style: const TextStyle(fontSize: 16, color: Colors.grey),
+                  ),
+
+                  SizedBox(height: dashboardWidth * 0.035),
+
+                  if (isMobile)
+                    Column(
+                      children: [
+                        _dashboardCard(
+                          context,
+                          'Total Complaints',
+                          provider.totalComplaints.toString(),
+                          Icons.description_outlined,
+                          const Color(0xFFE8F5E9),
+                          AppColors.primaryColor,
+                        ),
+
+                        const SizedBox(height: 16),
+
+                        _dashboardCard(
+                          context,
+                          'Pending',
+                          provider.pendingComplaints.toString(),
+                          Icons.access_time,
+                          const Color(0xFFFFF3D6),
+                          Colors.orange,
+                        ),
+
+                        const SizedBox(height: 16),
+
+                        _dashboardCard(
+                          context,
+                          'In Progress',
+                          provider.inProgressComplaints.toString(),
+                          Icons.sync,
+                          const Color(0xFFE3F2FD),
+                          Colors.blue,
+                        ),
+
+                        const SizedBox(height: 16),
+
+                        _dashboardCard(
+                          context,
+                          'Completed',
+                          provider.completedComplaints.toString(),
+                          Icons.check_circle_outline,
+                          const Color(0xFFE0F5E5),
+                          Colors.green,
+                        ),
+                      ],
+                    )
+                  else
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _dashboardCard(
+                            context,
+                            'Total Complaints',
+                            provider.totalComplaints.toString(),
+                            Icons.description_outlined,
+                            const Color(0xFFE8F5E9),
+                            AppColors.primaryColor,
+                          ),
+                        ),
+
+                        SizedBox(width: dashboardWidth * 0.015),
+
+                        Expanded(
+                          child: _dashboardCard(
+                            context,
+                            'Pending',
+                            provider.pendingComplaints.toString(),
+                            Icons.access_time,
+                            const Color(0xFFFFF3D6),
+                            Colors.orange,
+                          ),
+                        ),
+
+                        SizedBox(width: dashboardWidth * 0.015),
+
+                        Expanded(
+                          child: _dashboardCard(
+                            context,
+                            'In Progress',
+                            provider.inProgressComplaints.toString(),
+                            Icons.sync,
+                            const Color(0xFFE3F2FD),
+                            Colors.blue,
+                          ),
+                        ),
+
+                        SizedBox(width: dashboardWidth * 0.015),
+
+                        Expanded(
+                          child: _dashboardCard(
+                            context,
+                            'Completed',
+                            provider.completedComplaints.toString(),
+                            Icons.check_circle_outline,
+                            const Color(0xFFE0F5E5),
+                            Colors.green,
+                          ),
+                        ),
+                      ],
+                    ),
+
+                  SizedBox(height: dashboardWidth * 0.035),
+
+                  _complaintStatus(context, provider),
+
+                  SizedBox(height: dashboardWidth * 0.035),
+
+                  _recentComplaints(context),
+                ],
               ),
-
-              const SizedBox(height: 8),
-
-              Text(
-                'Monitor and manage waste complaints across your city.',
-                style: const TextStyle(fontSize: 16, color: Colors.grey),
-              ),
-
-              SizedBox(height: dashboardWidth * 0.035),
-
-              if (isMobile)
-                Column(
-                  children: [
-                    _dashboardCard(
-                      context,
-                      'Total Complaints',
-                      '128',
-                      Icons.description_outlined,
-                      const Color(0xFFE8F5E9),
-                      AppColors.primaryColor,
-                    ),
-
-                    const SizedBox(height: 16),
-
-                    _dashboardCard(
-                      context,
-                      'Pending',
-                      '24',
-                      Icons.access_time,
-                      const Color(0xFFFFF3D6),
-                      Colors.orange,
-                    ),
-
-                    const SizedBox(height: 16),
-
-                    _dashboardCard(
-                      context,
-                      'In Progress',
-                      '31',
-                      Icons.sync,
-                      const Color(0xFFE3F2FD),
-                      Colors.blue,
-                    ),
-
-                    const SizedBox(height: 16),
-
-                    _dashboardCard(
-                      context,
-                      'Completed',
-                      '73',
-                      Icons.check_circle_outline,
-                      const Color(0xFFE0F5E5),
-                      Colors.green,
-                    ),
-                  ],
-                )
-              else
-                Row(
-                  children: [
-                    Expanded(
-                      child: _dashboardCard(
-                        context,
-                        'Total Complaints',
-                        '128',
-                        Icons.description_outlined,
-                        const Color(0xFFE8F5E9),
-                        AppColors.primaryColor,
-                      ),
-                    ),
-
-                    SizedBox(width: dashboardWidth * 0.015),
-
-                    Expanded(
-                      child: _dashboardCard(
-                        context,
-                        'Pending',
-                        '24',
-                        Icons.access_time,
-                        const Color(0xFFFFF3D6),
-                        Colors.orange,
-                      ),
-                    ),
-
-                    SizedBox(width: dashboardWidth * 0.015),
-
-                    Expanded(
-                      child: _dashboardCard(
-                        context,
-                        'In Progress',
-                        '31',
-                        Icons.sync,
-                        const Color(0xFFE3F2FD),
-                        Colors.blue,
-                      ),
-                    ),
-
-                    SizedBox(width: dashboardWidth * 0.015),
-
-                    Expanded(
-                      child: _dashboardCard(
-                        context,
-                        'Completed',
-                        '73',
-                        Icons.check_circle_outline,
-                        const Color(0xFFE0F5E5),
-                        Colors.green,
-                      ),
-                    ),
-                  ],
-                ),
-
-              SizedBox(height: dashboardWidth * 0.035),
-
-              _complaintStatus(context),
-
-              SizedBox(height: dashboardWidth * 0.035),
-
-              _recentComplaints(context),
-            ],
-          ),
+            );
+          },
         );
       },
     );
@@ -212,7 +225,7 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _complaintStatus(BuildContext context) {
+  Widget _complaintStatus(BuildContext context, AdminProvider provider) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
@@ -253,7 +266,13 @@ class DashboardScreen extends StatelessWidget {
             height: 300,
             child: BarChart(
               BarChartData(
-                maxY: 80,
+                maxY:
+                    [
+                      provider.pendingComplaints,
+                      provider.inProgressComplaints,
+                      provider.completedComplaints,
+                    ].reduce((a, b) => a > b ? a : b) +
+                    10,
                 minY: 0,
                 alignment: BarChartAlignment.spaceEvenly,
 
@@ -336,11 +355,21 @@ class DashboardScreen extends StatelessWidget {
                 ),
 
                 barGroups: [
-                  _barGroup(0, 24, Colors.orange),
-
-                  _barGroup(1, 31, Colors.blue),
-
-                  _barGroup(2, 73, AppColors.primaryColor),
+                  _barGroup(
+                    0,
+                    provider.pendingComplaints.toDouble(),
+                    Colors.orange,
+                  ),
+                  _barGroup(
+                    1,
+                    provider.inProgressComplaints.toDouble(),
+                    Colors.blue,
+                  ),
+                  _barGroup(
+                    2,
+                    provider.completedComplaints.toDouble(),
+                    AppColors.primaryColor,
+                  ),
                 ],
               ),
             ),
@@ -368,6 +397,8 @@ class DashboardScreen extends StatelessWidget {
   }
 
   Widget _recentComplaints(BuildContext context) {
+    final provider = context.watch<AdminProvider>();
+    final complaints = provider.recentComplaints;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -421,61 +452,49 @@ class DashboardScreen extends StatelessWidget {
                       children: [
                         _complaintHeader(context),
 
-                        _complaintRow(
-                          context,
-                          'ECO-1042',
-                          'Rahul Sharma',
-                          'Household Waste',
-                          'Ward 07',
-                          '12 Mar 2026',
-                          'In Progress',
-                          Colors.blue,
-                          const Color(0xFFE3F2FD),
-                          'assets/waste-household.jpg',
-                          'Household Waste Complaint',
-                        ),
+                        if (provider.dashboardLoading)
+                          const Padding(
+                            padding: EdgeInsets.all(30),
+                            child: CircularProgressIndicator(),
+                          )
+                        else if (complaints.isEmpty)
+                          const Padding(
+                            padding: EdgeInsets.all(30),
+                            child: Text(
+                              'No complaints found',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                          )
+                        else
+                          ...complaints.map((complaint) {
+                            final status =
+                                complaint['status']?.toString() ?? 'Pending';
 
-                        _complaintRow(
-                          context,
-                          'ECO-1038',
-                          'Amit Patil',
-                          'Construction Debris',
-                          'Ward 07',
-                          '08 Mar 2026',
-                          'Completed',
-                          Colors.green,
-                          const Color(0xFFE0F5E5),
-                          'assets/waste-household.jpg',
-                          'Household Waste Complaint',
-                        ),
+                            Color statusColor = Colors.orange;
+                            Color statusBackground = const Color(0xFFFFF3D6);
 
-                        _complaintRow(
-                          context,
-                          'ECO-1031',
-                          'Priya Shah',
-                          'Garden Waste',
-                          'Ward 04',
-                          '02 Mar 2026',
-                          'Completed',
-                          Colors.green,
-                          const Color(0xFFE0F5E5),
-                          'assets/waste-household.jpg',
-                          'Household Waste Complaint',
-                        ),
+                            if (status.toLowerCase() == 'in progress') {
+                              statusColor = Colors.blue;
+                              statusBackground = const Color(0xFFE3F2FD);
+                            } else if (status.toLowerCase() == 'completed') {
+                              statusColor = Colors.green;
+                              statusBackground = const Color(0xFFE0F5E5);
+                            }
 
-                        _complaintRow(
-                          context,
-                          'ECO-1025',
-                          'Sameer Khan',
-                          'Plastic Waste',
-                          'Ward 04',
-                          '27 Feb 2026',
-                          'Pending',
-                          Colors.orange,
-                          const Color(0xFFFFF3D6),
-                          'assets/waste-household.jpg',
-                          'Household Waste Complaint',
-                        ),
+                            return _complaintRow(
+                              context,
+                              complaint['complaint_id']?.toString() ?? '',
+                              complaint['user_name']?.toString() ?? 'Unknown',
+                              complaint['waste_type']?.toString() ?? '',
+                              complaint['location']?.toString() ?? '',
+                              _formatDate(complaint['created_at']),
+                              status,
+                              statusColor,
+                              statusBackground,
+                              'assets/waste-household.jpg',
+                              complaint['title']?.toString() ?? '',
+                            );
+                          }),
                       ],
                     ),
                   ),
@@ -627,5 +646,38 @@ class DashboardScreen extends StatelessWidget {
         style: const TextStyle(fontSize: 14, color: Colors.black87),
       ),
     );
+  }
+
+  String _formatDate(dynamic value) {
+    if (value == null) return '';
+
+    try {
+      final date = DateTime.parse(value.toString());
+
+      return '${date.day.toString().padLeft(2, '0')} '
+          '${_monthName(date.month)} '
+          '${date.year}';
+    } catch (e) {
+      return value.toString();
+    }
+  }
+
+  String _monthName(int month) {
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+
+    return months[month - 1];
   }
 }

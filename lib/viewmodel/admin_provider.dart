@@ -20,19 +20,13 @@ class AdminProvider extends ChangeNotifier {
   bool isLoading = false;
   String? errorMessage;
 
-  Future<bool> login({
-    required String email,
-    required String password,
-  }) async {
+  Future<bool> login({required String email, required String password}) async {
     isLoading = true;
     errorMessage = null;
     notifyListeners();
 
     try {
-      await AdminApiService.loginAdmin(
-        email: email,
-        password: password,
-      );
+      await AdminApiService.loginAdmin(email: email, password: password);
 
       isLoading = false;
       notifyListeners();
@@ -40,9 +34,7 @@ class AdminProvider extends ChangeNotifier {
       return true;
     } catch (error) {
       isLoading = false;
-      errorMessage = error
-          .toString()
-          .replaceFirst('Exception: ', '');
+      errorMessage = error.toString().replaceFirst('Exception: ', '');
 
       notifyListeners();
 
@@ -75,6 +67,7 @@ class AdminProvider extends ChangeNotifier {
   int pendingComplaints = 0;
   int inProgressComplaints = 0;
   int completedComplaints = 0;
+  bool dashboardLoaded = false;
 
   List<Map<String, dynamic>> recentComplaints = [];
 
@@ -89,32 +82,25 @@ class AdminProvider extends ChangeNotifier {
 
       final statistics = data['statistics'];
 
-      totalComplaints =
-          statistics['totalComplaints'] ?? 0;
+      totalComplaints = statistics['totalComplaints'] ?? 0;
 
-      pendingComplaints =
-          statistics['pending'] ?? 0;
+      pendingComplaints = statistics['pending'] ?? 0;
 
-      inProgressComplaints =
-          statistics['inProgress'] ?? 0;
+      inProgressComplaints = statistics['inProgress'] ?? 0;
 
-      completedComplaints =
-          statistics['completed'] ?? 0;
+      completedComplaints = statistics['completed'] ?? 0;
 
-      recentComplaints =
-          List<Map<String, dynamic>>.from(
+      recentComplaints = List<Map<String, dynamic>>.from(
         data['recentComplaints'] ?? [],
       );
-
+      dashboardLoaded = true;
       dashboardLoading = false;
 
       notifyListeners();
     } catch (error) {
       dashboardLoading = false;
 
-      dashboardError = error
-          .toString()
-          .replaceFirst('Exception: ', '');
+      dashboardError = error.toString().replaceFirst('Exception: ', '');
 
       notifyListeners();
     }
