@@ -5,7 +5,7 @@ import 'package:ecotrack_admin_panel/constants/app_color.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Color color;
   final Color textColor;
   final double width;
