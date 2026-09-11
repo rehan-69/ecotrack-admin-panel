@@ -112,25 +112,36 @@ class ComplaintsScreen extends StatelessWidget {
 
                     const Spacer(),
 
-                    _dropdown(context, 'All Waste Types', [
+                    _dropdown(
+                      context,
                       'All Waste Types',
-                      'Household Waste',
-                      'Plastic Waste',
-                      'Construction Debris',
-                      'Garden Waste',
-                      'E-Waste',
-                      'Other',
-                    ]),
+                      [
+                        'All Waste Types',
+                        'Household Waste',
+                        'Plastic Waste',
+                        'Construction Debris',
+                        'Garden Waste',
+                        'E-Waste',
+                        'Other',
+                      ],
+                      (value) {
+                        provider.setComplaintWasteType(
+                          value == 'All Waste Types' ? null : value,
+                        );
+                        provider.loadComplaints();
+                      },
+                    ),
 
                     const SizedBox(width: 10),
 
-                    _dropdown(context, 'All Wards', [
+                    _dropdown(
+                      context,
                       'All Wards',
-                      'Ward 02',
-                      'Ward 04',
-                      'Ward 07',
-                      'Ward 09',
-                    ]),
+                      ['All Wards', 'Ward 02', 'Ward 04', 'Ward 07', 'Ward 09'],
+                      (value) {
+                        // Ward filter next step mein connect karenge.
+                      },
+                    ),
                   ],
                 ),
 
@@ -147,6 +158,7 @@ class ComplaintsScreen extends StatelessWidget {
                         provider.setComplaintStatus(null);
                       },
                     ),
+                    const SizedBox(width: 10),
 
                     _filterButton(
                       context,
@@ -156,6 +168,7 @@ class ComplaintsScreen extends StatelessWidget {
                         provider.setComplaintStatus('Pending');
                       },
                     ),
+                    const SizedBox(width: 10),
 
                     _filterButton(
                       context,
@@ -165,6 +178,7 @@ class ComplaintsScreen extends StatelessWidget {
                         provider.setComplaintStatus('In Progress');
                       },
                     ),
+                    const SizedBox(width: 10),
 
                     _filterButton(
                       context,
@@ -221,23 +235,34 @@ class ComplaintsScreen extends StatelessWidget {
                 spacing: 10,
                 runSpacing: 10,
                 children: [
-                  _dropdown(context, 'All Waste Types', [
+                  _dropdown(
+                    context,
                     'All Waste Types',
-                    'Household Waste',
-                    'Plastic Waste',
-                    'Construction Debris',
-                    'Garden Waste',
-                    'E-Waste',
-                    'Other',
-                  ]),
+                    [
+                      'All Waste Types',
+                      'Household Waste',
+                      'Plastic Waste',
+                      'Construction Debris',
+                      'Garden Waste',
+                      'E-Waste',
+                      'Other',
+                    ],
+                    (value) {
+                      provider.setComplaintWasteType(
+                        value == 'All Waste Types' ? null : value,
+                      );
+                      provider.loadComplaints();
+                    },
+                  ),
 
-                  _dropdown(context, 'All Wards', [
+                  _dropdown(
+                    context,
                     'All Wards',
-                    'Ward 02',
-                    'Ward 04',
-                    'Ward 07',
-                    'Ward 09',
-                  ]),
+                    ['All Wards', 'Ward 02', 'Ward 04', 'Ward 07', 'Ward 09'],
+                    (value) {
+                      // Ward filter next step mein connect karenge.
+                    },
+                  ),
                 ],
               ),
 
@@ -256,7 +281,7 @@ class ComplaintsScreen extends StatelessWidget {
                     },
                   ),
 
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 15),
 
                   _filterButton(
                     context,
@@ -267,7 +292,7 @@ class ComplaintsScreen extends StatelessWidget {
                     },
                   ),
 
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 15),
 
                   _filterButton(
                     context,
@@ -278,7 +303,7 @@ class ComplaintsScreen extends StatelessWidget {
                     },
                   ),
 
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 15),
 
                   _filterButton(
                     context,
@@ -332,6 +357,7 @@ class ComplaintsScreen extends StatelessWidget {
     BuildContext context,
     String selectedValue,
     List<String> items,
+    Function(String) onSelected,
   ) {
     return SizedBox(
       width: 170,
@@ -339,9 +365,7 @@ class ComplaintsScreen extends StatelessWidget {
       child: PopupMenuButton<String>(
         initialValue: selectedValue,
 
-        onSelected: (value) {
-          // Later filter logic add karenge.
-        },
+        onSelected: onSelected,
 
         position: PopupMenuPosition.under,
 
