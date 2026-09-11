@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
@@ -144,6 +145,29 @@ class AdminApiService {
 
     throw Exception(
       data['message'] ?? 'Failed to load complaints',
+    );
+  }
+
+  // =========================
+  // Get Complaint Wards
+  // =========================
+
+  static Future<List<String>> getComplaintWards() async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/admin/complaints/wards'),
+      headers: await _headers(),
+    );
+
+    final data = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return List<String>.from(
+        data['wards'] ?? [],
+      );
+    }
+
+    throw Exception(
+      data['message'] ?? 'Failed to load wards',
     );
   }
 

@@ -23,17 +23,20 @@ class AdminProvider extends ChangeNotifier {
   Future<bool> login({required String email, required String password}) async {
     isLoading = true;
     errorMessage = null;
+
     notifyListeners();
 
     try {
       await AdminApiService.loginAdmin(email: email, password: password);
 
       isLoading = false;
+
       notifyListeners();
 
       return true;
     } catch (error) {
       isLoading = false;
+
       errorMessage = error.toString().replaceFirst('Exception: ', '');
 
       notifyListeners();
@@ -67,6 +70,7 @@ class AdminProvider extends ChangeNotifier {
   int pendingComplaints = 0;
   int inProgressComplaints = 0;
   int completedComplaints = 0;
+
   bool dashboardLoaded = false;
 
   List<Map<String, dynamic>> recentComplaints = [];
@@ -93,6 +97,7 @@ class AdminProvider extends ChangeNotifier {
       recentComplaints = List<Map<String, dynamic>>.from(
         data['recentComplaints'] ?? [],
       );
+
       dashboardLoaded = true;
       dashboardLoading = false;
 
@@ -117,13 +122,87 @@ class AdminProvider extends ChangeNotifier {
   List<Map<String, dynamic>> complaints = [];
 
   String complaintSearch = '';
+
   String? selectedStatus;
   String? selectedWasteType;
   String? selectedWard;
 
+  // =========================
+  // Complaint Wards
+  // =========================
+
+  bool complaintWardsLoading = false;
+
+  List<String> complaintWards = [];
+
+  Future<void> loadComplaintWards() async {
+    if (complaintWardsLoading) return;
+
+    complaintWardsLoading = true;
+
+    notifyListeners();
+
+    try {
+      final wards = await AdminApiService.getComplaintWards();
+
+      complaintWards = ['All Wards', ...wards];
+
+      complaintWardsLoading = false;
+
+      notifyListeners();
+    } catch (error) {
+      complaintWardsLoading = false;
+
+      notifyListeners();
+    }
+  }
+
+  // =========================
+  // Complaint Waste Types
+  // =========================
+
+  bool wasteTypesLoading = false;
+
+  List<String> complaintWasteTypes = [];
+  Future<void> loadComplaintWasteTypes() async {
+    if (wasteTypesLoading) return;
+
+    wasteTypesLoading = true;
+    notifyListeners();
+
+    try {
+      final data = await AdminApiService.getWasteTypes();
+
+      complaintWasteTypes = [
+        'All Waste Types',
+        ...List<String>.from(
+          (data['wasteTypes'] ?? []).map((item) => item['name'].toString()),
+        ),
+      ];
+
+      wasteTypesLoading = false;
+      notifyListeners();
+    } catch (error) {
+      wasteTypesLoading = false;
+      notifyListeners();
+    }
+  }
+
+  // =========================
+  // Load Complaints
+  // =========================
+
   Future<void> loadComplaints() async {
     complaintsLoading = true;
     complaintsError = null;
+
+    if (complaintWards.isEmpty) {
+      loadComplaintWards();
+    }
+
+    if (complaintWasteTypes.isEmpty) {
+      loadComplaintWasteTypes();
+    }
 
     notifyListeners();
 
@@ -150,19 +229,37 @@ class AdminProvider extends ChangeNotifier {
     }
   }
 
+  // =========================
+  // Complaint Search
+  // =========================
+
   void setComplaintSearch(String value) {
     complaintSearch = value;
   }
 
+  // =========================
+  // Complaint Status
+  // =========================
+
   void setComplaintStatus(String? value) {
     selectedStatus = value;
+
     complaintsLoaded = false;
+
     loadComplaints();
   }
+
+  // =========================
+  // Complaint Waste Type
+  // =========================
 
   void setComplaintWasteType(String? value) {
     selectedWasteType = value;
   }
+
+  // =========================
+  // Complaint Ward
+  // =========================
 
   void setComplaintWard(String? value) {
     selectedWard = value;
