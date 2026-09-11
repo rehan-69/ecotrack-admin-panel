@@ -2,14 +2,11 @@ import 'package:ecotrack_admin_panel/service/admin_api_service.dart';
 import 'package:flutter/material.dart';
 
 class AdminProvider extends ChangeNotifier {
-  int selectedIndex = 0;
-
-  bool isLoading = false;
-  String? errorMessage;
-
   // =========================
   // Navigation
   // =========================
+
+  int selectedIndex = 0;
 
   void changeIndex(int index) {
     selectedIndex = index;
@@ -17,17 +14,25 @@ class AdminProvider extends ChangeNotifier {
   }
 
   // =========================
-  // Admin Login
+  // Login
   // =========================
 
-  Future<bool> login({required String email, required String password}) async {
+  bool isLoading = false;
+  String? errorMessage;
+
+  Future<bool> login({
+    required String email,
+    required String password,
+  }) async {
     isLoading = true;
     errorMessage = null;
-
     notifyListeners();
 
     try {
-      await AdminApiService.loginAdmin(email: email, password: password);
+      await AdminApiService.loginAdmin(
+        email: email,
+        password: password,
+      );
 
       isLoading = false;
       notifyListeners();
@@ -35,8 +40,9 @@ class AdminProvider extends ChangeNotifier {
       return true;
     } catch (error) {
       isLoading = false;
-
-      errorMessage = error.toString().replaceFirst('Exception: ', '');
+      errorMessage = error
+          .toString()
+          .replaceFirst('Exception: ', '');
 
       notifyListeners();
 
@@ -44,18 +50,10 @@ class AdminProvider extends ChangeNotifier {
     }
   }
 
-  // =========================
-  // Clear Error
-  // =========================
-
   void clearError() {
     errorMessage = null;
     notifyListeners();
   }
-
-  // =========================
-  // Logout
-  // =========================
 
   Future<void> logout() async {
     await AdminApiService.logout();
@@ -64,5 +62,61 @@ class AdminProvider extends ChangeNotifier {
     errorMessage = null;
 
     notifyListeners();
+  }
+
+  // =========================
+  // Dashboard
+  // =========================
+
+  bool dashboardLoading = false;
+  String? dashboardError;
+
+  int totalComplaints = 0;
+  int pendingComplaints = 0;
+  int inProgressComplaints = 0;
+  int completedComplaints = 0;
+
+  List<Map<String, dynamic>> recentComplaints = [];
+
+  Future<void> loadDashboard() async {
+    dashboardLoading = true;
+    dashboardError = null;
+
+    notifyListeners();
+
+    try {
+      final data = await AdminApiService.getDashboard();
+
+      final statistics = data['statistics'];
+
+      totalComplaints =
+          statistics['totalComplaints'] ?? 0;
+
+      pendingComplaints =
+          statistics['pending'] ?? 0;
+
+      inProgressComplaints =
+          statistics['inProgress'] ?? 0;
+
+      completedComplaints =
+          statistics['completed'] ?? 0;
+
+      recentComplaints =
+          List<Map<String, dynamic>>.from(
+        data['recentComplaints'] ?? [],
+      );
+
+      dashboardLoading = false;
+
+      notifyListeners();
+    } catch (error) {
+      dashboardLoading = false;
+
+      dashboardError = error
+          .toString()
+          .replaceFirst('Exception: ', '');
+
+      notifyListeners();
+    }
   }
 }
