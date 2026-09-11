@@ -1,53 +1,50 @@
+import 'package:ecotrack_admin_panel/viewmodel/admin_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
 import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:ecotrack_admin_panel/complaints/complaints_detail_screen.dart';
+import 'package:provider/provider.dart';
 
 class ComplaintsScreen extends StatelessWidget {
   const ComplaintsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.all(
-        context.width * 0.018,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Complaints',
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-            ),
+    return Consumer<AdminProvider>(
+      builder: (context, provider, child) {
+        if (!provider.complaintsLoaded && !provider.complaintsLoading) {
+          Future.microtask(() {
+            provider.loadComplaints();
+          });
+        }
+        return SingleChildScrollView(
+          padding: EdgeInsets.all(context.width * 0.018),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Complaints',
+                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+              ),
+
+              SizedBox(height: context.height * 0.008),
+
+              Text(
+                'View and manage citizen waste complaints.',
+                style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+              ),
+
+              SizedBox(height: context.height * 0.025),
+
+              _filters(context),
+
+              SizedBox(height: context.height * 0.025),
+
+              _complaintsTable(context),
+            ],
           ),
-
-          SizedBox(
-            height: context.height * 0.008,
-          ),
-
-          Text(
-            'View and manage citizen waste complaints.',
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.grey.shade600,
-            ),
-          ),
-
-          SizedBox(
-            height: context.height * 0.025,
-          ),
-
-          _filters(context),
-
-          SizedBox(
-            height: context.height * 0.025,
-          ),
-
-          _complaintsTable(context),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -58,14 +55,10 @@ class ComplaintsScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(
-          color: Colors.grey.shade200,
-        ),
+        border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(
-              alpha: 0.04,
-            ),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 10,
             offset: const Offset(0, 3),
           ),
@@ -88,8 +81,7 @@ class ComplaintsScreen extends StatelessWidget {
                           color: Color(0xFF334155),
                         ),
                         decoration: InputDecoration(
-                          hintText:
-                              'Search by complaint ID, title or citizen',
+                          hintText: 'Search by complaint ID, title or citizen',
                           hintStyle: TextStyle(
                             fontSize: 14,
                             color: Colors.grey.shade500,
@@ -103,27 +95,16 @@ class ComplaintsScreen extends StatelessWidget {
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: Colors.grey.shade300,
-                            ),
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: Colors.grey.shade300),
                           ),
-                          enabledBorder:
-                              OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: Colors.grey.shade300,
-                            ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: Colors.grey.shade300),
                           ),
-                          focusedBorder:
-                              OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: Colors.grey.shade400,
-                            ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: Colors.grey.shade400),
                           ),
                         ),
                       ),
@@ -131,81 +112,46 @@ class ComplaintsScreen extends StatelessWidget {
 
                     const Spacer(),
 
-                    _dropdown(
-                      context,
+                    _dropdown(context, 'All Waste Types', [
                       'All Waste Types',
-                      [
-                        'All Waste Types',
-                        'Household Waste',
-                        'Plastic Waste',
-                        'Construction Debris',
-                        'Garden Waste',
-                        'E-Waste',
-                        'Other',
-                      ],
-                    ),
+                      'Household Waste',
+                      'Plastic Waste',
+                      'Construction Debris',
+                      'Garden Waste',
+                      'E-Waste',
+                      'Other',
+                    ]),
 
-                    const SizedBox(
-                      width: 10,
-                    ),
+                    const SizedBox(width: 10),
 
-                    _dropdown(
-                      context,
+                    _dropdown(context, 'All Wards', [
                       'All Wards',
-                      [
-                        'All Wards',
-                        'Ward 02',
-                        'Ward 04',
-                        'Ward 07',
-                        'Ward 09',
-                      ],
-                    ),
+                      'Ward 02',
+                      'Ward 04',
+                      'Ward 07',
+                      'Ward 09',
+                    ]),
                   ],
                 ),
 
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
 
                 Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    _filterButton(
-                      context,
-                      'All',
-                      true,
-                    ),
+                    _filterButton(context, 'All', true),
 
-                    const SizedBox(
-                      width: 8,
-                    ),
+                    const SizedBox(width: 8),
 
-                    _filterButton(
-                      context,
-                      'Pending',
-                      false,
-                    ),
+                    _filterButton(context, 'Pending', false),
 
-                    const SizedBox(
-                      width: 8,
-                    ),
+                    const SizedBox(width: 8),
 
-                    _filterButton(
-                      context,
-                      'In Progress',
-                      false,
-                    ),
+                    _filterButton(context, 'In Progress', false),
 
-                    const SizedBox(
-                      width: 8,
-                    ),
+                    const SizedBox(width: 8),
 
-                    _filterButton(
-                      context,
-                      'Completed',
-                      false,
-                    ),
+                    _filterButton(context, 'Completed', false),
                   ],
                 ),
               ],
@@ -213,8 +159,7 @@ class ComplaintsScreen extends StatelessWidget {
           }
 
           return Column(
-            crossAxisAlignment:
-                CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 width: double.infinity,
@@ -225,8 +170,7 @@ class ComplaintsScreen extends StatelessWidget {
                     color: Color(0xFF334155),
                   ),
                   decoration: InputDecoration(
-                    hintText:
-                        'Search by complaint ID, title or citizen',
+                    hintText: 'Search by complaint ID, title or citizen',
                     hintStyle: TextStyle(
                       fontSize: 14,
                       color: Colors.grey.shade500,
@@ -238,91 +182,56 @@ class ComplaintsScreen extends StatelessWidget {
                     ),
                     contentPadding: EdgeInsets.zero,
                     border: OutlineInputBorder(
-                      borderRadius:
-                          BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: Colors.grey.shade300,
-                      ),
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.grey.shade300),
                     ),
-                    enabledBorder:
-                        OutlineInputBorder(
-                      borderRadius:
-                          BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: Colors.grey.shade300,
-                      ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.grey.shade300),
                     ),
                   ),
                 ),
               ),
 
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
 
               Wrap(
                 spacing: 10,
                 runSpacing: 10,
                 children: [
-                  _dropdown(
-                    context,
+                  _dropdown(context, 'All Waste Types', [
                     'All Waste Types',
-                    [
-                      'All Waste Types',
-                      'Household Waste',
-                      'Plastic Waste',
-                      'Construction Debris',
-                      'Garden Waste',
-                      'E-Waste',
-                      'Other',
-                    ],
-                  ),
+                    'Household Waste',
+                    'Plastic Waste',
+                    'Construction Debris',
+                    'Garden Waste',
+                    'E-Waste',
+                    'Other',
+                  ]),
 
-                  _dropdown(
-                    context,
+                  _dropdown(context, 'All Wards', [
                     'All Wards',
-                    [
-                      'All Wards',
-                      'Ward 02',
-                      'Ward 04',
-                      'Ward 07',
-                      'Ward 09',
-                    ],
-                  ),
+                    'Ward 02',
+                    'Ward 04',
+                    'Ward 07',
+                    'Ward 09',
+                  ]),
                 ],
               ),
 
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
 
               Wrap(
                 spacing: 8,
                 runSpacing: 8,
                 children: [
-                  _filterButton(
-                    context,
-                    'All',
-                    true,
-                  ),
+                  _filterButton(context, 'All', true),
 
-                  _filterButton(
-                    context,
-                    'Pending',
-                    false,
-                  ),
+                  _filterButton(context, 'Pending', false),
 
-                  _filterButton(
-                    context,
-                    'In Progress',
-                    false,
-                  ),
+                  _filterButton(context, 'In Progress', false),
 
-                  _filterButton(
-                    context,
-                    'Completed',
-                    false,
-                  ),
+                  _filterButton(context, 'Completed', false),
                 ],
               ),
             ],
@@ -332,25 +241,15 @@ class ComplaintsScreen extends StatelessWidget {
     );
   }
 
-  Widget _filterButton(
-    BuildContext context,
-    String text,
-    bool selected,
-  ) {
+  Widget _filterButton(BuildContext context, String text, bool selected) {
     return Container(
       height: 38,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 16,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: selected
-            ? AppColors.primaryColor
-            : Colors.white,
+        color: selected ? AppColors.primaryColor : Colors.white,
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: selected
-              ? AppColors.primaryColor
-              : Colors.grey.shade300,
+          color: selected ? AppColors.primaryColor : Colors.grey.shade300,
         ),
       ),
       alignment: Alignment.center,
@@ -358,12 +257,8 @@ class ComplaintsScreen extends StatelessWidget {
         text,
         style: TextStyle(
           fontSize: 14,
-          color: selected
-              ? Colors.white
-              : Colors.grey.shade700,
-          fontWeight: selected
-              ? FontWeight.w600
-              : FontWeight.w400,
+          color: selected ? Colors.white : Colors.grey.shade700,
+          fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
         ),
       ),
     );
@@ -388,33 +283,26 @@ class ComplaintsScreen extends StatelessWidget {
 
         offset: Offset.zero,
 
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
 
         color: Colors.white,
         elevation: 4,
 
         itemBuilder: (context) {
           return items.map((type) {
-            final isSelected =
-                type == selectedValue;
+            final isSelected = type == selectedValue;
 
             return PopupMenuItem<String>(
               value: type,
               height: 32,
               child: Container(
                 width: double.infinity,
-                padding:
-                    const EdgeInsets.symmetric(
-                  horizontal: 8,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 decoration: BoxDecoration(
                   color: isSelected
                       ? const Color(0xFFE8F5E9)
                       : Colors.transparent,
-                  borderRadius:
-                      BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
                   children: [
@@ -422,15 +310,12 @@ class ComplaintsScreen extends StatelessWidget {
                       child: Text(
                         type,
                         maxLines: 1,
-                        overflow:
-                            TextOverflow.ellipsis,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontSize: 14,
                           color: isSelected
                               ? AppColors.primaryColor
-                              : const Color(
-                                  0xFF374151,
-                                ),
+                              : const Color(0xFF374151),
                           fontWeight: isSelected
                               ? FontWeight.w500
                               : FontWeight.w400,
@@ -442,8 +327,7 @@ class ComplaintsScreen extends StatelessWidget {
                       const Icon(
                         Icons.check,
                         size: 18,
-                        color:
-                            AppColors.primaryColor,
+                        color: AppColors.primaryColor,
                       ),
                   ],
                 ),
@@ -455,17 +339,11 @@ class ComplaintsScreen extends StatelessWidget {
         child: Container(
           width: double.infinity,
           height: 40,
-          padding:
-              const EdgeInsets.symmetric(
-            horizontal: 12,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius:
-                BorderRadius.circular(8),
-            border: Border.all(
-              color: Colors.grey.shade300,
-            ),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: Colors.grey.shade300),
           ),
           child: Row(
             children: [
@@ -473,8 +351,7 @@ class ComplaintsScreen extends StatelessWidget {
                 child: Text(
                   selectedValue,
                   maxLines: 1,
-                  overflow:
-                      TextOverflow.ellipsis,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 14,
                     color: Color(0xFF374151),
@@ -494,35 +371,23 @@ class ComplaintsScreen extends StatelessWidget {
     );
   }
 
-  Widget _complaintsTable(
-    BuildContext context,
-  ) {
-    double tableWidth =
-        context.width < 1200
-            ? 1200
-            : context.width;
+  Widget _complaintsTable(BuildContext context) {
+    double tableWidth = context.width < 1200 ? 1200 : context.width;
 
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius:
-            BorderRadius.circular(15),
-        border: Border.all(
-          color: Colors.grey.shade200,
-        ),
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: Colors.grey.shade200),
       ),
       child: SingleChildScrollView(
-        scrollDirection:
-            Axis.horizontal,
+        scrollDirection: Axis.horizontal,
         child: SizedBox(
           width: tableWidth,
           child: Column(
             children: [
-              _tableHeader(
-                context,
-                tableWidth,
-              ),
+              _tableHeader(context, tableWidth),
 
               _tableRow(
                 context,
@@ -620,85 +485,39 @@ class ComplaintsScreen extends StatelessWidget {
     );
   }
 
-  Widget _tableHeader(
-    BuildContext context,
-    double tableWidth,
-  ) {
+  Widget _tableHeader(BuildContext context, double tableWidth) {
     return Container(
       height: 58,
       color: const Color(0xFFF8FAFA),
       child: Row(
         children: [
-          _headerCell(
-            context,
-            'COMPLAINT\nID',
-            tableWidth * 0.10,
-          ),
+          _headerCell(context, 'COMPLAINT\nID', tableWidth * 0.10),
 
-          _headerCell(
-            context,
-            'PHOTO',
-            tableWidth * 0.08,
-          ),
+          _headerCell(context, 'PHOTO', tableWidth * 0.08),
 
-          _headerCell(
-            context,
-            'COMPLAINT TITLE',
-            tableWidth * 0.15,
-          ),
+          _headerCell(context, 'COMPLAINT TITLE', tableWidth * 0.15),
 
-          _headerCell(
-            context,
-            'CITIZEN',
-            tableWidth * 0.12,
-          ),
+          _headerCell(context, 'CITIZEN', tableWidth * 0.12),
 
-          _headerCell(
-            context,
-            'WASTE TYPE',
-            tableWidth * 0.14,
-          ),
+          _headerCell(context, 'WASTE TYPE', tableWidth * 0.14),
 
-          _headerCell(
-            context,
-            'WARD /\nLOCATION',
-            tableWidth * 0.12,
-          ),
+          _headerCell(context, 'WARD /\nLOCATION', tableWidth * 0.12),
 
-          _headerCell(
-            context,
-            'SUBMITTED\nDATE',
-            tableWidth * 0.12,
-          ),
+          _headerCell(context, 'SUBMITTED\nDATE', tableWidth * 0.12),
 
-          _headerCell(
-            context,
-            'STATUS',
-            tableWidth * 0.09,
-          ),
+          _headerCell(context, 'STATUS', tableWidth * 0.09),
 
-          _headerCell(
-            context,
-            'ACTION',
-            tableWidth * 0.08,
-          ),
+          _headerCell(context, 'ACTION', tableWidth * 0.08),
         ],
       ),
     );
   }
 
-  Widget _headerCell(
-    BuildContext context,
-    String text,
-    double width,
-  ) {
+  Widget _headerCell(BuildContext context, String text, double width) {
     return SizedBox(
       width: width,
       child: Padding(
-        padding:
-            const EdgeInsets.symmetric(
-          horizontal: 12,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Text(
           text,
           style: TextStyle(
@@ -729,26 +548,17 @@ class ComplaintsScreen extends StatelessWidget {
       height: 70,
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.grey.shade200,
-          ),
-        ),
+        border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
       ),
       child: Row(
         children: [
-          _dataCell(
-            context,
-            id,
-            tableWidth * 0.10,
-          ),
+          _dataCell(context, id, tableWidth * 0.10),
 
           SizedBox(
             width: tableWidth * 0.08,
             child: Center(
               child: ClipRRect(
-                borderRadius:
-                    BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(8),
                 child: Image.asset(
                   image,
                   width: 48,
@@ -759,59 +569,35 @@ class ComplaintsScreen extends StatelessWidget {
             ),
           ),
 
-          _dataCell(
-            context,
-            title,
-            tableWidth * 0.15,
-          ),
+          _dataCell(context, title, tableWidth * 0.15),
 
-          _dataCell(
-            context,
-            citizen,
-            tableWidth * 0.12,
-          ),
+          _dataCell(context, citizen, tableWidth * 0.12),
 
-          _dataCell(
-            context,
-            wasteType,
-            tableWidth * 0.14,
-          ),
+          _dataCell(context, wasteType, tableWidth * 0.14),
 
-          _dataCell(
-            context,
-            location,
-            tableWidth * 0.12,
-          ),
+          _dataCell(context, location, tableWidth * 0.12),
 
-          _dataCell(
-            context,
-            date,
-            tableWidth * 0.12,
-          ),
+          _dataCell(context, date, tableWidth * 0.12),
 
           SizedBox(
             width: tableWidth * 0.09,
             child: Align(
-              alignment:
-                  Alignment.centerLeft,
+              alignment: Alignment.centerLeft,
               child: Container(
-                padding:
-                    const EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                   horizontal: 10,
                   vertical: 6,
                 ),
                 decoration: BoxDecoration(
                   color: statusBackground,
-                  borderRadius:
-                      BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
                   status,
                   style: TextStyle(
                     fontSize: 12,
                     color: statusColor,
-                    fontWeight:
-                        FontWeight.w500,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
@@ -825,8 +611,7 @@ class ComplaintsScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        ComplaintDetailScreen(
+                    builder: (context) => ComplaintDetailScreen(
                       complaintId: id,
                       image: image,
                       title: title,
@@ -841,11 +626,7 @@ class ComplaintsScreen extends StatelessWidget {
               },
               child: Text(
                 'View',
-                style: TextStyle(
-                  fontSize: 14,
-                  color:
-                      AppColors.primaryColor,
-                ),
+                style: TextStyle(fontSize: 14, color: AppColors.primaryColor),
               ),
             ),
           ),
@@ -854,27 +635,16 @@ class ComplaintsScreen extends StatelessWidget {
     );
   }
 
-  Widget _dataCell(
-    BuildContext context,
-    String text,
-    double width,
-  ) {
+  Widget _dataCell(BuildContext context, String text, double width) {
     return SizedBox(
       width: width,
       child: Padding(
-        padding:
-            const EdgeInsets.symmetric(
-          horizontal: 12,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Text(
           text,
           maxLines: 2,
-          overflow:
-              TextOverflow.ellipsis,
-          style: const TextStyle(
-            fontSize: 14,
-            color: Color(0xFF0F172A),
-          ),
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(fontSize: 14, color: Color(0xFF0F172A)),
         ),
       ),
     );

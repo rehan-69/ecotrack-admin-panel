@@ -105,4 +105,64 @@ class AdminProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  // =========================
+  // Complaints
+  // =========================
+
+  bool complaintsLoading = false;
+  bool complaintsLoaded = false;
+  String? complaintsError;
+
+  List<Map<String, dynamic>> complaints = [];
+
+  String complaintSearch = '';
+  String? selectedStatus;
+  String? selectedWasteType;
+  String? selectedWard;
+
+  Future<void> loadComplaints() async {
+    complaintsLoading = true;
+    complaintsError = null;
+
+    notifyListeners();
+
+    try {
+      final data = await AdminApiService.getComplaints(
+        search: complaintSearch,
+        status: selectedStatus,
+        wasteType: selectedWasteType,
+        ward: selectedWard,
+      );
+
+      complaints = List<Map<String, dynamic>>.from(data['complaints'] ?? []);
+      
+      complaintsLoaded = true;
+      complaintsLoading = false;
+
+      notifyListeners();
+    } catch (error) {
+      complaintsLoading = false;
+
+      complaintsError = error.toString().replaceFirst('Exception: ', '');
+
+      notifyListeners();
+    }
+  }
+
+  void setComplaintSearch(String value) {
+    complaintSearch = value;
+  }
+
+  void setComplaintStatus(String? value) {
+    selectedStatus = value;
+  }
+
+  void setComplaintWasteType(String? value) {
+    selectedWasteType = value;
+  }
+
+  void setComplaintWard(String? value) {
+    selectedWard = value;
+  }
 }
