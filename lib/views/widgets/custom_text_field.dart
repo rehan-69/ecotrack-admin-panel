@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
 
-
 class CustomTextField extends StatelessWidget {
   final String title;
   final double width;
@@ -53,42 +52,25 @@ class CustomTextField extends StatelessWidget {
           ),
 
           prefixIcon: prefixIcon != null
-              ? const Icon(
-                  Icons.email_outlined,
-                  color: Color(0xFF79808C),
-                  size: 20,
-                )
+              ? Icon(prefixIcon, color: Color(0xFF79808C), size: 20)
               : null,
 
           filled: true,
           fillColor: Colors.white,
 
-          contentPadding:
-              const EdgeInsets.symmetric(
+          contentPadding: const EdgeInsets.symmetric(
             horizontal: 14,
             vertical: 14,
           ),
 
-          enabledBorder:
-              OutlineInputBorder(
-            borderRadius:
-                BorderRadius.circular(
-              borderRadius,
-            ),
-            borderSide: const BorderSide(
-              color: Color(0xFFE5E7EB),
-            ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(borderRadius),
+            borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
           ),
 
-          focusedBorder:
-              OutlineInputBorder(
-            borderRadius:
-                BorderRadius.circular(
-              borderRadius,
-            ),
-            borderSide: const BorderSide(
-              color: AppColors.primaryColor,
-            ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(borderRadius),
+            borderSide: const BorderSide(color: AppColors.primaryColor),
           ),
         ),
       ),
