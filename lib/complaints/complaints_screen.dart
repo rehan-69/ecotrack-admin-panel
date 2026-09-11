@@ -36,7 +36,7 @@ class ComplaintsScreen extends StatelessWidget {
 
               SizedBox(height: context.height * 0.025),
 
-              _filters(context),
+              _filters(context, provider),
 
               SizedBox(height: context.height * 0.025),
 
@@ -48,7 +48,7 @@ class ComplaintsScreen extends StatelessWidget {
     );
   }
 
-  Widget _filters(BuildContext context) {
+  Widget _filters(BuildContext context, AdminProvider provider) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(14),
@@ -139,19 +139,41 @@ class ComplaintsScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    _filterButton(context, 'All', true),
+                    _filterButton(
+                      context,
+                      'All',
+                      provider.selectedStatus == null,
+                      () {
+                        provider.setComplaintStatus(null);
+                      },
+                    ),
 
-                    const SizedBox(width: 8),
+                    _filterButton(
+                      context,
+                      'Pending',
+                      provider.selectedStatus == 'Pending',
+                      () {
+                        provider.setComplaintStatus('Pending');
+                      },
+                    ),
 
-                    _filterButton(context, 'Pending', false),
+                    _filterButton(
+                      context,
+                      'In Progress',
+                      provider.selectedStatus == 'In Progress',
+                      () {
+                        provider.setComplaintStatus('In Progress');
+                      },
+                    ),
 
-                    const SizedBox(width: 8),
-
-                    _filterButton(context, 'In Progress', false),
-
-                    const SizedBox(width: 8),
-
-                    _filterButton(context, 'Completed', false),
+                    _filterButton(
+                      context,
+                      'Completed',
+                      provider.selectedStatus == 'Completed',
+                      () {
+                        provider.setComplaintStatus('Completed');
+                      },
+                    ),
                   ],
                 ),
               ],
@@ -225,13 +247,47 @@ class ComplaintsScreen extends StatelessWidget {
                 spacing: 8,
                 runSpacing: 8,
                 children: [
-                  _filterButton(context, 'All', true),
+                  _filterButton(
+                    context,
+                    'All',
+                    provider.selectedStatus == null,
+                    () {
+                      provider.setComplaintStatus(null);
+                    },
+                  ),
 
-                  _filterButton(context, 'Pending', false),
+                  const SizedBox(width: 8),
 
-                  _filterButton(context, 'In Progress', false),
+                  _filterButton(
+                    context,
+                    'Pending',
+                    provider.selectedStatus == 'Pending',
+                    () {
+                      provider.setComplaintStatus('Pending');
+                    },
+                  ),
 
-                  _filterButton(context, 'Completed', false),
+                  const SizedBox(width: 8),
+
+                  _filterButton(
+                    context,
+                    'In Progress',
+                    provider.selectedStatus == 'In Progress',
+                    () {
+                      provider.setComplaintStatus('In Progress');
+                    },
+                  ),
+
+                  const SizedBox(width: 8),
+
+                  _filterButton(
+                    context,
+                    'Completed',
+                    provider.selectedStatus == 'Completed',
+                    () {
+                      provider.setComplaintStatus('Completed');
+                    },
+                  ),
                 ],
               ),
             ],
@@ -241,24 +297,32 @@ class ComplaintsScreen extends StatelessWidget {
     );
   }
 
-  Widget _filterButton(BuildContext context, String text, bool selected) {
-    return Container(
-      height: 38,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        color: selected ? AppColors.primaryColor : Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: selected ? AppColors.primaryColor : Colors.grey.shade300,
+  Widget _filterButton(
+    BuildContext context,
+    String text,
+    bool selected,
+    VoidCallback onTap,
+  ) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 38,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        decoration: BoxDecoration(
+          color: selected ? AppColors.primaryColor : Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: selected ? AppColors.primaryColor : Colors.grey.shade300,
+          ),
         ),
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        text,
-        style: TextStyle(
-          fontSize: 14,
-          color: selected ? Colors.white : Colors.grey.shade700,
-          fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
+        alignment: Alignment.center,
+        child: Text(
+          text,
+          style: TextStyle(
+            fontSize: 14,
+            color: selected ? Colors.white : Colors.grey.shade700,
+            fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
+          ),
         ),
       ),
     );
@@ -372,6 +436,8 @@ class ComplaintsScreen extends StatelessWidget {
   }
 
   Widget _complaintsTable(BuildContext context) {
+    final provider = context.watch<AdminProvider>();
+
     double tableWidth = context.width < 1200 ? 1200 : context.width;
 
     return Container(
@@ -389,95 +455,59 @@ class ComplaintsScreen extends StatelessWidget {
             children: [
               _tableHeader(context, tableWidth),
 
-              _tableRow(
-                context,
-                tableWidth,
-                'ECO-1042',
-                'assets/waste-household.jpg',
-                'Household Waste',
-                'Rahul Sharma',
-                'Household Waste',
-                'Ward 07',
-                '12 Mar 2026',
-                'In Progress',
-                Colors.blue,
-                const Color(0xFFE3F2FD),
-              ),
+              if (provider.complaintsLoading)
+                const Padding(
+                  padding: EdgeInsets.all(30),
+                  child: CircularProgressIndicator(),
+                )
+              else if (provider.complaintsError != null)
+                Padding(
+                  padding: const EdgeInsets.all(30),
+                  child: Text(
+                    provider.complaintsError!,
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                )
+              else if (provider.complaints.isEmpty)
+                const Padding(
+                  padding: EdgeInsets.all(30),
+                  child: Text(
+                    'No complaints found',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                )
+              else
+                ...provider.complaints.map((complaint) {
+                  final status = complaint['status']?.toString() ?? 'Pending';
 
-              _tableRow(
-                context,
-                tableWidth,
-                'ECO-1038',
-                'assets/waste-household.jpg',
-                'Construction Debris',
-                'Amit Patil',
-                'Construction Debris',
-                'Ward 07',
-                '08 Mar 2026',
-                'Completed',
-                Colors.green,
-                const Color(0xFFE0F5E5),
-              ),
+                  Color statusColor = Colors.orange;
+                  Color statusBackground = const Color(0xFFFFF0CC);
 
-              _tableRow(
-                context,
-                tableWidth,
-                'ECO-1031',
-                'assets/waste-household.jpg',
-                'Garden Waste',
-                'Priya Shah',
-                'Garden Waste',
-                'Ward 04',
-                '02 Mar 2026',
-                'Completed',
-                Colors.green,
-                const Color(0xFFE0F5E5),
-              ),
+                  if (status.toLowerCase() == 'in progress') {
+                    statusColor = Colors.blue;
+                    statusBackground = const Color(0xFFE3F2FD);
+                  } else if (status.toLowerCase() == 'completed') {
+                    statusColor = Colors.green;
+                    statusBackground = const Color(0xFFE0F5E5);
+                  }
 
-              _tableRow(
-                context,
-                tableWidth,
-                'ECO-1025',
-                'assets/waste-household.jpg',
-                'Plastic Waste',
-                'Sameer Khan',
-                'Plastic Waste',
-                'Ward 04',
-                '27 Feb 2026',
-                'Pending',
-                Colors.orange,
-                const Color(0xFFFFF0CC),
-              ),
-
-              _tableRow(
-                context,
-                tableWidth,
-                'ECO-1019',
-                'assets/waste-household.jpg',
-                'E-Waste dumped near road',
-                'Neha Joshi',
-                'E-Waste',
-                'Ward 02',
-                '21 Feb 2026',
-                'Pending',
-                Colors.orange,
-                const Color(0xFFFFF0CC),
-              ),
-
-              _tableRow(
-                context,
-                tableWidth,
-                'ECO-1014',
-                'assets/waste-household.jpg',
-                'Household Waste near road',
-                'Vikas Deshmukh',
-                'Household Waste',
-                'Ward 09',
-                '16 Feb 2026',
-                'In Progress',
-                Colors.blue,
-                const Color(0xFFE3F2FD),
-              ),
+                  return _tableRow(
+                    context,
+                    tableWidth,
+                    complaint['complaint_id']?.toString() ?? '',
+                    'assets/waste-household.jpg',
+                    complaint['title']?.toString() ?? '',
+                    complaint['user_name']?.toString() ?? 'Unknown',
+                    complaint['waste_type']?.toString() ?? '',
+                    complaint['ward']?.toString() ??
+                        complaint['location']?.toString() ??
+                        '',
+                    _formatDate(complaint['created_at']),
+                    status,
+                    statusColor,
+                    statusBackground,
+                  );
+                }),
             ],
           ),
         ),
@@ -648,5 +678,34 @@ class ComplaintsScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _formatDate(dynamic value) {
+    if (value == null) return '';
+
+    try {
+      final date = DateTime.parse(value.toString());
+
+      const months = [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
+      ];
+
+      return '${date.day.toString().padLeft(2, '0')} '
+          '${months[date.month - 1]} '
+          '${date.year}';
+    } catch (e) {
+      return value.toString();
+    }
   }
 }

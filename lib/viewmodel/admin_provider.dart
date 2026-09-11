@@ -136,7 +136,7 @@ class AdminProvider extends ChangeNotifier {
       );
 
       complaints = List<Map<String, dynamic>>.from(data['complaints'] ?? []);
-      
+
       complaintsLoaded = true;
       complaintsLoading = false;
 
@@ -156,6 +156,8 @@ class AdminProvider extends ChangeNotifier {
 
   void setComplaintStatus(String? value) {
     selectedStatus = value;
+    complaintsLoaded = false;
+    loadComplaints();
   }
 
   void setComplaintWasteType(String? value) {
