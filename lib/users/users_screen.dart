@@ -1,57 +1,86 @@
 import 'package:flutter/material.dart';
+
 import 'package:ecotrack_admin_panel/constants/responsive.dart';
+import 'package:ecotrack_admin_panel/models/user_model.dart';
 import 'package:ecotrack_admin_panel/users/user_detail_screen.dart';
+import 'package:ecotrack_admin_panel/viewmodel/admin_provider.dart';
+import 'package:provider/provider.dart';
 
 class UsersScreen extends StatelessWidget {
   const UsersScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.all(
-        context.width * 0.018,
-      ),
-      child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Users',
-            style: const TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-            ),
+    return Consumer<AdminProvider>(
+      builder: (context, provider, child) {
+        // Load users when screen opens
+        if (!provider.usersLoaded &&
+            !provider.usersLoading) {
+          Future.microtask(
+            () => provider.loadUsers(),
+          );
+        }
+
+        return SingleChildScrollView(
+          padding: EdgeInsets.all(
+            context.width * 0.018,
           ),
+          child: Column(
+            crossAxisAlignment:
+                CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Users',
+                style: const TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
 
-          SizedBox(
-            height: context.height * 0.008,
+              SizedBox(
+                height: context.height * 0.008,
+              ),
+
+              Text(
+                'Manage registered EcoTrack citizens.',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+
+              SizedBox(
+                height: context.height * 0.025,
+              ),
+
+              _searchBox(
+                context,
+                provider,
+              ),
+
+              SizedBox(
+                height: context.height * 0.025,
+              ),
+
+              _usersTable(
+                context,
+                provider,
+              ),
+            ],
           ),
-
-          Text(
-            'Manage registered EcoTrack citizens.',
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.grey.shade600,
-            ),
-          ),
-
-          SizedBox(
-            height: context.height * 0.025,
-          ),
-
-          _searchBox(context),
-
-          SizedBox(
-            height: context.height * 0.025,
-          ),
-
-          _usersTable(context),
-        ],
-      ),
+        );
+      },
     );
   }
 
-  Widget _searchBox(BuildContext context) {
+  // =========================
+  // Search Box
+  // =========================
+
+  Widget _searchBox(
+    BuildContext context,
+    AdminProvider provider,
+  ) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(
@@ -59,8 +88,7 @@ class UsersScreen extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius:
-            BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(15),
         border: Border.all(
           color: Colors.grey.shade200,
         ),
@@ -85,6 +113,10 @@ class UsersScreen extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 14,
               ),
+              onChanged: (value) {
+                provider.setUserSearch(value);
+                provider.loadUsers();
+              },
               decoration: InputDecoration(
                 hintText: 'Search user',
                 hintStyle: TextStyle(
@@ -110,6 +142,14 @@ class UsersScreen extends StatelessWidget {
                     color: Colors.grey.shade300,
                   ),
                 ),
+                focusedBorder:
+                    OutlineInputBorder(
+                  borderRadius:
+                      BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                    color: Colors.grey.shade400,
+                  ),
+                ),
               ),
             ),
           );
@@ -118,17 +158,72 @@ class UsersScreen extends StatelessWidget {
     );
   }
 
+  // =========================
+  // Users Table
+  // =========================
+
   Widget _usersTable(
     BuildContext context,
+    AdminProvider provider,
   ) {
-    double tableWidth = 1100;
+    const double tableWidth = 1100;
+
+    // Loading
+    if (provider.usersLoading) {
+      return Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(
+          vertical: 60,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(
+            color: Colors.grey.shade200,
+          ),
+        ),
+        child: const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
+    // Error
+    if (provider.usersError != null) {
+      return Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(
+          vertical: 60,
+          horizontal: 20,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(
+            color: Colors.grey.shade200,
+          ),
+        ),
+        child: Center(
+          child: Text(
+            provider.usersError!,
+            style: TextStyle(
+              color: Colors.red.shade600,
+              fontSize: 14,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
+    }
+
+    final List<UserModel> users =
+        provider.users;
 
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius:
-            BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(15),
         border: Border.all(
           color: Colors.grey.shade200,
         ),
@@ -153,70 +248,28 @@ class UsersScreen extends StatelessWidget {
                 tableWidth,
               ),
 
-              _userRow(
-                context,
-                tableWidth,
-                'Rahul Sharma',
-                'rahul.sharma@gmail.com',
-                '+9198220 41576',
-                '12 complaints',
-                '12 Mar 2026',
-                'Active',
-              ),
+              if (users.isEmpty)
+                const SizedBox(
+                  height: 100,
+                  child: Center(
+                    child: Text(
+                      'No users found',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ),
 
-              _userRow(
-                context,
-                tableWidth,
-                'Amit Patil',
-                'amit.patil@gmail.com',
-                '+9198765 43210',
-                '8 complaints',
-                '08 Mar 2026',
-                'Active',
-              ),
-
-              _userRow(
-                context,
-                tableWidth,
-                'Priya Shah',
-                'priya.shah@gmail.com',
-                '+9199887 66554',
-                '6 complaints',
-                '02 Mar 2026',
-                'Active',
-              ),
-
-              _userRow(
-                context,
-                tableWidth,
-                'Sameer Khan',
-                'sameer.khan@gmail.com',
-                '+9197654 32109',
-                '5 complaints',
-                '27 Feb 2026',
-                'Active',
-              ),
-
-              _userRow(
-                context,
-                tableWidth,
-                'Neha Joshi',
-                'neha.joshi@gmail.com',
-                '+9196543 21098',
-                '4 complaints',
-                '21 Feb 2026',
-                'Active',
-              ),
-
-              _userRow(
-                context,
-                tableWidth,
-                'Vikas Deshmukh',
-                'vikas.deshmukh@gmail.com',
-                '+9195432 10987',
-                '3 complaints',
-                '16 Feb 2026',
-                'Inactive',
+              ...users.map(
+                (UserModel user) {
+                  return _userRow(
+                    context,
+                    tableWidth,
+                    user,
+                  );
+                },
               ),
             ],
           ),
@@ -224,6 +277,10 @@ class UsersScreen extends StatelessWidget {
       ),
     );
   }
+
+  // =========================
+  // Table Header
+  // =========================
 
   Widget _tableHeader(
     BuildContext context,
@@ -304,16 +361,19 @@ class UsersScreen extends StatelessWidget {
     );
   }
 
+  // =========================
+  // User Row
+  // =========================
+
   Widget _userRow(
     BuildContext context,
     double tableWidth,
-    String name,
-    String email,
-    String mobile,
-    String complaints,
-    String joinedDate,
-    String status,
+    UserModel user,
   ) {
+    final bool isActive =
+        user.status.toLowerCase() ==
+            'active';
+
     return Container(
       height: 65,
       decoration: BoxDecoration(
@@ -325,37 +385,45 @@ class UsersScreen extends StatelessWidget {
       ),
       child: Row(
         children: [
+          // Name
           _dataCell(
             context,
-            name,
+            user.name,
             tableWidth * 0.14,
             bold: true,
           ),
 
+          // Email
           _dataCell(
             context,
-            email,
+            user.email,
             tableWidth * 0.22,
           ),
 
+          // Mobile
           _dataCell(
             context,
-            mobile,
+            user.mobile.isEmpty
+                ? '-'
+                : user.mobile,
             tableWidth * 0.15,
           ),
 
+          // Total Complaints
           _dataCell(
             context,
-            complaints,
+            '${user.complaintCount} complaints',
             tableWidth * 0.15,
           ),
 
+          // Joined Date
           _dataCell(
             context,
-            joinedDate,
+            _formatDate(user.joinedDate),
             tableWidth * 0.12,
           ),
 
+          // Status
           SizedBox(
             width: tableWidth * 0.10,
             child: Align(
@@ -368,7 +436,7 @@ class UsersScreen extends StatelessWidget {
                   vertical: 5,
                 ),
                 decoration: BoxDecoration(
-                  color: status == 'Active'
+                  color: isActive
                       ? const Color(
                           0xFFDDF5E2,
                         )
@@ -376,13 +444,15 @@ class UsersScreen extends StatelessWidget {
                           0xFFF1F3F3,
                         ),
                   borderRadius:
-                      BorderRadius.circular(20),
+                      BorderRadius.circular(
+                    20,
+                  ),
                 ),
                 child: Text(
-                  status,
+                  user.status,
                   style: TextStyle(
                     fontSize: 12,
-                    color: status == 'Active'
+                    color: isActive
                         ? Colors.green.shade700
                         : Colors.grey.shade700,
                   ),
@@ -391,6 +461,7 @@ class UsersScreen extends StatelessWidget {
             ),
           ),
 
+          // Action
           SizedBox(
             width: tableWidth * 0.08,
             child: Align(
@@ -419,7 +490,9 @@ class UsersScreen extends StatelessWidget {
                   shape:
                       RoundedRectangleBorder(
                     borderRadius:
-                        BorderRadius.circular(10),
+                        BorderRadius.circular(
+                      10,
+                    ),
                   ),
                 ),
                 child: Text(
@@ -437,6 +510,45 @@ class UsersScreen extends StatelessWidget {
       ),
     );
   }
+
+  // =========================
+  // Format Joined Date
+  // =========================
+
+  String _formatDate(String value) {
+    if (value.isEmpty) {
+      return '-';
+    }
+
+    try {
+      final date = DateTime.parse(value);
+
+      const months = [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
+      ];
+
+      return '${date.day.toString().padLeft(2, '0')} '
+          '${months[date.month - 1]} '
+          '${date.year}';
+    } catch (error) {
+      return value;
+    }
+  }
+
+  // =========================
+  // Data Cell
+  // =========================
 
   Widget _dataCell(
     BuildContext context,
