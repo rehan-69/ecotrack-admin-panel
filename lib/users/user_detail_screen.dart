@@ -834,6 +834,7 @@ class UserDetailScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => ComplaintDetailScreen(
+                      id: 28,
                       complaintId: complaintId,
                       image: 'assets/waste-household.jpg',
                       title: title,

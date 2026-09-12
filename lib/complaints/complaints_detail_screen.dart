@@ -6,6 +6,7 @@ import 'package:ecotrack_admin_panel/views/widgets/side_bar.dart';
 import 'package:ecotrack_admin_panel/viewmodel/admin_provider.dart';
 
 class ComplaintDetailScreen extends StatelessWidget {
+  final int id;
   final String complaintId;
   final String image;
   final String title;
@@ -17,6 +18,7 @@ class ComplaintDetailScreen extends StatelessWidget {
 
   const ComplaintDetailScreen({
     super.key,
+    required this.id,
     required this.complaintId,
     required this.image,
     required this.title,
@@ -32,7 +34,23 @@ class ComplaintDetailScreen extends StatelessWidget {
     return Consumer<AdminProvider>(
       builder: (context, value, child) {
         final bool isMobile = MediaQuery.of(context).size.width < 900;
-
+        if (value.complaintDetail == null &&
+            !value.complaintDetailLoading &&
+            value.complaintDetailError == null) {
+          Future.microtask(() {
+            value.loadComplaintDetail(id);
+          });
+        }
+        if (value.complaintDetailError != null) {
+          return Scaffold(
+            body: Center(
+              child: Text(
+                value.complaintDetailError!,
+                style: const TextStyle(color: Colors.red, fontSize: 16),
+              ),
+            ),
+          );
+        }
         if (isMobile) {
           return Scaffold(
             backgroundColor: const Color(0xFFF7FAF8),

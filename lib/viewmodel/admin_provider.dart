@@ -264,4 +264,41 @@ class AdminProvider extends ChangeNotifier {
   void setComplaintWard(String? value) {
     selectedWard = value;
   }
+
+    // =========================
+  // Complaint Detail
+  // =========================
+
+  bool complaintDetailLoading = false;
+  String? complaintDetailError;
+  Map<String, dynamic>? complaintDetail;
+
+  Future<void> loadComplaintDetail(int id) async {
+    complaintDetailLoading = true;
+    complaintDetailError = null;
+    complaintDetail = null;
+    notifyListeners();
+
+    try {
+      final data = await AdminApiService.getComplaintById(id);
+
+      complaintDetail = Map<String, dynamic>.from(
+        data['complaint'] ?? {},
+      );
+
+      complaintDetailLoading = false;
+      notifyListeners();
+    } catch (error) {
+      complaintDetailLoading = false;
+      complaintDetailError =
+          error.toString().replaceFirst('Exception: ', '');
+      notifyListeners();
+    }
+  }
+
+  void clearComplaintDetail() {
+    complaintDetail = null;
+    complaintDetailError = null;
+    complaintDetailLoading = false;
+  }
 }

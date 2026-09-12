@@ -609,6 +609,7 @@ class DashboardScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => ComplaintDetailScreen(
+                      id: 28,
                       complaintId: id,
                       image: image,
                       title: title,

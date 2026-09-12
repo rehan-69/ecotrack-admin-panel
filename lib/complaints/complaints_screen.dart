@@ -39,14 +39,20 @@ class ComplaintsScreen extends StatelessWidget {
             children: [
               const Text(
                 'Complaints',
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
 
               SizedBox(height: context.height * 0.008),
 
               Text(
                 'View and manage citizen waste complaints.',
-                style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey.shade600,
+                ),
               ),
 
               SizedBox(height: context.height * 0.025),
@@ -63,14 +69,23 @@ class ComplaintsScreen extends StatelessWidget {
     );
   }
 
-  Widget _filters(BuildContext context, AdminProvider provider) {
+  // =========================
+  // FILTERS
+  // =========================
+
+  Widget _filters(
+    BuildContext context,
+    AdminProvider provider,
+  ) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(
+          color: Colors.grey.shade200,
+        ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.04),
@@ -100,7 +115,8 @@ class ComplaintsScreen extends StatelessWidget {
                           color: Color(0xFF334155),
                         ),
                         decoration: InputDecoration(
-                          hintText: 'Search by complaint ID, title or citizen',
+                          hintText:
+                              'Search by complaint ID, title or citizen',
                           hintStyle: TextStyle(
                             fontSize: 14,
                             color: Colors.grey.shade500,
@@ -115,15 +131,21 @@ class ComplaintsScreen extends StatelessWidget {
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(color: Colors.grey.shade300),
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade300,
+                            ),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(color: Colors.grey.shade300),
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade300,
+                            ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(color: Colors.grey.shade400),
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade400,
+                            ),
                           ),
                         ),
                       ),
@@ -141,6 +163,7 @@ class ComplaintsScreen extends StatelessWidget {
                         provider.setComplaintWasteType(
                           value == 'All Waste Types' ? null : value,
                         );
+
                         provider.loadComplaints();
                       },
                     ),
@@ -157,18 +180,16 @@ class ComplaintsScreen extends StatelessWidget {
                         provider.setComplaintWard(
                           value == 'All Wards' ? null : value,
                         );
+
                         provider.loadComplaints();
                       },
                     ),
-
-                    const SizedBox(width: 10),
                   ],
                 ),
 
                 const SizedBox(height: 10),
 
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     _filterButton(
                       context,
@@ -217,6 +238,7 @@ class ComplaintsScreen extends StatelessWidget {
             );
           }
 
+          // MOBILE
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -233,7 +255,8 @@ class ComplaintsScreen extends StatelessWidget {
                     color: Color(0xFF334155),
                   ),
                   decoration: InputDecoration(
-                    hintText: 'Search by complaint ID, title or citizen',
+                    hintText:
+                        'Search by complaint ID, title or citizen',
                     hintStyle: TextStyle(
                       fontSize: 14,
                       color: Colors.grey.shade500,
@@ -246,15 +269,21 @@ class ComplaintsScreen extends StatelessWidget {
                     contentPadding: EdgeInsets.zero,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.grey.shade300),
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade300,
+                      ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.grey.shade300),
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade300,
+                      ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.grey.shade400),
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade400,
+                      ),
                     ),
                   ),
                 ),
@@ -276,6 +305,7 @@ class ComplaintsScreen extends StatelessWidget {
                       provider.setComplaintWasteType(
                         value == 'All Waste Types' ? null : value,
                       );
+
                       provider.loadComplaints();
                     },
                   ),
@@ -290,6 +320,7 @@ class ComplaintsScreen extends StatelessWidget {
                       provider.setComplaintWard(
                         value == 'All Wards' ? null : value,
                       );
+
                       provider.loadComplaints();
                     },
                   ),
@@ -311,8 +342,6 @@ class ComplaintsScreen extends StatelessWidget {
                     },
                   ),
 
-                  const SizedBox(width: 15),
-
                   _filterButton(
                     context,
                     'Pending',
@@ -322,8 +351,6 @@ class ComplaintsScreen extends StatelessWidget {
                     },
                   ),
 
-                  const SizedBox(width: 15),
-
                   _filterButton(
                     context,
                     'In Progress',
@@ -332,8 +359,6 @@ class ComplaintsScreen extends StatelessWidget {
                       provider.setComplaintStatus('In Progress');
                     },
                   ),
-
-                  const SizedBox(width: 15),
 
                   _filterButton(
                     context,
@@ -352,6 +377,10 @@ class ComplaintsScreen extends StatelessWidget {
     );
   }
 
+  // =========================
+  // FILTER BUTTON
+  // =========================
+
   Widget _filterButton(
     BuildContext context,
     String text,
@@ -362,12 +391,18 @@ class ComplaintsScreen extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: 38,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16,
+        ),
         decoration: BoxDecoration(
-          color: selected ? AppColors.primaryColor : Colors.white,
+          color: selected
+              ? AppColors.primaryColor
+              : Colors.white,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-            color: selected ? AppColors.primaryColor : Colors.grey.shade300,
+            color: selected
+                ? AppColors.primaryColor
+                : Colors.grey.shade300,
           ),
         ),
         alignment: Alignment.center,
@@ -375,13 +410,21 @@ class ComplaintsScreen extends StatelessWidget {
           text,
           style: TextStyle(
             fontSize: 14,
-            color: selected ? Colors.white : Colors.grey.shade700,
-            fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
+            color: selected
+                ? Colors.white
+                : Colors.grey.shade700,
+            fontWeight: selected
+                ? FontWeight.w600
+                : FontWeight.w400,
           ),
         ),
       ),
     );
   }
+
+  // =========================
+  // DROPDOWN
+  // =========================
 
   Widget _dropdown(
     BuildContext context,
@@ -397,7 +440,9 @@ class ComplaintsScreen extends StatelessWidget {
         onSelected: onSelected,
         position: PopupMenuPosition.under,
         offset: Offset.zero,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
         color: Colors.white,
         elevation: 4,
         itemBuilder: (context) {
@@ -409,7 +454,9 @@ class ComplaintsScreen extends StatelessWidget {
               height: 32,
               child: Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8,
+                ),
                 decoration: BoxDecoration(
                   color: isSelected
                       ? const Color(0xFFE8F5E9)
@@ -434,6 +481,7 @@ class ComplaintsScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+
                     if (isSelected)
                       const Icon(
                         Icons.check,
@@ -449,11 +497,15 @@ class ComplaintsScreen extends StatelessWidget {
         child: Container(
           width: double.infinity,
           height: 40,
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 12,
+          ),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Colors.grey.shade300),
+            border: Border.all(
+              color: Colors.grey.shade300,
+            ),
           ),
           child: Row(
             children: [
@@ -468,6 +520,7 @@ class ComplaintsScreen extends StatelessWidget {
                   ),
                 ),
               ),
+
               Icon(
                 Icons.keyboard_arrow_down,
                 size: 18,
@@ -480,17 +533,24 @@ class ComplaintsScreen extends StatelessWidget {
     );
   }
 
+  // =========================
+  // COMPLAINT TABLE
+  // =========================
+
   Widget _complaintsTable(BuildContext context) {
     final provider = context.watch<AdminProvider>();
 
-    double tableWidth = context.width < 1200 ? 1200 : context.width;
+    final double tableWidth =
+        context.width < 1200 ? 1200 : context.width;
 
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(
+          color: Colors.grey.shade200,
+        ),
       ),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -498,7 +558,10 @@ class ComplaintsScreen extends StatelessWidget {
           width: tableWidth,
           child: Column(
             children: [
-              _tableHeader(context, tableWidth),
+              _tableHeader(
+                context,
+                tableWidth,
+              ),
 
               if (provider.complaintsLoading)
                 const Padding(
@@ -510,7 +573,9 @@ class ComplaintsScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(30),
                   child: Text(
                     provider.complaintsError!,
-                    style: const TextStyle(color: Colors.red),
+                    style: const TextStyle(
+                      color: Colors.red,
+                    ),
                   ),
                 )
               else if (provider.complaints.isEmpty)
@@ -518,41 +583,79 @@ class ComplaintsScreen extends StatelessWidget {
                   padding: EdgeInsets.all(30),
                   child: Text(
                     'No complaints found',
-                    style: TextStyle(color: Colors.grey),
+                    style: TextStyle(
+                      color: Colors.grey,
+                    ),
                   ),
                 )
               else
-                ...provider.complaints.map((complaint) {
-                  final status = complaint['status']?.toString() ?? 'Pending';
+                ...provider.complaints.map(
+                  (complaint) {
+                    final int complaintDbId =
+                        int.tryParse(
+                              complaint['id']
+                                      ?.toString() ??
+                                  '',
+                            ) ??
+                            0;
 
-                  Color statusColor = Colors.orange;
-                  Color statusBackground = const Color(0xFFFFF0CC);
+                    final String status =
+                        complaint['status']
+                                ?.toString() ??
+                            'Pending';
 
-                  if (status.toLowerCase() == 'in progress') {
-                    statusColor = Colors.blue;
-                    statusBackground = const Color(0xFFE3F2FD);
-                  } else if (status.toLowerCase() == 'completed') {
-                    statusColor = Colors.green;
-                    statusBackground = const Color(0xFFE0F5E5);
-                  }
+                    Color statusColor =
+                        Colors.orange;
 
-                  return _tableRow(
-                    context,
-                    tableWidth,
-                    complaint['complaint_id']?.toString() ?? '',
-                    _getComplaintImage(complaint['image']) ?? '',
-                    complaint['title']?.toString() ?? '',
-                    complaint['user_name']?.toString() ?? 'Unknown',
-                    complaint['waste_type']?.toString() ?? '',
-                    complaint['ward']?.toString() ??
-                        complaint['location']?.toString() ??
-                        '',
-                    _formatDate(complaint['created_at']),
-                    status,
-                    statusColor,
-                    statusBackground,
-                  );
-                }),
+                    Color statusBackground =
+                        const Color(0xFFFFF0CC);
+
+                    if (status.toLowerCase() ==
+                        'in progress') {
+                      statusColor = Colors.blue;
+                      statusBackground =
+                          const Color(0xFFE3F2FD);
+                    } else if (status.toLowerCase() ==
+                        'completed') {
+                      statusColor = Colors.green;
+                      statusBackground =
+                          const Color(0xFFE0F5E5);
+                    }
+
+                    return _tableRow(
+                      context,
+                      tableWidth,
+                      complaintDbId,
+                      complaint['complaint_id']
+                              ?.toString() ??
+                          '',
+                      _getComplaintImage(
+                            complaint['image'],
+                          ) ??
+                          '',
+                      complaint['title']
+                              ?.toString() ??
+                          '',
+                      complaint['user_name']
+                              ?.toString() ??
+                          'Unknown',
+                      complaint['waste_type']
+                              ?.toString() ??
+                          '',
+                      complaint['ward']
+                              ?.toString() ??
+                          complaint['location']
+                              ?.toString() ??
+                          '',
+                      _formatDate(
+                        complaint['created_at'],
+                      ),
+                      status,
+                      statusColor,
+                      statusBackground,
+                    );
+                  },
+                ),
             ],
           ),
         ),
@@ -560,31 +663,80 @@ class ComplaintsScreen extends StatelessWidget {
     );
   }
 
-  Widget _tableHeader(BuildContext context, double tableWidth) {
+  // =========================
+  // TABLE HEADER
+  // =========================
+
+  Widget _tableHeader(
+    BuildContext context,
+    double tableWidth,
+  ) {
     return Container(
       height: 58,
       color: const Color(0xFFF8FAFA),
       child: Row(
         children: [
-          _headerCell(context, 'COMPLAINT\nID', tableWidth * 0.10),
-          _headerCell(context, 'PHOTO', tableWidth * 0.08),
-          _headerCell(context, 'COMPLAINT TITLE', tableWidth * 0.15),
-          _headerCell(context, 'CITIZEN', tableWidth * 0.12),
-          _headerCell(context, 'WASTE TYPE', tableWidth * 0.14),
-          _headerCell(context, 'WARD /\nLOCATION', tableWidth * 0.12),
-          _headerCell(context, 'SUBMITTED\nDATE', tableWidth * 0.12),
-          _headerCell(context, 'STATUS', tableWidth * 0.09),
-          _headerCell(context, 'ACTION', tableWidth * 0.08),
+          _headerCell(
+            context,
+            'COMPLAINT\nID',
+            tableWidth * 0.10,
+          ),
+          _headerCell(
+            context,
+            'PHOTO',
+            tableWidth * 0.08,
+          ),
+          _headerCell(
+            context,
+            'COMPLAINT TITLE',
+            tableWidth * 0.15,
+          ),
+          _headerCell(
+            context,
+            'CITIZEN',
+            tableWidth * 0.12,
+          ),
+          _headerCell(
+            context,
+            'WASTE TYPE',
+            tableWidth * 0.14,
+          ),
+          _headerCell(
+            context,
+            'WARD /\nLOCATION',
+            tableWidth * 0.12,
+          ),
+          _headerCell(
+            context,
+            'SUBMITTED\nDATE',
+            tableWidth * 0.12,
+          ),
+          _headerCell(
+            context,
+            'STATUS',
+            tableWidth * 0.09,
+          ),
+          _headerCell(
+            context,
+            'ACTION',
+            tableWidth * 0.08,
+          ),
         ],
       ),
     );
   }
 
-  Widget _headerCell(BuildContext context, String text, double width) {
+  Widget _headerCell(
+    BuildContext context,
+    String text,
+    double width,
+  ) {
     return SizedBox(
       width: width,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 12,
+        ),
         child: Text(
           text,
           style: TextStyle(
@@ -597,10 +749,15 @@ class ComplaintsScreen extends StatelessWidget {
     );
   }
 
+  // =========================
+  // TABLE ROW
+  // =========================
+
   Widget _tableRow(
     BuildContext context,
     double tableWidth,
-    String id,
+    int complaintDbId,
+    String complaintId,
     String image,
     String title,
     String citizen,
@@ -615,59 +772,59 @@ class ComplaintsScreen extends StatelessWidget {
       height: 70,
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.grey.shade200,
+          ),
+        ),
       ),
       child: Row(
         children: [
-          _dataCell(context, id, tableWidth * 0.10),
+          _dataCell(
+            context,
+            complaintId,
+            tableWidth * 0.10,
+          ),
 
           SizedBox(
             width: tableWidth * 0.08,
             child: Center(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: image.isEmpty
-                    ? Image.asset(
-                        'assets/waste-household.jpg',
-                        width: 48,
-                        height: 48,
-                        fit: BoxFit.cover,
-                      )
-                    : image.startsWith('http://') ||
-                          image.startsWith('https://')
-                    ? Image.network(
-                        image,
-                        width: 48,
-                        height: 48,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Image.asset(
-                            'assets/waste-household.jpg',
-                            width: 48,
-                            height: 48,
-                            fit: BoxFit.cover,
-                          );
-                        },
-                      )
-                    : Image.asset(
-                        image,
-                        width: 48,
-                        height: 48,
-                        fit: BoxFit.cover,
-                      ),
+                child: _buildComplaintImage(image),
               ),
             ),
           ),
 
-          _dataCell(context, title, tableWidth * 0.15),
+          _dataCell(
+            context,
+            title,
+            tableWidth * 0.15,
+          ),
 
-          _dataCell(context, citizen, tableWidth * 0.12),
+          _dataCell(
+            context,
+            citizen,
+            tableWidth * 0.12,
+          ),
 
-          _dataCell(context, wasteType, tableWidth * 0.14),
+          _dataCell(
+            context,
+            wasteType,
+            tableWidth * 0.14,
+          ),
 
-          _dataCell(context, location, tableWidth * 0.12),
+          _dataCell(
+            context,
+            location,
+            tableWidth * 0.12,
+          ),
 
-          _dataCell(context, date, tableWidth * 0.12),
+          _dataCell(
+            context,
+            date,
+            tableWidth * 0.12,
+          ),
 
           SizedBox(
             width: tableWidth * 0.09,
@@ -701,8 +858,10 @@ class ComplaintsScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ComplaintDetailScreen(
-                      complaintId: id,
+                    builder: (context) =>
+                        ComplaintDetailScreen(
+                      id: complaintDbId,
+                      complaintId: complaintId,
                       image: image,
                       title: title,
                       citizen: citizen,
@@ -716,7 +875,10 @@ class ComplaintsScreen extends StatelessWidget {
               },
               child: Text(
                 'View',
-                style: TextStyle(fontSize: 14, color: AppColors.primaryColor),
+                style: TextStyle(
+                  fontSize: 14,
+                  color: AppColors.primaryColor,
+                ),
               ),
             ),
           ),
@@ -725,26 +887,89 @@ class ComplaintsScreen extends StatelessWidget {
     );
   }
 
-  Widget _dataCell(BuildContext context, String text, double width) {
+  // =========================
+  // IMAGE
+  // =========================
+
+  Widget _buildComplaintImage(String image) {
+    if (image.isEmpty) {
+      return Image.asset(
+        'assets/waste-household.jpg',
+        width: 48,
+        height: 48,
+        fit: BoxFit.cover,
+      );
+    }
+
+    if (image.startsWith('http://') ||
+        image.startsWith('https://')) {
+      return Image.network(
+        image,
+        width: 48,
+        height: 48,
+        fit: BoxFit.cover,
+        errorBuilder: (
+          context,
+          error,
+          stackTrace,
+        ) {
+          return Image.asset(
+            'assets/waste-household.jpg',
+            width: 48,
+            height: 48,
+            fit: BoxFit.cover,
+          );
+        },
+      );
+    }
+
+    return Image.asset(
+      image,
+      width: 48,
+      height: 48,
+      fit: BoxFit.cover,
+    );
+  }
+
+  // =========================
+  // DATA CELL
+  // =========================
+
+  Widget _dataCell(
+    BuildContext context,
+    String text,
+    double width,
+  ) {
     return SizedBox(
       width: width,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 12,
+        ),
         child: Text(
           text,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: const TextStyle(fontSize: 14, color: Color(0xFF0F172A)),
+          style: const TextStyle(
+            fontSize: 14,
+            color: Color(0xFF0F172A),
+          ),
         ),
       ),
     );
   }
 
+  // =========================
+  // DATE FORMAT
+  // =========================
+
   String _formatDate(dynamic value) {
     if (value == null) return '';
 
     try {
-      final date = DateTime.parse(value.toString());
+      final date = DateTime.parse(
+        value.toString(),
+      );
 
       const months = [
         'Jan',
