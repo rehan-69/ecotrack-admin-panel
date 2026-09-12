@@ -265,12 +265,13 @@ class AdminProvider extends ChangeNotifier {
     selectedWard = value;
   }
 
-    // =========================
+  // =========================
   // Complaint Detail
   // =========================
 
   bool complaintDetailLoading = false;
   String? complaintDetailError;
+  String? selectedComplaintStatus;
   Map<String, dynamic>? complaintDetail;
 
   Future<void> loadComplaintDetail(int id) async {
@@ -282,16 +283,13 @@ class AdminProvider extends ChangeNotifier {
     try {
       final data = await AdminApiService.getComplaintById(id);
 
-      complaintDetail = Map<String, dynamic>.from(
-        data['complaint'] ?? {},
-      );
+      complaintDetail = Map<String, dynamic>.from(data['complaint'] ?? {});
 
       complaintDetailLoading = false;
       notifyListeners();
     } catch (error) {
       complaintDetailLoading = false;
-      complaintDetailError =
-          error.toString().replaceFirst('Exception: ', '');
+      complaintDetailError = error.toString().replaceFirst('Exception: ', '');
       notifyListeners();
     }
   }
@@ -300,5 +298,34 @@ class AdminProvider extends ChangeNotifier {
     complaintDetail = null;
     complaintDetailError = null;
     complaintDetailLoading = false;
+  }
+
+  void setSelectedDetailStatus(String? value) {
+    selectedComplaintStatus = value;
+    notifyListeners();
+  }
+
+  Future<bool> updateComplaintStatus(int id) async {
+    final newStatus = selectedComplaintStatus;
+
+    if (newStatus == null) {
+      return false;
+    }
+
+    try {
+      await AdminApiService.updateComplaintStatus(id: id, status: newStatus);
+
+      complaintDetail?['status'] = newStatus;
+
+      notifyListeners();
+
+      return true;
+    } catch (error) {
+      complaintDetailError = error.toString().replaceFirst('Exception: ', '');
+
+      notifyListeners();
+
+      return false;
+    }
   }
 }

@@ -210,8 +210,8 @@ class ComplaintDetailScreen extends StatelessWidget {
 
   Widget _content(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-
     final bool isMobile = screenWidth < 900;
+    final detailComplaint = context.read<AdminProvider>().complaintDetail ?? {};
 
     return Container(
       width: double.infinity,
@@ -275,7 +275,7 @@ class ComplaintDetailScreen extends StatelessWidget {
 
                 _statusBadge(
                   context,
-                  status,
+                  detailComplaint['status']?.toString() ?? status,
                   const Color(0xFFE3F2FD),
                   Colors.blue,
                 ),
@@ -348,6 +348,11 @@ class ComplaintDetailScreen extends StatelessWidget {
 
   Widget _complaintImage(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
+    final value = context.read<AdminProvider>();
+    final detailComplaint = value.complaintDetail ?? {};
+    final images = detailComplaint['image'] is List
+        ? List.from(detailComplaint['image'])
+        : [];
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
@@ -357,7 +362,13 @@ class ComplaintDetailScreen extends StatelessWidget {
 
         height: screenWidth < 600 ? 250 : 385,
 
-        child: Image.asset(image, fit: BoxFit.cover),
+        child: Image.network(
+          images.isNotEmpty ? images[0].toString() : '',
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return Image.asset(image, fit: BoxFit.cover);
+          },
+        ),
       ),
     );
   }
@@ -365,6 +376,8 @@ class ComplaintDetailScreen extends StatelessWidget {
   // CURRENT STATUS
 
   Widget _currentStatusCard(BuildContext context) {
+    final value = context.read<AdminProvider>();
+    final detailComplaint = value.complaintDetail ?? {};
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
@@ -395,7 +408,12 @@ class ComplaintDetailScreen extends StatelessWidget {
 
           const SizedBox(height: 14),
 
-          _statusBadge(context, status, const Color(0xFFE3F2FD), Colors.blue),
+          _statusBadge(
+            context,
+            detailComplaint['status']?.toString() ?? status,
+            const Color(0xFFE3F2FD),
+            Colors.blue,
+          ),
 
           const SizedBox(height: 25),
 
@@ -418,23 +436,28 @@ class ComplaintDetailScreen extends StatelessWidget {
               border: Border.all(color: Colors.grey.shade300),
             ),
 
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                value:
+                    value.selectedComplaintStatus ??
+                    detailComplaint['status']?.toString() ??
                     status,
-                    overflow: TextOverflow.ellipsis,
-
-                    style: const TextStyle(fontSize: 14),
+                isExpanded: true,
+                items: const [
+                  DropdownMenuItem(value: 'Pending', child: Text('Pending')),
+                  DropdownMenuItem(
+                    value: 'In Progress',
+                    child: Text('In Progress'),
                   ),
-                ),
-
-                const Icon(
-                  Icons.keyboard_arrow_down,
-                  size: 20,
-                  color: Colors.grey,
-                ),
-              ],
+                  DropdownMenuItem(
+                    value: 'Completed',
+                    child: Text('Completed'),
+                  ),
+                ],
+                onChanged: (value) {
+                  context.read<AdminProvider>().setSelectedDetailStatus(value);
+                },
+              ),
             ),
           ),
 
@@ -445,7 +468,17 @@ class ComplaintDetailScreen extends StatelessWidget {
             height: 37,
 
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () async {
+                final success = await value.updateComplaintStatus(id);
+
+                if (success) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Complaint status updated successfully'),
+                    ),
+                  );
+                }
+              },
 
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primaryColor,
@@ -471,6 +504,8 @@ class ComplaintDetailScreen extends StatelessWidget {
   // COMPLAINT INFORMATION
 
   Widget _complaintInformation(BuildContext context) {
+    final value = context.read<AdminProvider>();
+    final detailComplaint = value.complaintDetail ?? {};
     final double screenWidth = MediaQuery.of(context).size.width;
 
     final bool isMobile = screenWidth < 600;
@@ -551,9 +586,12 @@ class ComplaintDetailScreen extends StatelessWidget {
 
                 const SizedBox(height: 7),
 
-                const Text(
-                  'Garbage bin near the bus stop has been overflowing for three days.',
-                  style: TextStyle(fontSize: 14, color: Color(0xFF07152B)),
+                Text(
+                  detailComplaint['description']?.toString() ?? '',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Color(0xFF07152B),
+                  ),
                 ),
               ],
             ),
@@ -566,18 +604,26 @@ class ComplaintDetailScreen extends StatelessWidget {
   // LEFT INFORMATION
 
   Widget _leftInformation(BuildContext context) {
+    final value = context.read<AdminProvider>();
+    final detailComplaint = value.complaintDetail ?? {};
+
     return Column(
       children: [
         _informationItem(
           context,
           Icons.local_offer_outlined,
           'Complaint ID',
-          complaintId,
+          detailComplaint['complaint_id']?.toString() ?? complaintId,
         ),
 
         const SizedBox(height: 15),
 
-        _informationItem(context, Icons.person_outline, 'Citizen', citizen),
+        _informationItem(
+          context,
+          Icons.person_outline,
+          'Citizen',
+          detailComplaint['user_name']?.toString() ?? citizen,
+        ),
 
         const SizedBox(height: 15),
 
@@ -585,7 +631,7 @@ class ComplaintDetailScreen extends StatelessWidget {
           context,
           Icons.location_on_outlined,
           'Location',
-          location,
+          detailComplaint['location']?.toString() ?? location,
         ),
 
         const SizedBox(height: 15),
@@ -594,7 +640,7 @@ class ComplaintDetailScreen extends StatelessWidget {
           context,
           Icons.location_on_outlined,
           'GPS Location',
-          '19.9975° N, 73.7898° E',
+          '${detailComplaint['latitude'] ?? ''}° N, ${detailComplaint['longitude'] ?? ''}° E',
         ),
       ],
     );
@@ -603,13 +649,15 @@ class ComplaintDetailScreen extends StatelessWidget {
   // RIGHT INFORMATION
 
   Widget _rightInformation(BuildContext context) {
+    final value = context.read<AdminProvider>();
+    final detailComplaint = value.complaintDetail ?? {};
     return Column(
       children: [
         _informationItem(
           context,
           Icons.local_offer_outlined,
           'Complaint Title',
-          title,
+          detailComplaint['title']?.toString() ?? title,
         ),
 
         const SizedBox(height: 15),
@@ -618,7 +666,7 @@ class ComplaintDetailScreen extends StatelessWidget {
           context,
           Icons.local_offer_outlined,
           'Waste Type',
-          wasteType,
+          detailComplaint['waste_type']?.toString() ?? wasteType,
         ),
 
         const SizedBox(height: 15),
@@ -627,7 +675,7 @@ class ComplaintDetailScreen extends StatelessWidget {
           context,
           Icons.calendar_today_outlined,
           'Submitted Date',
-          date,
+          detailComplaint['created_at']?.toString() ?? date,
         ),
       ],
     );
@@ -690,18 +738,31 @@ class ComplaintDetailScreen extends StatelessWidget {
   }
 
   // STATUS TIMELINE
-
   Widget _statusTimeline(BuildContext context) {
+    final value = context.read<AdminProvider>();
+    final detailComplaint = value.complaintDetail ?? {};
+
+    final currentStatus = detailComplaint['status']?.toString() ?? status;
+
+    final submittedCompleted = true;
+
+    final pendingCompleted =
+        currentStatus == 'Pending' ||
+        currentStatus == 'In Progress' ||
+        currentStatus == 'Completed';
+
+    final inProgressCompleted =
+        currentStatus == 'In Progress' || currentStatus == 'Completed';
+
+    final completedCompleted = currentStatus == 'Completed';
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
-
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
-
         border: Border.all(color: Colors.grey.shade200),
-
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.04),
@@ -710,10 +771,8 @@ class ComplaintDetailScreen extends StatelessWidget {
           ),
         ],
       ),
-
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-
         children: [
           const Text(
             'Status Timeline',
@@ -722,13 +781,37 @@ class ComplaintDetailScreen extends StatelessWidget {
 
           const SizedBox(height: 20),
 
-          _timelineItem(context, 'Submitted', true, false, '1'),
+          _timelineItem(
+            context,
+            'Submitted',
+            submittedCompleted,
+            currentStatus == 'Submitted',
+            '1',
+          ),
 
-          _timelineItem(context, 'Pending', true, false, '2'),
+          _timelineItem(
+            context,
+            'Pending',
+            pendingCompleted,
+            currentStatus == 'Pending',
+            '2',
+          ),
 
-          _timelineItem(context, 'In Progress', true, true, '3'),
+          _timelineItem(
+            context,
+            'In Progress',
+            inProgressCompleted,
+            currentStatus == 'In Progress',
+            '3',
+          ),
 
-          _timelineItem(context, 'Completed', false, false, '4'),
+          _timelineItem(
+            context,
+            'Completed',
+            completedCompleted,
+            currentStatus == 'Completed',
+            '4',
+          ),
         ],
       ),
     );
