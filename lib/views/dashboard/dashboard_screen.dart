@@ -4,8 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
 import 'package:ecotrack_admin_panel/viewmodel/admin_provider.dart';
 import 'package:ecotrack_admin_panel/complaints/complaints_detail_screen.dart';
-
-
+import 'package:ecotrack_admin_panel/models/complaint_model.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -19,6 +18,7 @@ class DashboardScreen extends StatelessWidget {
             provider.loadDashboard();
           });
         }
+
         return LayoutBuilder(
           builder: (context, constraints) {
             final double dashboardWidth = constraints.maxWidth;
@@ -42,7 +42,10 @@ class DashboardScreen extends StatelessWidget {
 
                   Text(
                     'Monitor and manage waste complaints across your city.',
-                    style: const TextStyle(fontSize: 16, color: Colors.grey),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey,
+                    ),
                   ),
 
                   SizedBox(height: dashboardWidth * 0.035),
@@ -195,7 +198,11 @@ class DashboardScreen extends StatelessWidget {
               color: iconBackground,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(icon, color: iconColor, size: 22),
+            child: Icon(
+              icon,
+              color: iconColor,
+              size: 22,
+            ),
           ),
 
           const SizedBox(width: 14),
@@ -205,7 +212,10 @@ class DashboardScreen extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: const TextStyle(fontSize: 15, color: Colors.grey),
+                style: const TextStyle(
+                  fontSize: 15,
+                  color: Colors.grey,
+                ),
               ),
 
               const SizedBox(height: 5),
@@ -225,7 +235,10 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _complaintStatus(BuildContext context, AdminProvider provider) {
+  Widget _complaintStatus(
+    BuildContext context,
+    AdminProvider provider,
+  ) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
@@ -257,7 +270,10 @@ class DashboardScreen extends StatelessWidget {
 
           const Text(
             'Distribution of complaints by current status.',
-            style: TextStyle(fontSize: 14, color: Colors.grey),
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey,
+            ),
           ),
 
           const SizedBox(height: 20),
@@ -266,14 +282,15 @@ class DashboardScreen extends StatelessWidget {
             height: 300,
             child: BarChart(
               BarChartData(
-                maxY:
-                    [
+                maxY: [
                       provider.pendingComplaints,
                       provider.inProgressComplaints,
                       provider.completedComplaints,
                     ].reduce((a, b) => a > b ? a : b) +
                     10,
+
                 minY: 0,
+
                 alignment: BarChartAlignment.spaceEvenly,
 
                 gridData: FlGridData(
@@ -289,12 +306,19 @@ class DashboardScreen extends StatelessWidget {
                   },
                 ),
 
-                borderData: FlBorderData(show: false),
+                borderData: FlBorderData(
+                  show: false,
+                ),
 
                 barTouchData: BarTouchData(
                   enabled: true,
                   touchTooltipData: BarTouchTooltipData(
-                    getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                    getTooltipItem: (
+                      group,
+                      groupIndex,
+                      rod,
+                      rodIndex,
+                    ) {
                       return BarTooltipItem(
                         rod.toY.toInt().toString(),
                         const TextStyle(
@@ -309,11 +333,15 @@ class DashboardScreen extends StatelessWidget {
 
                 titlesData: FlTitlesData(
                   topTitles: const AxisTitles(
-                    sideTitles: SideTitles(showTitles: false),
+                    sideTitles: SideTitles(
+                      showTitles: false,
+                    ),
                   ),
 
                   rightTitles: const AxisTitles(
-                    sideTitles: SideTitles(showTitles: false),
+                    sideTitles: SideTitles(
+                      showTitles: false,
+                    ),
                   ),
 
                   leftTitles: AxisTitles(
@@ -360,11 +388,13 @@ class DashboardScreen extends StatelessWidget {
                     provider.pendingComplaints.toDouble(),
                     Colors.orange,
                   ),
+
                   _barGroup(
                     1,
                     provider.inProgressComplaints.toDouble(),
                     Colors.blue,
                   ),
+
                   _barGroup(
                     2,
                     provider.completedComplaints.toDouble(),
@@ -379,7 +409,11 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  BarChartGroupData _barGroup(int x, double value, Color color) {
+  BarChartGroupData _barGroup(
+    int x,
+    double value,
+    Color color,
+  ) {
     return BarChartGroupData(
       x: x,
       barRods: [
@@ -399,6 +433,7 @@ class DashboardScreen extends StatelessWidget {
   Widget _recentComplaints(BuildContext context) {
     final provider = context.watch<AdminProvider>();
     final complaints = provider.recentComplaints;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -406,7 +441,10 @@ class DashboardScreen extends StatelessWidget {
           children: [
             const Text(
               'Recent Complaints',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
             ),
 
             const Spacer(),
@@ -429,7 +467,9 @@ class DashboardScreen extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(15),
-            border: Border.all(color: Colors.grey.shade200),
+            border: Border.all(
+              color: Colors.grey.shade200,
+            ),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.05),
@@ -462,37 +502,43 @@ class DashboardScreen extends StatelessWidget {
                             padding: EdgeInsets.all(30),
                             child: Text(
                               'No complaints found',
-                              style: TextStyle(color: Colors.grey),
+                              style: TextStyle(
+                                color: Colors.grey,
+                              ),
                             ),
                           )
                         else
-                          ...complaints.map((complaint) {
-                            final status =
-                                complaint['status']?.toString() ?? 'Pending';
+                          ...complaints.map((ComplaintModel complaint) {
+                            final status = complaint.status;
 
                             Color statusColor = Colors.orange;
-                            Color statusBackground = const Color(0xFFFFF3D6);
+                            Color statusBackground =
+                                const Color(0xFFFFF3D6);
 
                             if (status.toLowerCase() == 'in progress') {
                               statusColor = Colors.blue;
-                              statusBackground = const Color(0xFFE3F2FD);
-                            } else if (status.toLowerCase() == 'completed') {
+                              statusBackground =
+                                  const Color(0xFFE3F2FD);
+                            } else if (status.toLowerCase() ==
+                                'completed') {
                               statusColor = Colors.green;
-                              statusBackground = const Color(0xFFE0F5E5);
+                              statusBackground =
+                                  const Color(0xFFE0F5E5);
                             }
 
                             return _complaintRow(
                               context,
-                              complaint['complaint_id']?.toString() ?? '',
-                              complaint['user_name']?.toString() ?? 'Unknown',
-                              complaint['waste_type']?.toString() ?? '',
-                              complaint['location']?.toString() ?? '',
-                              _formatDate(complaint['created_at']),
+                              complaint.id,
+                              complaint.complaintId,
+                              complaint.userName,
+                              complaint.wasteType,
+                              complaint.location,
+                              _formatDate(complaint.createdAt),
                               status,
                               statusColor,
                               statusBackground,
                               'assets/waste-household.jpg',
-                              complaint['title']?.toString() ?? '',
+                              complaint.title,
                             );
                           }),
                       ],
@@ -509,29 +555,64 @@ class DashboardScreen extends StatelessWidget {
 
   Widget _complaintHeader(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 16,
+      ),
       color: const Color(0xFFF8FAFA),
       child: Row(
         children: [
-          _tableTitle(context, 'COMPLAINT ID', 12),
+          _tableTitle(
+            context,
+            'COMPLAINT ID',
+            12,
+          ),
 
-          _tableTitle(context, 'CITIZEN', 12),
+          _tableTitle(
+            context,
+            'CITIZEN',
+            12,
+          ),
 
-          _tableTitle(context, 'WASTE TYPE', 15),
+          _tableTitle(
+            context,
+            'WASTE TYPE',
+            15,
+          ),
 
-          _tableTitle(context, 'LOCATION', 10),
+          _tableTitle(
+            context,
+            'LOCATION',
+            10,
+          ),
 
-          _tableTitle(context, 'DATE', 10),
+          _tableTitle(
+            context,
+            'DATE',
+            10,
+          ),
 
-          _tableTitle(context, 'STATUS', 10),
+          _tableTitle(
+            context,
+            'STATUS',
+            10,
+          ),
 
-          _tableTitle(context, 'ACTION', 7),
+          _tableTitle(
+            context,
+            'ACTION',
+            7,
+          ),
         ],
       ),
     );
   }
 
-  Widget _tableTitle(BuildContext context, String title, int flex) {
+  Widget _tableTitle(
+    BuildContext context,
+    String title,
+    int flex,
+  ) {
     return Expanded(
       flex: flex,
       child: Text(
@@ -547,6 +628,7 @@ class DashboardScreen extends StatelessWidget {
 
   Widget _complaintRow(
     BuildContext context,
+    int complaintDbId,
     String id,
     String citizen,
     String wasteType,
@@ -559,22 +641,49 @@ class DashboardScreen extends StatelessWidget {
     String title,
   ) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 16,
+      ),
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border(top: BorderSide(color: Colors.grey.shade200)),
+        border: Border(
+          top: BorderSide(
+            color: Colors.grey.shade200,
+          ),
+        ),
       ),
       child: Row(
         children: [
-          _tableText(context, id, 12),
+          _tableText(
+            context,
+            id,
+            12,
+          ),
 
-          _tableText(context, citizen, 12),
+          _tableText(
+            context,
+            citizen,
+            12,
+          ),
 
-          _tableText(context, wasteType, 15),
+          _tableText(
+            context,
+            wasteType,
+            15,
+          ),
 
-          _tableText(context, location, 10),
+          _tableText(
+            context,
+            location,
+            10,
+          ),
 
-          _tableText(context, date, 10),
+          _tableText(
+            context,
+            date,
+            10,
+          ),
 
           Expanded(
             flex: 10,
@@ -609,7 +718,7 @@ class DashboardScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => ComplaintDetailScreen(
-                      id: 28,
+                      id: complaintDbId,
                       complaintId: id,
                       image: image,
                       title: title,
@@ -622,9 +731,9 @@ class DashboardScreen extends StatelessWidget {
                   ),
                 );
               },
-              child: Text(
+              child: const Text(
                 'View',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
                   color: AppColors.primaryColor,
                   fontWeight: FontWeight.w500,
@@ -637,14 +746,21 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _tableText(BuildContext context, String text, int flex) {
+  Widget _tableText(
+    BuildContext context,
+    String text,
+    int flex,
+  ) {
     return Expanded(
       flex: flex,
       child: Text(
         text,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: const TextStyle(fontSize: 14, color: Colors.black87),
+        style: const TextStyle(
+          fontSize: 14,
+          color: Colors.black87,
+        ),
       ),
     );
   }

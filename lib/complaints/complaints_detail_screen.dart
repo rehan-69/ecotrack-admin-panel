@@ -34,6 +34,7 @@ class ComplaintDetailScreen extends StatelessWidget {
     return Consumer<AdminProvider>(
       builder: (context, value, child) {
         final bool isMobile = MediaQuery.of(context).size.width < 900;
+
         if (value.complaintDetail == null &&
             !value.complaintDetailLoading &&
             value.complaintDetailError == null) {
@@ -41,16 +42,21 @@ class ComplaintDetailScreen extends StatelessWidget {
             value.loadComplaintDetail(id);
           });
         }
+
         if (value.complaintDetailError != null) {
           return Scaffold(
             body: Center(
               child: Text(
                 value.complaintDetailError!,
-                style: const TextStyle(color: Colors.red, fontSize: 16),
+                style: const TextStyle(
+                  color: Colors.red,
+                  fontSize: 16,
+                ),
               ),
             ),
           );
         }
+
         if (isMobile) {
           return Scaffold(
             backgroundColor: const Color(0xFFF7FAF8),
@@ -88,7 +94,9 @@ class ComplaintDetailScreen extends StatelessWidget {
                   children: [
                     _header(context),
 
-                    Expanded(child: _content(context)),
+                    Expanded(
+                      child: _content(context),
+                    ),
                   ],
                 ),
               ),
@@ -107,13 +115,20 @@ class ComplaintDetailScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 18),
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.grey.shade200,
+          ),
+        ),
       ),
       child: Row(
         children: [
           const Text(
             'Nashik Municipal Corporation',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
           ),
 
           const Spacer(),
@@ -124,12 +139,18 @@ class ComplaintDetailScreen extends StatelessWidget {
             children: [
               const Text(
                 'Admin',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
 
               Text(
                 'admin@ecotrack.gov.in',
-                style: TextStyle(fontSize: 12, color: Colors.grey.shade500),
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey.shade500,
+                ),
               ),
             ],
           ),
@@ -165,7 +186,11 @@ class ComplaintDetailScreen extends StatelessWidget {
       leading: Builder(
         builder: (context) {
           return IconButton(
-            icon: const Icon(Icons.menu, color: Colors.black54, size: 28),
+            icon: const Icon(
+              Icons.menu,
+              color: Colors.black54,
+              size: 28,
+            ),
             onPressed: () {
               Scaffold.of(context).openDrawer();
             },
@@ -185,7 +210,10 @@ class ComplaintDetailScreen extends StatelessWidget {
           ),
 
           const Spacer(),
-          SizedBox(width: context.width * 0.005),
+
+          SizedBox(
+            width: context.width * 0.005,
+          ),
 
           const CircleAvatar(
             radius: 15,
@@ -211,20 +239,25 @@ class ComplaintDetailScreen extends StatelessWidget {
   Widget _content(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final bool isMobile = screenWidth < 900;
-    final detailComplaint = context.read<AdminProvider>().complaintDetail ?? {};
+
+    final detailComplaint =
+        context.read<AdminProvider>().complaintDetail;
 
     return Container(
       width: double.infinity,
       color: const Color(0xFFF7FAF8),
 
       child: SingleChildScrollView(
-        padding: EdgeInsets.all(isMobile ? 16 : 26),
+        padding: EdgeInsets.all(
+          isMobile ? 16 : 26,
+        ),
 
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
 
           children: [
             // BACK
+
             InkWell(
               onTap: () {
                 Navigator.pop(context);
@@ -244,7 +277,10 @@ class ComplaintDetailScreen extends StatelessWidget {
 
                   const Text(
                     'Back',
-                    style: TextStyle(fontSize: 14, color: Color(0xFF64748B)),
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFF64748B),
+                    ),
                   ),
                 ],
               ),
@@ -253,6 +289,7 @@ class ComplaintDetailScreen extends StatelessWidget {
             const SizedBox(height: 20),
 
             // TITLE
+
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
 
@@ -275,7 +312,7 @@ class ComplaintDetailScreen extends StatelessWidget {
 
                 _statusBadge(
                   context,
-                  detailComplaint['status']?.toString() ?? status,
+                  detailComplaint?.status ?? status,
                   const Color(0xFFE3F2FD),
                   Colors.blue,
                 ),
@@ -285,6 +322,7 @@ class ComplaintDetailScreen extends StatelessWidget {
             const SizedBox(height: 24),
 
             // DESKTOP
+
             if (!isMobile)
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -320,6 +358,7 @@ class ComplaintDetailScreen extends StatelessWidget {
               ),
 
             // MOBILE / TABLET
+
             if (isMobile)
               Column(
                 children: [
@@ -348,11 +387,12 @@ class ComplaintDetailScreen extends StatelessWidget {
 
   Widget _complaintImage(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
+
     final value = context.read<AdminProvider>();
-    final detailComplaint = value.complaintDetail ?? {};
-    final images = detailComplaint['image'] is List
-        ? List.from(detailComplaint['image'])
-        : [];
+
+    final detailComplaint = value.complaintDetail;
+
+    final images = detailComplaint?.image ?? [];
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
@@ -363,10 +403,15 @@ class ComplaintDetailScreen extends StatelessWidget {
         height: screenWidth < 600 ? 250 : 385,
 
         child: Image.network(
-          images.isNotEmpty ? images[0].toString() : '',
+          images.isNotEmpty ? images[0] : '',
+
           fit: BoxFit.cover,
+
           errorBuilder: (context, error, stackTrace) {
-            return Image.asset(image, fit: BoxFit.cover);
+            return Image.asset(
+              image,
+              fit: BoxFit.cover,
+            );
           },
         ),
       ),
@@ -377,16 +422,22 @@ class ComplaintDetailScreen extends StatelessWidget {
 
   Widget _currentStatusCard(BuildContext context) {
     final value = context.read<AdminProvider>();
-    final detailComplaint = value.complaintDetail ?? {};
+
+    final detailComplaint = value.complaintDetail;
+
     return Container(
       width: double.infinity,
+
       padding: const EdgeInsets.all(20),
 
       decoration: BoxDecoration(
         color: Colors.white,
+
         borderRadius: BorderRadius.circular(15),
 
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(
+          color: Colors.grey.shade200,
+        ),
 
         boxShadow: [
           BoxShadow(
@@ -403,14 +454,17 @@ class ComplaintDetailScreen extends StatelessWidget {
         children: [
           const Text(
             'Current Status',
-            style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+            style: TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.w600,
+            ),
           ),
 
           const SizedBox(height: 14),
 
           _statusBadge(
             context,
-            detailComplaint['status']?.toString() ?? status,
+            detailComplaint?.status ?? status,
             const Color(0xFFE3F2FD),
             Colors.blue,
           ),
@@ -419,43 +473,63 @@ class ComplaintDetailScreen extends StatelessWidget {
 
           const Text(
             'Update Complaint Status',
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w500,
+            ),
           ),
 
           const SizedBox(height: 10),
 
           Container(
             width: double.infinity,
+
             height: 38,
-            padding: const EdgeInsets.symmetric(horizontal: 12),
+
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12,
+            ),
 
             decoration: BoxDecoration(
               color: Colors.white,
+
               borderRadius: BorderRadius.circular(9),
 
-              border: Border.all(color: Colors.grey.shade300),
+              border: Border.all(
+                color: Colors.grey.shade300,
+              ),
             ),
 
             child: DropdownButtonHideUnderline(
               child: DropdownButton<String>(
                 value:
                     value.selectedComplaintStatus ??
-                    detailComplaint['status']?.toString() ??
+                    detailComplaint?.status ??
                     status,
+
                 isExpanded: true,
+
                 items: const [
-                  DropdownMenuItem(value: 'Pending', child: Text('Pending')),
+                  DropdownMenuItem(
+                    value: 'Pending',
+                    child: Text('Pending'),
+                  ),
+
                   DropdownMenuItem(
                     value: 'In Progress',
                     child: Text('In Progress'),
                   ),
+
                   DropdownMenuItem(
                     value: 'Completed',
                     child: Text('Completed'),
                   ),
                 ],
+
                 onChanged: (value) {
-                  context.read<AdminProvider>().setSelectedDetailStatus(value);
+                  context
+                      .read<AdminProvider>()
+                      .setSelectedDetailStatus(value);
                 },
               ),
             ),
@@ -465,16 +539,20 @@ class ComplaintDetailScreen extends StatelessWidget {
 
           SizedBox(
             width: double.infinity,
+
             height: 37,
 
             child: ElevatedButton(
               onPressed: () async {
-                final success = await value.updateComplaintStatus(id);
+                final success =
+                    await value.updateComplaintStatus(id);
 
                 if (success) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text('Complaint status updated successfully'),
+                      content: Text(
+                        'Complaint status updated successfully',
+                      ),
                     ),
                   );
                 }
@@ -492,7 +570,10 @@ class ComplaintDetailScreen extends StatelessWidget {
 
               child: const Text(
                 'Update Status',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),
@@ -505,20 +586,27 @@ class ComplaintDetailScreen extends StatelessWidget {
 
   Widget _complaintInformation(BuildContext context) {
     final value = context.read<AdminProvider>();
-    final detailComplaint = value.complaintDetail ?? {};
-    final double screenWidth = MediaQuery.of(context).size.width;
+
+    final detailComplaint = value.complaintDetail;
+
+    final double screenWidth =
+        MediaQuery.of(context).size.width;
 
     final bool isMobile = screenWidth < 600;
 
     return Container(
       width: double.infinity,
+
       padding: const EdgeInsets.all(20),
 
       decoration: BoxDecoration(
         color: Colors.white,
+
         borderRadius: BorderRadius.circular(15),
 
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(
+          color: Colors.grey.shade200,
+        ),
 
         boxShadow: [
           BoxShadow(
@@ -535,7 +623,10 @@ class ComplaintDetailScreen extends StatelessWidget {
         children: [
           const Text(
             'Complaint Information',
-            style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+            style: TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.w600,
+            ),
           ),
 
           const SizedBox(height: 18),
@@ -545,11 +636,15 @@ class ComplaintDetailScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
 
               children: [
-                Expanded(child: _leftInformation(context)),
+                Expanded(
+                  child: _leftInformation(context),
+                ),
 
                 const SizedBox(width: 35),
 
-                Expanded(child: _rightInformation(context)),
+                Expanded(
+                  child: _rightInformation(context),
+                ),
               ],
             ),
 
@@ -568,10 +663,12 @@ class ComplaintDetailScreen extends StatelessWidget {
 
           Container(
             width: double.infinity,
+
             padding: const EdgeInsets.all(16),
 
             decoration: BoxDecoration(
               color: const Color(0xFFF7F9F8),
+
               borderRadius: BorderRadius.circular(12),
             ),
 
@@ -581,13 +678,16 @@ class ComplaintDetailScreen extends StatelessWidget {
               children: [
                 const Text(
                   'Description',
-                  style: TextStyle(fontSize: 13, color: Color(0xFF64748B)),
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Color(0xFF64748B),
+                  ),
                 ),
 
                 const SizedBox(height: 7),
 
                 Text(
-                  detailComplaint['description']?.toString() ?? '',
+                  detailComplaint?.description ?? '',
                   style: const TextStyle(
                     fontSize: 14,
                     color: Color(0xFF07152B),
@@ -605,7 +705,8 @@ class ComplaintDetailScreen extends StatelessWidget {
 
   Widget _leftInformation(BuildContext context) {
     final value = context.read<AdminProvider>();
-    final detailComplaint = value.complaintDetail ?? {};
+
+    final detailComplaint = value.complaintDetail;
 
     return Column(
       children: [
@@ -613,7 +714,7 @@ class ComplaintDetailScreen extends StatelessWidget {
           context,
           Icons.local_offer_outlined,
           'Complaint ID',
-          detailComplaint['complaint_id']?.toString() ?? complaintId,
+          detailComplaint?.complaintId ?? complaintId,
         ),
 
         const SizedBox(height: 15),
@@ -622,7 +723,7 @@ class ComplaintDetailScreen extends StatelessWidget {
           context,
           Icons.person_outline,
           'Citizen',
-          detailComplaint['user_name']?.toString() ?? citizen,
+          detailComplaint?.userName ?? citizen,
         ),
 
         const SizedBox(height: 15),
@@ -631,7 +732,7 @@ class ComplaintDetailScreen extends StatelessWidget {
           context,
           Icons.location_on_outlined,
           'Location',
-          detailComplaint['location']?.toString() ?? location,
+          detailComplaint?.location ?? location,
         ),
 
         const SizedBox(height: 15),
@@ -640,7 +741,8 @@ class ComplaintDetailScreen extends StatelessWidget {
           context,
           Icons.location_on_outlined,
           'GPS Location',
-          '${detailComplaint['latitude'] ?? ''}° N, ${detailComplaint['longitude'] ?? ''}° E',
+          '${detailComplaint?.latitude ?? ''}° N, '
+          '${detailComplaint?.longitude ?? ''}° E',
         ),
       ],
     );
@@ -650,14 +752,16 @@ class ComplaintDetailScreen extends StatelessWidget {
 
   Widget _rightInformation(BuildContext context) {
     final value = context.read<AdminProvider>();
-    final detailComplaint = value.complaintDetail ?? {};
+
+    final detailComplaint = value.complaintDetail;
+
     return Column(
       children: [
         _informationItem(
           context,
           Icons.local_offer_outlined,
           'Complaint Title',
-          detailComplaint['title']?.toString() ?? title,
+          detailComplaint?.title ?? title,
         ),
 
         const SizedBox(height: 15),
@@ -666,7 +770,7 @@ class ComplaintDetailScreen extends StatelessWidget {
           context,
           Icons.local_offer_outlined,
           'Waste Type',
-          detailComplaint['waste_type']?.toString() ?? wasteType,
+          detailComplaint?.wasteType ?? wasteType,
         ),
 
         const SizedBox(height: 15),
@@ -675,7 +779,7 @@ class ComplaintDetailScreen extends StatelessWidget {
           context,
           Icons.calendar_today_outlined,
           'Submitted Date',
-          detailComplaint['created_at']?.toString() ?? date,
+          detailComplaint?.createdAt ?? date,
         ),
       ],
     );
@@ -699,10 +803,15 @@ class ComplaintDetailScreen extends StatelessWidget {
 
           decoration: BoxDecoration(
             color: const Color(0xFFEAF7EE),
+
             borderRadius: BorderRadius.circular(10),
           ),
 
-          child: Icon(icon, size: 18, color: AppColors.primaryColor),
+          child: Icon(
+            icon,
+            size: 18,
+            color: AppColors.primaryColor,
+          ),
         ),
 
         const SizedBox(width: 12),
@@ -714,7 +823,10 @@ class ComplaintDetailScreen extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: const TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: Color(0xFF64748B),
+                ),
               ),
 
               const SizedBox(height: 3),
@@ -738,11 +850,14 @@ class ComplaintDetailScreen extends StatelessWidget {
   }
 
   // STATUS TIMELINE
+
   Widget _statusTimeline(BuildContext context) {
     final value = context.read<AdminProvider>();
-    final detailComplaint = value.complaintDetail ?? {};
 
-    final currentStatus = detailComplaint['status']?.toString() ?? status;
+    final detailComplaint = value.complaintDetail;
+
+    final currentStatus =
+        detailComplaint?.status ?? status;
 
     final submittedCompleted = true;
 
@@ -752,17 +867,26 @@ class ComplaintDetailScreen extends StatelessWidget {
         currentStatus == 'Completed';
 
     final inProgressCompleted =
-        currentStatus == 'In Progress' || currentStatus == 'Completed';
+        currentStatus == 'In Progress' ||
+        currentStatus == 'Completed';
 
-    final completedCompleted = currentStatus == 'Completed';
+    final completedCompleted =
+        currentStatus == 'Completed';
 
     return Container(
       width: double.infinity,
+
       padding: const EdgeInsets.all(20),
+
       decoration: BoxDecoration(
         color: Colors.white,
+
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.grey.shade200),
+
+        border: Border.all(
+          color: Colors.grey.shade200,
+        ),
+
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.04),
@@ -771,12 +895,17 @@ class ComplaintDetailScreen extends StatelessWidget {
           ),
         ],
       ),
+
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+
         children: [
           const Text(
             'Status Timeline',
-            style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+            style: TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.w600,
+            ),
           ),
 
           const SizedBox(height: 20),
@@ -843,8 +972,8 @@ class ComplaintDetailScreen extends StatelessWidget {
                   color: current
                       ? AppColors.primaryColor
                       : completed
-                      ? const Color(0xFFF4FBF6)
-                      : const Color(0xFFF3F5F6),
+                          ? const Color(0xFFF4FBF6)
+                          : const Color(0xFFF3F5F6),
 
                   shape: BoxShape.circle,
 
@@ -852,8 +981,8 @@ class ComplaintDetailScreen extends StatelessWidget {
                     color: current
                         ? AppColors.primaryColor
                         : completed
-                        ? AppColors.primaryColor
-                        : const Color(0xFFDCE3E7),
+                            ? AppColors.primaryColor
+                            : const Color(0xFFDCE3E7),
                   ),
                 ),
 
@@ -878,7 +1007,10 @@ class ComplaintDetailScreen extends StatelessWidget {
 
               if (title != 'Completed')
                 Expanded(
-                  child: Container(width: 1, color: AppColors.primaryColor),
+                  child: Container(
+                    width: 1,
+                    color: AppColors.primaryColor,
+                  ),
                 ),
             ],
           ),
@@ -896,7 +1028,9 @@ class ComplaintDetailScreen extends StatelessWidget {
                   title,
                   style: TextStyle(
                     fontSize: 14,
-                    fontWeight: current ? FontWeight.w500 : FontWeight.w400,
+                    fontWeight: current
+                        ? FontWeight.w500
+                        : FontWeight.w400,
                     color: current
                         ? AppColors.primaryColor
                         : const Color(0xFF334155),
@@ -906,7 +1040,10 @@ class ComplaintDetailScreen extends StatelessWidget {
                 if (current)
                   const Text(
                     'Current status',
-                    style: TextStyle(fontSize: 12, color: Color(0xFF94A3B8)),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Color(0xFF94A3B8),
+                    ),
                   ),
               ],
             ),
@@ -925,7 +1062,10 @@ class ComplaintDetailScreen extends StatelessWidget {
     Color textColor,
   ) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 12,
+        vertical: 5,
+      ),
 
       decoration: BoxDecoration(
         color: backgroundColor,

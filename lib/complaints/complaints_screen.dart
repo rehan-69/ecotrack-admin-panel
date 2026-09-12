@@ -8,15 +8,9 @@ import 'package:ecotrack_admin_panel/complaints/complaints_detail_screen.dart';
 class ComplaintsScreen extends StatelessWidget {
   const ComplaintsScreen({super.key});
 
-  String? _getComplaintImage(dynamic image) {
-    if (image == null) return null;
-
-    if (image is List && image.isNotEmpty) {
-      return image.first.toString();
-    }
-
-    if (image is String && image.isNotEmpty) {
-      return image;
+  String? _getComplaintImage(List<String> image) {
+    if (image.isNotEmpty) {
+      return image.first;
     }
 
     return null;
@@ -591,21 +585,11 @@ class ComplaintsScreen extends StatelessWidget {
               else
                 ...provider.complaints.map(
                   (complaint) {
-                    final int complaintDbId =
-                        int.tryParse(
-                              complaint['id']
-                                      ?.toString() ??
-                                  '',
-                            ) ??
-                            0;
+                    final int complaintDbId = complaint.id;
 
-                    final String status =
-                        complaint['status']
-                                ?.toString() ??
-                            'Pending';
+                    final String status = complaint.status;
 
-                    Color statusColor =
-                        Colors.orange;
+                    Color statusColor = Colors.orange;
 
                     Color statusBackground =
                         const Color(0xFFFFF0CC);
@@ -626,30 +610,13 @@ class ComplaintsScreen extends StatelessWidget {
                       context,
                       tableWidth,
                       complaintDbId,
-                      complaint['complaint_id']
-                              ?.toString() ??
-                          '',
-                      _getComplaintImage(
-                            complaint['image'],
-                          ) ??
-                          '',
-                      complaint['title']
-                              ?.toString() ??
-                          '',
-                      complaint['user_name']
-                              ?.toString() ??
-                          'Unknown',
-                      complaint['waste_type']
-                              ?.toString() ??
-                          '',
-                      complaint['ward']
-                              ?.toString() ??
-                          complaint['location']
-                              ?.toString() ??
-                          '',
-                      _formatDate(
-                        complaint['created_at'],
-                      ),
+                      complaint.complaintId,
+                      _getComplaintImage(complaint.image) ?? '',
+                      complaint.title,
+                      complaint.userName,
+                      complaint.wasteType,
+                      complaint.ward ?? complaint.location,
+                      _formatDate(complaint.createdAt),
                       status,
                       statusColor,
                       statusBackground,
@@ -681,41 +648,49 @@ class ComplaintsScreen extends StatelessWidget {
             'COMPLAINT\nID',
             tableWidth * 0.10,
           ),
+
           _headerCell(
             context,
             'PHOTO',
             tableWidth * 0.08,
           ),
+
           _headerCell(
             context,
             'COMPLAINT TITLE',
             tableWidth * 0.15,
           ),
+
           _headerCell(
             context,
             'CITIZEN',
             tableWidth * 0.12,
           ),
+
           _headerCell(
             context,
             'WASTE TYPE',
             tableWidth * 0.14,
           ),
+
           _headerCell(
             context,
             'WARD /\nLOCATION',
             tableWidth * 0.12,
           ),
+
           _headerCell(
             context,
             'SUBMITTED\nDATE',
             tableWidth * 0.12,
           ),
+
           _headerCell(
             context,
             'STATUS',
             tableWidth * 0.09,
           ),
+
           _headerCell(
             context,
             'ACTION',

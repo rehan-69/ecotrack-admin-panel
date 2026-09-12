@@ -1,5 +1,8 @@
 import 'package:ecotrack_admin_panel/service/admin_api_service.dart';
 import 'package:flutter/material.dart';
+import 'package:ecotrack_admin_panel/models/complaint_model.dart';
+import 'package:ecotrack_admin_panel/models/dashboard_model.dart';
+import 'package:ecotrack_admin_panel/models/complaint_detail_model.dart';
 
 class AdminProvider extends ChangeNotifier {
   // =========================
@@ -20,14 +23,20 @@ class AdminProvider extends ChangeNotifier {
   bool isLoading = false;
   String? errorMessage;
 
-  Future<bool> login({required String email, required String password}) async {
+  Future<bool> login({
+    required String email,
+    required String password,
+  }) async {
     isLoading = true;
     errorMessage = null;
 
     notifyListeners();
 
     try {
-      await AdminApiService.loginAdmin(email: email, password: password);
+      await AdminApiService.loginAdmin(
+        email: email,
+        password: password,
+      );
 
       isLoading = false;
 
@@ -73,7 +82,9 @@ class AdminProvider extends ChangeNotifier {
 
   bool dashboardLoaded = false;
 
-  List<Map<String, dynamic>> recentComplaints = [];
+  DashboardModel? dashboard;
+
+  List<ComplaintModel> recentComplaints = [];
 
   Future<void> loadDashboard() async {
     dashboardLoading = true;
@@ -84,19 +95,14 @@ class AdminProvider extends ChangeNotifier {
     try {
       final data = await AdminApiService.getDashboard();
 
-      final statistics = data['statistics'];
+      dashboard = DashboardModel.fromJson(data);
 
-      totalComplaints = statistics['totalComplaints'] ?? 0;
+      totalComplaints = dashboard!.totalComplaints;
+      pendingComplaints = dashboard!.pending;
+      inProgressComplaints = dashboard!.inProgress;
+      completedComplaints = dashboard!.completed;
 
-      pendingComplaints = statistics['pending'] ?? 0;
-
-      inProgressComplaints = statistics['inProgress'] ?? 0;
-
-      completedComplaints = statistics['completed'] ?? 0;
-
-      recentComplaints = List<Map<String, dynamic>>.from(
-        data['recentComplaints'] ?? [],
-      );
+      recentComplaints = dashboard!.recentComplaints;
 
       dashboardLoaded = true;
       dashboardLoading = false;
@@ -105,7 +111,8 @@ class AdminProvider extends ChangeNotifier {
     } catch (error) {
       dashboardLoading = false;
 
-      dashboardError = error.toString().replaceFirst('Exception: ', '');
+      dashboardError =
+          error.toString().replaceFirst('Exception: ', '');
 
       notifyListeners();
     }
@@ -119,7 +126,7 @@ class AdminProvider extends ChangeNotifier {
   bool complaintsLoaded = false;
   String? complaintsError;
 
-  List<Map<String, dynamic>> complaints = [];
+  List<ComplaintModel> complaints = [];
 
   String complaintSearch = '';
 
@@ -164,6 +171,7 @@ class AdminProvider extends ChangeNotifier {
   bool wasteTypesLoading = false;
 
   List<String> complaintWasteTypes = [];
+
   Future<void> loadComplaintWasteTypes() async {
     if (wasteTypesLoading) return;
 
@@ -176,7 +184,8 @@ class AdminProvider extends ChangeNotifier {
       complaintWasteTypes = [
         'All Waste Types',
         ...List<String>.from(
-          (data['wasteTypes'] ?? []).map((item) => item['name'].toString()),
+          (data['wasteTypes'] ?? [])
+              .map((item) => item['name'].toString()),
         ),
       ];
 
@@ -214,7 +223,13 @@ class AdminProvider extends ChangeNotifier {
         ward: selectedWard,
       );
 
-      complaints = List<Map<String, dynamic>>.from(data['complaints'] ?? []);
+      complaints = (data['complaints'] as List? ?? [])
+          .map(
+            (item) => ComplaintModel.fromJson(
+              Map<String, dynamic>.from(item),
+            ),
+          )
+          .toList();
 
       complaintsLoaded = true;
       complaintsLoading = false;
@@ -223,7 +238,8 @@ class AdminProvider extends ChangeNotifier {
     } catch (error) {
       complaintsLoading = false;
 
-      complaintsError = error.toString().replaceFirst('Exception: ', '');
+      complaintsError =
+          error.toString().replaceFirst('Exception: ', '');
 
       notifyListeners();
     }
@@ -272,24 +288,34 @@ class AdminProvider extends ChangeNotifier {
   bool complaintDetailLoading = false;
   String? complaintDetailError;
   String? selectedComplaintStatus;
-  Map<String, dynamic>? complaintDetail;
+
+  ComplaintDetailModel? complaintDetail;
 
   Future<void> loadComplaintDetail(int id) async {
     complaintDetailLoading = true;
     complaintDetailError = null;
     complaintDetail = null;
+
     notifyListeners();
 
     try {
       final data = await AdminApiService.getComplaintById(id);
 
-      complaintDetail = Map<String, dynamic>.from(data['complaint'] ?? {});
+      complaintDetail = ComplaintDetailModel.fromJson(
+        Map<String, dynamic>.from(
+          data['complaint'] ?? {},
+        ),
+      );
 
       complaintDetailLoading = false;
+
       notifyListeners();
     } catch (error) {
       complaintDetailLoading = false;
-      complaintDetailError = error.toString().replaceFirst('Exception: ', '');
+
+      complaintDetailError =
+          error.toString().replaceFirst('Exception: ', '');
+
       notifyListeners();
     }
   }
@@ -313,15 +339,36 @@ class AdminProvider extends ChangeNotifier {
     }
 
     try {
-      await AdminApiService.updateComplaintStatus(id: id, status: newStatus);
+      await AdminApiService.updateComplaintStatus(
+        id: id,
+        status: newStatus,
+      );
 
-      complaintDetail?['status'] = newStatus;
+      if (complaintDetail != null) {
+        complaintDetail = ComplaintDetailModel(
+          id: complaintDetail!.id,
+          complaintId: complaintDetail!.complaintId,
+          userId: complaintDetail!.userId,
+          userName: complaintDetail!.userName,
+          image: complaintDetail!.image,
+          title: complaintDetail!.title,
+          description: complaintDetail!.description,
+          wasteType: complaintDetail!.wasteType,
+          location: complaintDetail!.location,
+          status: newStatus,
+          createdAt: complaintDetail!.createdAt,
+          latitude: complaintDetail!.latitude,
+          longitude: complaintDetail!.longitude,
+          ward: complaintDetail!.ward,
+        );
+      }
 
       notifyListeners();
 
       return true;
     } catch (error) {
-      complaintDetailError = error.toString().replaceFirst('Exception: ', '');
+      complaintDetailError =
+          error.toString().replaceFirst('Exception: ', '');
 
       notifyListeners();
 
