@@ -358,18 +358,12 @@ class ComplaintDetailScreen extends StatelessWidget {
       return Image.asset('assets/waste-household.jpg', fit: BoxFit.cover);
     }
 
-    if (image.startsWith('http://') || image.startsWith('https://')) {
-      return Image.network(
-        image,
-        fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) {
-          return Image.asset('assets/waste-household.jpg', fit: BoxFit.cover);
-        },
-      );
-    }
+    final imageUrl = image.startsWith('http://') || image.startsWith('https://')
+        ? image
+        : 'http://127.0.0.1:3000$image';
 
-    return Image.asset(
-      image,
+    return Image.network(
+      imageUrl,
       fit: BoxFit.cover,
       errorBuilder: (context, error, stackTrace) {
         return Image.asset('assets/waste-household.jpg', fit: BoxFit.cover);

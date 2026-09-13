@@ -722,12 +722,7 @@ class ComplaintsScreen extends StatelessWidget {
 
   Widget _buildComplaintImage(String image) {
     if (image.isEmpty) {
-      return Image.asset(
-        'assets/waste-household.jpg',
-        width: 48,
-        height: 48,
-        fit: BoxFit.cover,
-      );
+      return Image.asset('assets/waste-household.jpg', fit: BoxFit.cover);
     }
 
     final imageUrl = image.startsWith('http://') || image.startsWith('https://')
@@ -736,16 +731,9 @@ class ComplaintsScreen extends StatelessWidget {
 
     return Image.network(
       imageUrl,
-      width: 48,
-      height: 48,
       fit: BoxFit.cover,
       errorBuilder: (context, error, stackTrace) {
-        return Image.asset(
-          'assets/waste-household.jpg',
-          width: 48,
-          height: 48,
-          fit: BoxFit.cover,
-        );
+        return Image.asset('assets/waste-household.jpg', fit: BoxFit.cover);
       },
     );
   }
