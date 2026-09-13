@@ -17,14 +17,9 @@ class UserModel {
     required this.complaintCount,
   });
 
-  factory UserModel.fromJson(
-    Map<String, dynamic> json,
-  ) {
+  factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      id: int.tryParse(
-            json['id']?.toString() ?? '0',
-          ) ??
-          0,
+      id: int.tryParse(json['id']?.toString() ?? '0') ?? 0,
 
       name: json['name']?.toString() ?? 'Unknown',
 
@@ -32,16 +27,12 @@ class UserModel {
 
       mobile: json['mobile']?.toString() ?? '',
 
-      joinedDate:
-          json['joined_date']?.toString() ?? '',
+      joinedDate: json['created_at']?.toString() ?? '',
 
-      status:
-          json['status']?.toString() ?? 'Inactive',
+      status: json['is_verified'] == true ? 'Active' : 'Inactive',
 
-      complaintCount: int.tryParse(
-            json['complaint_count']?.toString() ?? '0',
-          ) ??
-          0,
+      complaintCount:
+          int.tryParse(json['complaint_count']?.toString() ?? '0') ?? 0,
     );
   }
 }
