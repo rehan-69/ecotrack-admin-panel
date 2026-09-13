@@ -27,7 +27,7 @@ class UserModel {
 
       mobile: json['mobile']?.toString() ?? '',
 
-      joinedDate: json['created_at']?.toString() ?? '',
+      joinedDate: json['joined_date']?.toString() ?? '',
 
       status: json['is_verified'] == true ? 'Active' : 'Inactive',
 

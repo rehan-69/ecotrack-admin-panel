@@ -730,24 +730,24 @@ class ComplaintsScreen extends StatelessWidget {
       );
     }
 
-    if (image.startsWith('http://') || image.startsWith('https://')) {
-      return Image.network(
-        image,
-        width: 48,
-        height: 48,
-        fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) {
-          return Image.asset(
-            'assets/waste-household.jpg',
-            width: 48,
-            height: 48,
-            fit: BoxFit.cover,
-          );
-        },
-      );
-    }
+    final imageUrl = image.startsWith('http://') || image.startsWith('https://')
+        ? image
+        : 'http://127.0.0.1:3000$image';
 
-    return Image.asset(image, width: 48, height: 48, fit: BoxFit.cover);
+    return Image.network(
+      imageUrl,
+      width: 48,
+      height: 48,
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) {
+        return Image.asset(
+          'assets/waste-household.jpg',
+          width: 48,
+          height: 48,
+          fit: BoxFit.cover,
+        );
+      },
+    );
   }
 
   // =========================
