@@ -609,22 +609,30 @@ class DashboardScreen extends StatelessWidget {
 
           Expanded(
             flex: 7,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        ComplaintDetailScreen(id: complaintDbId),
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(20),
+                hoverColor: const Color(0xFFF3F0F8),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          ComplaintDetailScreen(id: complaintDbId),
+                    ),
+                  );
+                },
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                  child: Text(
+                    'View',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: AppColors.primaryColor,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                );
-              },
-              child: const Text(
-                'View',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: AppColors.primaryColor,
-                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
