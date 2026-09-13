@@ -584,7 +584,7 @@ class DashboardScreen extends StatelessWidget {
 
           Expanded(
             flex: 10,
-            child: Align(
+            child: Container(
               alignment: Alignment.centerLeft,
               child: Container(
                 padding: const EdgeInsets.symmetric(
@@ -609,23 +609,33 @@ class DashboardScreen extends StatelessWidget {
 
           Expanded(
             flex: 7,
-            child: MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(20),
-                hoverColor: const Color(0xFFF3F0F8),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          ComplaintDetailScreen(id: complaintDbId),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 7,
                     ),
-                  );
-                },
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-                  child: Text(
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    foregroundColor: AppColors.primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ComplaintDetailScreen(id: complaintDbId),
+                      ),
+                    );
+                  },
+                  child: const Text(
                     'View',
                     style: TextStyle(
                       fontSize: 14,

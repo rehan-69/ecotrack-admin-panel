@@ -704,7 +704,7 @@ class ComplaintsScreen extends StatelessWidget {
           SizedBox(
             width: tableWidth * 0.08,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: TextButton(
