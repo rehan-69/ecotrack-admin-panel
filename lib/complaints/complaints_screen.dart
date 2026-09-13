@@ -33,20 +33,14 @@ class ComplaintsScreen extends StatelessWidget {
             children: [
               const Text(
                 'Complaints',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               ),
 
               SizedBox(height: context.height * 0.008),
 
               Text(
                 'View and manage citizen waste complaints.',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey.shade600,
-                ),
+                style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
               ),
 
               SizedBox(height: context.height * 0.025),
@@ -67,19 +61,14 @@ class ComplaintsScreen extends StatelessWidget {
   // FILTERS
   // =========================
 
-  Widget _filters(
-    BuildContext context,
-    AdminProvider provider,
-  ) {
+  Widget _filters(BuildContext context, AdminProvider provider) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(
-          color: Colors.grey.shade200,
-        ),
+        border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.04),
@@ -109,8 +98,7 @@ class ComplaintsScreen extends StatelessWidget {
                           color: Color(0xFF334155),
                         ),
                         decoration: InputDecoration(
-                          hintText:
-                              'Search by complaint ID, title or citizen',
+                          hintText: 'Search by complaint ID, title or citizen',
                           hintStyle: TextStyle(
                             fontSize: 14,
                             color: Colors.grey.shade500,
@@ -125,21 +113,15 @@ class ComplaintsScreen extends StatelessWidget {
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: Colors.grey.shade300,
-                            ),
+                            borderSide: BorderSide(color: Colors.grey.shade300),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: Colors.grey.shade300,
-                            ),
+                            borderSide: BorderSide(color: Colors.grey.shade300),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: Colors.grey.shade400,
-                            ),
+                            borderSide: BorderSide(color: Colors.grey.shade400),
                           ),
                         ),
                       ),
@@ -249,8 +231,7 @@ class ComplaintsScreen extends StatelessWidget {
                     color: Color(0xFF334155),
                   ),
                   decoration: InputDecoration(
-                    hintText:
-                        'Search by complaint ID, title or citizen',
+                    hintText: 'Search by complaint ID, title or citizen',
                     hintStyle: TextStyle(
                       fontSize: 14,
                       color: Colors.grey.shade500,
@@ -263,21 +244,15 @@ class ComplaintsScreen extends StatelessWidget {
                     contentPadding: EdgeInsets.zero,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: Colors.grey.shade300,
-                      ),
+                      borderSide: BorderSide(color: Colors.grey.shade300),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: Colors.grey.shade300,
-                      ),
+                      borderSide: BorderSide(color: Colors.grey.shade300),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: Colors.grey.shade400,
-                      ),
+                      borderSide: BorderSide(color: Colors.grey.shade400),
                     ),
                   ),
                 ),
@@ -385,18 +360,12 @@ class ComplaintsScreen extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: 38,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(
-          color: selected
-              ? AppColors.primaryColor
-              : Colors.white,
+          color: selected ? AppColors.primaryColor : Colors.white,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-            color: selected
-                ? AppColors.primaryColor
-                : Colors.grey.shade300,
+            color: selected ? AppColors.primaryColor : Colors.grey.shade300,
           ),
         ),
         alignment: Alignment.center,
@@ -404,12 +373,8 @@ class ComplaintsScreen extends StatelessWidget {
           text,
           style: TextStyle(
             fontSize: 14,
-            color: selected
-                ? Colors.white
-                : Colors.grey.shade700,
-            fontWeight: selected
-                ? FontWeight.w600
-                : FontWeight.w400,
+            color: selected ? Colors.white : Colors.grey.shade700,
+            fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
           ),
         ),
       ),
@@ -434,9 +399,7 @@ class ComplaintsScreen extends StatelessWidget {
         onSelected: onSelected,
         position: PopupMenuPosition.under,
         offset: Offset.zero,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         color: Colors.white,
         elevation: 4,
         itemBuilder: (context) {
@@ -448,9 +411,7 @@ class ComplaintsScreen extends StatelessWidget {
               height: 32,
               child: Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 decoration: BoxDecoration(
                   color: isSelected
                       ? const Color(0xFFE8F5E9)
@@ -491,15 +452,11 @@ class ComplaintsScreen extends StatelessWidget {
         child: Container(
           width: double.infinity,
           height: 40,
-          padding: const EdgeInsets.symmetric(
-            horizontal: 12,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              color: Colors.grey.shade300,
-            ),
+            border: Border.all(color: Colors.grey.shade300),
           ),
           child: Row(
             children: [
@@ -534,17 +491,14 @@ class ComplaintsScreen extends StatelessWidget {
   Widget _complaintsTable(BuildContext context) {
     final provider = context.watch<AdminProvider>();
 
-    final double tableWidth =
-        context.width < 1200 ? 1200 : context.width;
+    final double tableWidth = context.width < 1200 ? 1200 : context.width;
 
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(
-          color: Colors.grey.shade200,
-        ),
+        border: Border.all(color: Colors.grey.shade200),
       ),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -552,10 +506,7 @@ class ComplaintsScreen extends StatelessWidget {
           width: tableWidth,
           child: Column(
             children: [
-              _tableHeader(
-                context,
-                tableWidth,
-              ),
+              _tableHeader(context, tableWidth),
 
               if (provider.complaintsLoading)
                 const Padding(
@@ -567,9 +518,7 @@ class ComplaintsScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(30),
                   child: Text(
                     provider.complaintsError!,
-                    style: const TextStyle(
-                      color: Colors.red,
-                    ),
+                    style: const TextStyle(color: Colors.red),
                   ),
                 )
               else if (provider.complaints.isEmpty)
@@ -577,52 +526,43 @@ class ComplaintsScreen extends StatelessWidget {
                   padding: EdgeInsets.all(30),
                   child: Text(
                     'No complaints found',
-                    style: TextStyle(
-                      color: Colors.grey,
-                    ),
+                    style: TextStyle(color: Colors.grey),
                   ),
                 )
               else
-                ...provider.complaints.map(
-                  (complaint) {
-                    final int complaintDbId = complaint.id;
+                ...provider.complaints.map((complaint) {
+                  final int complaintDbId = complaint.id;
 
-                    final String status = complaint.status;
+                  final String status = complaint.status;
 
-                    Color statusColor = Colors.orange;
+                  Color statusColor = Colors.orange;
 
-                    Color statusBackground =
-                        const Color(0xFFFFF0CC);
+                  Color statusBackground = const Color(0xFFFFF0CC);
 
-                    if (status.toLowerCase() ==
-                        'in progress') {
-                      statusColor = Colors.blue;
-                      statusBackground =
-                          const Color(0xFFE3F2FD);
-                    } else if (status.toLowerCase() ==
-                        'completed') {
-                      statusColor = Colors.green;
-                      statusBackground =
-                          const Color(0xFFE0F5E5);
-                    }
+                  if (status.toLowerCase() == 'in progress') {
+                    statusColor = Colors.blue;
+                    statusBackground = const Color(0xFFE3F2FD);
+                  } else if (status.toLowerCase() == 'completed') {
+                    statusColor = Colors.green;
+                    statusBackground = const Color(0xFFE0F5E5);
+                  }
 
-                    return _tableRow(
-                      context,
-                      tableWidth,
-                      complaintDbId,
-                      complaint.complaintId,
-                      _getComplaintImage(complaint.image) ?? '',
-                      complaint.title,
-                      complaint.userName,
-                      complaint.wasteType,
-                      complaint.ward ?? complaint.location,
-                      _formatDate(complaint.createdAt),
-                      status,
-                      statusColor,
-                      statusBackground,
-                    );
-                  },
-                ),
+                  return _tableRow(
+                    context,
+                    tableWidth,
+                    complaintDbId,
+                    complaint.complaintId,
+                    _getComplaintImage(complaint.image) ?? '',
+                    complaint.title,
+                    complaint.userName,
+                    complaint.wasteType,
+                    complaint.ward ?? complaint.location,
+                    _formatDate(complaint.createdAt),
+                    status,
+                    statusColor,
+                    statusBackground,
+                  );
+                }),
             ],
           ),
         ),
@@ -634,84 +574,39 @@ class ComplaintsScreen extends StatelessWidget {
   // TABLE HEADER
   // =========================
 
-  Widget _tableHeader(
-    BuildContext context,
-    double tableWidth,
-  ) {
+  Widget _tableHeader(BuildContext context, double tableWidth) {
     return Container(
       height: 58,
       color: const Color(0xFFF8FAFA),
       child: Row(
         children: [
-          _headerCell(
-            context,
-            'COMPLAINT\nID',
-            tableWidth * 0.10,
-          ),
+          _headerCell(context, 'COMPLAINT\nID', tableWidth * 0.10),
 
-          _headerCell(
-            context,
-            'PHOTO',
-            tableWidth * 0.08,
-          ),
+          _headerCell(context, 'PHOTO', tableWidth * 0.08),
 
-          _headerCell(
-            context,
-            'COMPLAINT TITLE',
-            tableWidth * 0.15,
-          ),
+          _headerCell(context, 'COMPLAINT TITLE', tableWidth * 0.15),
 
-          _headerCell(
-            context,
-            'CITIZEN',
-            tableWidth * 0.12,
-          ),
+          _headerCell(context, 'CITIZEN', tableWidth * 0.12),
 
-          _headerCell(
-            context,
-            'WASTE TYPE',
-            tableWidth * 0.14,
-          ),
+          _headerCell(context, 'WASTE TYPE', tableWidth * 0.14),
 
-          _headerCell(
-            context,
-            'WARD /\nLOCATION',
-            tableWidth * 0.12,
-          ),
+          _headerCell(context, 'WARD /\nLOCATION', tableWidth * 0.12),
 
-          _headerCell(
-            context,
-            'SUBMITTED\nDATE',
-            tableWidth * 0.12,
-          ),
+          _headerCell(context, 'SUBMITTED\nDATE', tableWidth * 0.12),
 
-          _headerCell(
-            context,
-            'STATUS',
-            tableWidth * 0.09,
-          ),
+          _headerCell(context, 'STATUS', tableWidth * 0.09),
 
-          _headerCell(
-            context,
-            'ACTION',
-            tableWidth * 0.08,
-          ),
+          _headerCell(context, 'ACTION', tableWidth * 0.08),
         ],
       ),
     );
   }
 
-  Widget _headerCell(
-    BuildContext context,
-    String text,
-    double width,
-  ) {
+  Widget _headerCell(BuildContext context, String text, double width) {
     return SizedBox(
       width: width,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 12,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Text(
           text,
           style: TextStyle(
@@ -747,19 +642,11 @@ class ComplaintsScreen extends StatelessWidget {
       height: 70,
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.grey.shade200,
-          ),
-        ),
+        border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
       ),
       child: Row(
         children: [
-          _dataCell(
-            context,
-            complaintId,
-            tableWidth * 0.10,
-          ),
+          _dataCell(context, complaintId, tableWidth * 0.10),
 
           SizedBox(
             width: tableWidth * 0.08,
@@ -771,35 +658,15 @@ class ComplaintsScreen extends StatelessWidget {
             ),
           ),
 
-          _dataCell(
-            context,
-            title,
-            tableWidth * 0.15,
-          ),
+          _dataCell(context, title, tableWidth * 0.15),
 
-          _dataCell(
-            context,
-            citizen,
-            tableWidth * 0.12,
-          ),
+          _dataCell(context, citizen, tableWidth * 0.12),
 
-          _dataCell(
-            context,
-            wasteType,
-            tableWidth * 0.14,
-          ),
+          _dataCell(context, wasteType, tableWidth * 0.14),
 
-          _dataCell(
-            context,
-            location,
-            tableWidth * 0.12,
-          ),
+          _dataCell(context, location, tableWidth * 0.12),
 
-          _dataCell(
-            context,
-            date,
-            tableWidth * 0.12,
-          ),
+          _dataCell(context, date, tableWidth * 0.12),
 
           SizedBox(
             width: tableWidth * 0.09,
@@ -834,26 +701,13 @@ class ComplaintsScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        ComplaintDetailScreen(
-                      id: complaintDbId,
-                      complaintId: complaintId,
-                      image: image,
-                      title: title,
-                      citizen: citizen,
-                      wasteType: wasteType,
-                      location: location,
-                      date: date,
-                      status: status,
-                    ),
+                        ComplaintDetailScreen(id: complaintDbId),
                   ),
                 );
               },
               child: Text(
                 'View',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: AppColors.primaryColor,
-                ),
+                style: TextStyle(fontSize: 14, color: AppColors.primaryColor),
               ),
             ),
           ),
@@ -876,18 +730,13 @@ class ComplaintsScreen extends StatelessWidget {
       );
     }
 
-    if (image.startsWith('http://') ||
-        image.startsWith('https://')) {
+    if (image.startsWith('http://') || image.startsWith('https://')) {
       return Image.network(
         image,
         width: 48,
         height: 48,
         fit: BoxFit.cover,
-        errorBuilder: (
-          context,
-          error,
-          stackTrace,
-        ) {
+        errorBuilder: (context, error, stackTrace) {
           return Image.asset(
             'assets/waste-household.jpg',
             width: 48,
@@ -898,37 +747,23 @@ class ComplaintsScreen extends StatelessWidget {
       );
     }
 
-    return Image.asset(
-      image,
-      width: 48,
-      height: 48,
-      fit: BoxFit.cover,
-    );
+    return Image.asset(image, width: 48, height: 48, fit: BoxFit.cover);
   }
 
   // =========================
   // DATA CELL
   // =========================
 
-  Widget _dataCell(
-    BuildContext context,
-    String text,
-    double width,
-  ) {
+  Widget _dataCell(BuildContext context, String text, double width) {
     return SizedBox(
       width: width,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 12,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Text(
           text,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: const TextStyle(
-            fontSize: 14,
-            color: Color(0xFF0F172A),
-          ),
+          style: const TextStyle(fontSize: 14, color: Color(0xFF0F172A)),
         ),
       ),
     );
@@ -942,9 +777,7 @@ class ComplaintsScreen extends StatelessWidget {
     if (value == null) return '';
 
     try {
-      final date = DateTime.parse(
-        value.toString(),
-      );
+      final date = DateTime.parse(value.toString());
 
       const months = [
         'Jan',

@@ -3,7 +3,6 @@ import 'package:ecotrack_admin_panel/constants/app_color.dart';
 import 'package:ecotrack_admin_panel/constants/responsive.dart';
 import 'package:ecotrack_admin_panel/complaints/complaints_detail_screen.dart';
 
-
 class UserDetailScreen extends StatelessWidget {
   final String name;
   final String email;
@@ -833,17 +832,7 @@ class UserDetailScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ComplaintDetailScreen(
-                      id: 28,
-                      complaintId: complaintId,
-                      image: 'assets/waste-household.jpg',
-                      title: title,
-                      citizen: name,
-                      wasteType: wasteType,
-                      location: 'Ward 07',
-                      date: date,
-                      status: status,
-                    ),
+                    builder: (context) => ComplaintDetailScreen(id: 28),
                   ),
                 );
               },
