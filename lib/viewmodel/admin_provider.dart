@@ -4,8 +4,8 @@ import 'package:ecotrack_admin_panel/service/admin_api_service.dart';
 
 import 'package:ecotrack_admin_panel/models/complaint_model.dart';
 import 'package:ecotrack_admin_panel/models/dashboard_model.dart';
-import 'package:ecotrack_admin_panel/models/complaint_detail_model.dart';
 import 'package:ecotrack_admin_panel/models/user_model.dart';
+import 'package:ecotrack_admin_panel/models/user_detail_model.dart';
 
 class AdminProvider extends ChangeNotifier {
   // =========================
@@ -323,133 +323,6 @@ class AdminProvider extends ChangeNotifier {
   }
 
   // =========================
-  // Complaint Detail
-  // =========================
-
-  bool complaintDetailLoading = false;
-  String? complaintDetailError;
-
-  String? selectedComplaintStatus;
-
-  ComplaintDetailModel? complaintDetail;
-
-  Future<void> loadComplaintDetail(
-    int id,
-  ) async {
-    complaintDetailLoading = true;
-    complaintDetailError = null;
-    complaintDetail = null;
-
-    notifyListeners();
-
-    try {
-      final data =
-          await AdminApiService
-              .getComplaintById(id);
-
-      complaintDetail =
-          ComplaintDetailModel.fromJson(
-        Map<String, dynamic>.from(
-          data['complaint'] ?? {},
-        ),
-      );
-
-      complaintDetailLoading = false;
-
-      notifyListeners();
-    } catch (error) {
-      complaintDetailLoading = false;
-
-      complaintDetailError =
-          error.toString().replaceFirst(
-                'Exception: ',
-                '',
-              );
-
-      notifyListeners();
-    }
-  }
-
-  void clearComplaintDetail() {
-    complaintDetail = null;
-    complaintDetailError = null;
-    complaintDetailLoading = false;
-  }
-
-  void setSelectedDetailStatus(
-    String? value,
-  ) {
-    selectedComplaintStatus = value;
-
-    notifyListeners();
-  }
-
-  Future<bool> updateComplaintStatus(
-    int id,
-  ) async {
-    final newStatus =
-        selectedComplaintStatus;
-
-    if (newStatus == null) {
-      return false;
-    }
-
-    try {
-      await AdminApiService
-          .updateComplaintStatus(
-        id: id,
-        status: newStatus,
-      );
-
-      if (complaintDetail != null) {
-        complaintDetail =
-            ComplaintDetailModel(
-          id: complaintDetail!.id,
-          complaintId:
-              complaintDetail!.complaintId,
-          userId:
-              complaintDetail!.userId,
-          userName:
-              complaintDetail!.userName,
-          image:
-              complaintDetail!.image,
-          title:
-              complaintDetail!.title,
-          description:
-              complaintDetail!.description,
-          wasteType:
-              complaintDetail!.wasteType,
-          location:
-              complaintDetail!.location,
-          status: newStatus,
-          createdAt:
-              complaintDetail!.createdAt,
-          latitude:
-              complaintDetail!.latitude,
-          longitude:
-              complaintDetail!.longitude,
-          ward:
-              complaintDetail!.ward,
-        );
-      }
-
-      notifyListeners();
-
-      return true;
-    } catch (error) {
-      complaintDetailError =
-          error.toString().replaceFirst(
-                'Exception: ',
-                '',
-              );
-
-      notifyListeners();
-
-      return false;
-    }
-  }
-
-  // =========================
   // Users
   // =========================
 
@@ -512,5 +385,71 @@ class AdminProvider extends ChangeNotifier {
 
   void setUserSearch(String value) {
     userSearch = value;
+  }
+
+  // =========================
+  // User Detail
+  // =========================
+
+  bool userDetailLoading = false;
+
+  String? userDetailError;
+
+  UserDetailModel? userDetail;
+
+  // =========================
+  // Load User Detail
+  // =========================
+
+  Future<void> loadUserDetail(int id) async {
+    userDetailLoading = true;
+    userDetailError = null;
+    userDetail = null;
+
+    notifyListeners();
+
+    try {
+      final data =
+          await AdminApiService.getUserById(id);
+
+      final userData =
+          Map<String, dynamic>.from(
+        data['user'] ?? {},
+      );
+
+      userData['complaints'] =
+          data['complaints'] ?? [];
+
+      userDetail =
+          UserDetailModel.fromJson(
+        userData,
+      );
+
+      userDetailLoading = false;
+
+      notifyListeners();
+    } catch (error) {
+      userDetailLoading = false;
+
+      userDetailError =
+          error.toString().replaceFirst(
+                'Exception: ',
+                '',
+              );
+
+      notifyListeners();
+    }
+  }
+
+  // =========================
+  // Clear User Detail
+  // =========================
+
+  void clearUserDetail() {
+    userDetail = null;
+    userDetailError = null;
+    userDetailLoading = false;
+
+    notifyListeners();
   }
 }
