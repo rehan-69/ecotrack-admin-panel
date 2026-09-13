@@ -617,7 +617,7 @@ class DashboardScreen extends StatelessWidget {
                   style: TextButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 10,
-                      vertical: 7,
+                      vertical: 12,
                     ),
                     minimumSize: Size.zero,
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
