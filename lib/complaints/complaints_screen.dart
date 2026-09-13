@@ -639,7 +639,7 @@ class ComplaintsScreen extends StatelessWidget {
     Color statusBackground,
   ) {
     return Container(
-      height: 70,
+      height: 60,
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
@@ -650,10 +650,18 @@ class ComplaintsScreen extends StatelessWidget {
 
           SizedBox(
             width: tableWidth * 0.08,
-            child: Center(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: _buildComplaintImage(image),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: SizedBox(
+                    width: 48,
+                    height: 48,
+                    child: _buildComplaintImage(image),
+                  ),
+                ),
               ),
             ),
           ),
@@ -695,19 +703,28 @@ class ComplaintsScreen extends StatelessWidget {
 
           SizedBox(
             width: tableWidth * 0.08,
-            child: TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        ComplaintDetailScreen(id: complaintDbId),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 6),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ComplaintDetailScreen(id: complaintDbId),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    'View',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: AppColors.primaryColor,
+                    ),
                   ),
-                );
-              },
-              child: Text(
-                'View',
-                style: TextStyle(fontSize: 14, color: AppColors.primaryColor),
+                ),
               ),
             ),
           ),

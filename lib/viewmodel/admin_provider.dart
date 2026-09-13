@@ -371,6 +371,7 @@ class AdminProvider extends ChangeNotifier {
       notifyListeners();
 
       await loadComplaints();
+      await loadDashboard();
     } catch (error) {
       complaintDetailError = error.toString().replaceFirst('Exception: ', '');
 
