@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
+import 'package:ecotrack_admin_panel/viewmodel/admin_provider.dart';
+import 'package:ecotrack_admin_panel/models/waste_type_model.dart';
+
 import 'package:ecotrack_admin_panel/waste_types/add_waste_type_dialog.dart';
 import 'package:ecotrack_admin_panel/waste_types/edit_waste_type_dialog.dart';
 import 'package:ecotrack_admin_panel/waste_types/delete_waste_type_dialog.dart';
@@ -14,6 +19,16 @@ class WasteTypesScreen extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
 
     final isMobile = screenWidth < 600;
+
+    final provider = context.watch<AdminProvider>();
+
+    if (!provider.adminWasteTypesLoading &&
+        !provider.adminWasteTypesLoaded &&
+        provider.adminWasteTypesError == null) {
+      Future.microtask(() {
+        provider.loadWasteTypes();
+      });
+    }
 
     return Container(
       color: const Color(0xFFF8FAF9),
@@ -69,13 +84,15 @@ class WasteTypesScreen extends StatelessWidget {
                     width: 164,
                     height: 36,
                     child: ElevatedButton.icon(
-                      onPressed: () {
-                        showDialog(
+                      onPressed: () async {
+                        await showDialog(
                           context: context,
                           builder: (context) {
                             return const AddWasteTypeDialog();
                           },
                         );
+
+                        provider.loadWasteTypes();
                       },
                       icon: const Icon(Icons.add, size: 18),
                       label: const Text(
@@ -101,7 +118,7 @@ class WasteTypesScreen extends StatelessWidget {
 
               const SizedBox(height: 23),
 
-              _wasteTypeTable(context),
+              _wasteTypeTable(context, provider),
             ],
           ),
         ),
@@ -109,7 +126,7 @@ class WasteTypesScreen extends StatelessWidget {
     );
   }
 
-  Widget _wasteTypeTable(BuildContext context) {
+  Widget _wasteTypeTable(BuildContext context, AdminProvider provider) {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -132,6 +149,40 @@ class WasteTypesScreen extends StatelessWidget {
                 ? minTableWidth
                 : constraints.maxWidth;
 
+            if (provider.adminWasteTypesLoading) {
+              return SizedBox(
+                width: tableWidth,
+                height: 150,
+                child: const Center(child: CircularProgressIndicator()),
+              );
+            }
+
+            if (provider.adminWasteTypesError != null) {
+              return SizedBox(
+                width: tableWidth,
+                height: 150,
+                child: Center(
+                  child: Text(
+                    provider.adminWasteTypesError!,
+                    style: const TextStyle(color: Colors.red, fontSize: 14),
+                  ),
+                ),
+              );
+            }
+
+            if (provider.wasteTypes.isEmpty) {
+              return SizedBox(
+                width: tableWidth,
+                height: 150,
+                child: const Center(
+                  child: Text(
+                    'No waste types found',
+                    style: TextStyle(fontSize: 14, color: Color(0xFF64748B)),
+                  ),
+                ),
+              );
+            }
+
             return SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               physics: const ClampingScrollPhysics(),
@@ -141,64 +192,8 @@ class WasteTypesScreen extends StatelessWidget {
                   children: [
                     _tableHeader(context, tableWidth),
 
-                    _wasteRow(
-                      context,
-                      tableWidth,
-                      'Household Waste',
-                      'Daily kitchen and domestic waste from homes.',
-                      '42',
-                      'Active',
-                      false,
-                    ),
-
-                    _wasteRow(
-                      context,
-                      tableWidth,
-                      'Plastic Waste',
-                      'Bottles, wrappers and polythene litter.',
-                      '28',
-                      'Active',
-                      false,
-                    ),
-
-                    _wasteRow(
-                      context,
-                      tableWidth,
-                      'Construction Debris',
-                      'Bricks, sand, concrete and building material.',
-                      '19',
-                      'Active',
-                      false,
-                    ),
-
-                    _wasteRow(
-                      context,
-                      tableWidth,
-                      'Garden Waste',
-                      'Leaves, branches and garden trimmings.',
-                      '16',
-                      'Active',
-                      true,
-                    ),
-
-                    _wasteRow(
-                      context,
-                      tableWidth,
-                      'E-Waste',
-                      'Discarded electronics, batteries and cables.',
-                      '14',
-                      'Active',
-                      false,
-                    ),
-
-                    _wasteRow(
-                      context,
-                      tableWidth,
-                      'Other',
-                      'Any waste that does not fit other categories.',
-                      '9',
-                      'Inactive',
-                      false,
+                    ...provider.wasteTypes.map(
+                      (wasteType) => _wasteRow(context, tableWidth, wasteType),
                     ),
                   ],
                 ),
@@ -217,15 +212,13 @@ class WasteTypesScreen extends StatelessWidget {
       color: const Color(0xFFF8FAFA),
       child: Row(
         children: [
-          Expanded(flex: 18, child: _headerCell(context, 'WASTE TYPE')),
+          Expanded(flex: 20, child: _headerCell(context, 'WASTE TYPE')),
 
-          Expanded(flex: 36, child: _headerCell(context, 'DESCRIPTION')),
+          Expanded(flex: 38, child: _headerCell(context, 'DESCRIPTION')),
 
-          Expanded(flex: 16, child: _headerCell(context, 'TOTAL COMPLAINTS')),
+          Expanded(flex: 17, child: _headerCell(context, 'TOTAL COMPLAINTS')),
 
-          Expanded(flex: 10, child: _headerCell(context, 'STATUS')),
-
-          Expanded(flex: 20, child: _headerCell(context, 'ACTIONS')),
+          Expanded(flex: 25, child: _headerCell(context, 'ACTIONS')),
         ],
       ),
     );
@@ -254,70 +247,38 @@ class WasteTypesScreen extends StatelessWidget {
   Widget _wasteRow(
     BuildContext context,
     double width,
-    String wasteType,
-    String description,
-    String complaints,
-    String status,
-    bool highlighted,
+    WasteTypeModel wasteType,
   ) {
     return Container(
       width: width,
       height: 59,
-      decoration: BoxDecoration(
-        color: highlighted ? const Color(0xFFF4FBF6) : Colors.white,
-        border: const Border(
-          bottom: BorderSide(color: Color(0xFFDDE3E8), width: 1),
-        ),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        border: Border(bottom: BorderSide(color: Color(0xFFDDE3E8), width: 1)),
       ),
       child: Row(
         children: [
-          Expanded(flex: 18, child: _dataCell(context, wasteType, bold: true)),
+          Expanded(
+            flex: 20,
+            child: _dataCell(context, wasteType.name, bold: true),
+          ),
 
           Expanded(
-            flex: 36,
+            flex: 38,
             child: _dataCell(
               context,
-              description,
+              wasteType.description,
               textColor: const Color(0xFF64748B),
             ),
           ),
 
-          Expanded(flex: 16, child: _dataCell(context, complaints)),
-
           Expanded(
-            flex: 10,
-            child: SizedBox(
-              height: 59,
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 11,
-                    vertical: 5,
-                  ),
-                  decoration: BoxDecoration(
-                    color: status == 'Active'
-                        ? const Color(0xFFD8F4DE)
-                        : const Color(0xFFF0F3F2),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    status,
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: status == 'Active'
-                          ? const Color(0xFF16803C)
-                          : const Color(0xFF64748B),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            flex: 17,
+            child: _dataCell(context, wasteType.complaintCount.toString()),
           ),
 
           Expanded(
-            flex: 20,
+            flex: 25,
             child: SizedBox(
               height: 59,
               child: Row(
@@ -326,17 +287,21 @@ class WasteTypesScreen extends StatelessWidget {
                     width: 73,
                     height: 34,
                     child: OutlinedButton.icon(
-                      onPressed: () {
-                        showDialog(
+                      onPressed: () async {
+                        await showDialog(
                           context: context,
                           builder: (context) {
                             return EditWasteTypeDialog(
-                              wasteType: wasteType,
-                              description: description,
-                              status: status,
+                              id: wasteType.id,
+                              wasteType: wasteType.name,
+                              description: wasteType.description,
                             );
                           },
                         );
+
+                        if (context.mounted) {
+                          context.read<AdminProvider>().loadWasteTypes();
+                        }
                       },
                       icon: const Icon(Icons.edit_outlined, size: 16),
                       label: const Text(
@@ -368,11 +333,20 @@ class WasteTypesScreen extends StatelessWidget {
                     width: 92,
                     height: 34,
                     child: OutlinedButton.icon(
-                      onPressed: () {
-                       showDialog(
-                        context:context,
-                        builder: (context) => DeleteWasteTypeDialog(),
-                       );
+                      onPressed: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (context) {
+                            return DeleteWasteTypeDialog(
+                              id: wasteType.id,
+                              wasteType: wasteType.name,
+                            );
+                          },
+                        );
+
+                        if (context.mounted) {
+                          context.read<AdminProvider>().loadWasteTypes();
+                        }
                       },
                       icon: const Icon(Icons.delete_outline, size: 16),
                       label: const Text(

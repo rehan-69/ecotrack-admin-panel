@@ -7,6 +7,7 @@ import 'package:ecotrack_admin_panel/models/complaint_detail_model.dart';
 import 'package:ecotrack_admin_panel/models/dashboard_model.dart';
 import 'package:ecotrack_admin_panel/models/user_model.dart';
 import 'package:ecotrack_admin_panel/models/user_detail_model.dart';
+import 'package:ecotrack_admin_panel/models/waste_type_model.dart';
 
 class AdminProvider extends ChangeNotifier {
   // =========================
@@ -494,5 +495,121 @@ class AdminProvider extends ChangeNotifier {
     userDetailLoading = false;
 
     notifyListeners();
+  }
+
+  // =========================
+  // Waste Types
+  // =========================
+
+  bool adminWasteTypesLoading = false;
+
+  bool adminWasteTypesLoaded = false;
+
+  String? adminWasteTypesError;
+
+  List<WasteTypeModel> wasteTypes = [];
+
+  // =========================
+  // Load Waste Types
+  // =========================
+
+  Future<void> loadWasteTypes() async {
+    adminWasteTypesLoading = true;
+    adminWasteTypesError = null;
+
+    notifyListeners();
+
+    try {
+      final data = await AdminApiService.getWasteTypes();
+
+      wasteTypes = (data['wasteTypes'] as List? ?? [])
+          .map(
+            (item) => WasteTypeModel.fromJson(Map<String, dynamic>.from(item)),
+          )
+          .toList();
+
+      adminWasteTypesLoaded = true;
+      adminWasteTypesLoading = false;
+
+      notifyListeners();
+    } catch (error) {
+      adminWasteTypesLoading = false;
+
+      adminWasteTypesError = error.toString().replaceFirst('Exception: ', '');
+
+      notifyListeners();
+    }
+  }
+
+  // =========================
+  // Clear Waste Types Error
+  // =========================
+
+  void clearWasteTypesError() {
+    adminWasteTypesError = null;
+
+    notifyListeners();
+  }
+
+  Future<bool> addWasteType({
+    required String name,
+    required String description,
+  }) async {
+    try {
+      await AdminApiService.createWasteType(
+        name: name,
+        description: description,
+      );
+
+      await loadWasteTypes();
+
+      return true;
+    } catch (error) {
+      adminWasteTypesError = error.toString().replaceFirst('Exception: ', '');
+
+      notifyListeners();
+
+      return false;
+    }
+  }
+
+  Future<bool> deleteWasteType(int id) async {
+    try {
+      await AdminApiService.deleteWasteType(id);
+
+      await loadWasteTypes();
+
+      return true;
+    } catch (error) {
+      adminWasteTypesError = error.toString().replaceFirst('Exception: ', '');
+
+      notifyListeners();
+
+      return false;
+    }
+  }
+
+  Future<bool> updateWasteType({
+    required int id,
+    required String name,
+    required String description,
+  }) async {
+    try {
+      await AdminApiService.updateWasteType(
+        id: id,
+        name: name,
+        description: description,
+      );
+
+      await loadWasteTypes();
+
+      return true;
+    } catch (error) {
+      adminWasteTypesError = error.toString().replaceFirst('Exception: ', '');
+
+      notifyListeners();
+
+      return false;
+    }
   }
 }
