@@ -243,7 +243,6 @@ class UsersScreen extends StatelessWidget {
   // =========================
 
   Widget _userRow(BuildContext context, double tableWidth, UserModel user) {
-    final bool isActive = user.status.toLowerCase() == 'active';
 
     return Container(
       height: 65,

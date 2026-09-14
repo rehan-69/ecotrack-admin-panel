@@ -663,30 +663,6 @@ class _UserDetailContent extends StatelessWidget {
   }
 
   // =========================
-  // STATUS BADGE
-  // =========================
-
-  Widget _statusBadge(BuildContext context) {
-    final bool active = user.status.toLowerCase() == 'active';
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-      decoration: BoxDecoration(
-        color: active ? const Color(0xFFD9F5DF) : const Color(0xFFFDE8E8),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Text(
-        user.status,
-        style: TextStyle(
-          fontSize: 12,
-          color: active ? const Color(0xFF16833A) : const Color(0xFFC62828),
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-    );
-  }
-
-  // =========================
   // RECENT COMPLAINTS
   // =========================
 
