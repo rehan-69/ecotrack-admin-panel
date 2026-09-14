@@ -83,11 +83,7 @@ class _UserDetailContent extends StatelessWidget {
     if (isMobile) {
       return Scaffold(
         backgroundColor: const Color(0xFFF7FAF8),
-        drawer: Drawer(
-          width: 280,
-          backgroundColor: Colors.white,
-          child: _sideBar(context),
-        ),
+
         appBar: _mobileHeader(context),
         body: _mainContent(context),
       );
@@ -97,7 +93,6 @@ class _UserDetailContent extends StatelessWidget {
       backgroundColor: const Color(0xFFF7FAF8),
       body: Row(
         children: [
-          _sideBar(context),
           Expanded(
             child: Column(
               children: [
@@ -198,157 +193,6 @@ class _UserDetailContent extends StatelessWidget {
         ],
       ),
       titleSpacing: 0,
-    );
-  }
-
-  // =========================
-  // SIDEBAR
-  // =========================
-
-  Widget _sideBar(BuildContext context) {
-    final bool isMobile = MediaQuery.of(context).size.width < 900;
-
-    double sidebarWidth;
-
-    if (isMobile) {
-      sidebarWidth = 280;
-    } else if (MediaQuery.of(context).size.width < 1200) {
-      sidebarWidth = 180;
-    } else {
-      sidebarWidth = 250;
-    }
-
-    return Container(
-      width: sidebarWidth,
-      color: Colors.white,
-      child: Column(
-        children: [
-          // LOGO
-          Container(
-            height: 66,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              children: [
-                Container(
-                  width: 42,
-                  height: 42,
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Icon(Icons.eco_outlined, color: Colors.white),
-                ),
-                const SizedBox(width: 12),
-                const Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'EcoTrack',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      'Admin Panel',
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-
-          const Divider(height: 1),
-
-          const SizedBox(height: 18),
-
-          // MANAGEMENT
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: const Text(
-                'MANAGEMENT',
-                style: TextStyle(
-                  fontSize: 11,
-                  color: Color(0xFF64748B),
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ),
-
-          const SizedBox(height: 12),
-
-          _menuItem(context, Icons.dashboard_outlined, 'Dashboard', false),
-
-          _menuItem(context, Icons.description_outlined, 'Complaints', false),
-
-          _menuItem(context, Icons.people_outline, 'Users', true),
-
-          _menuItem(context, Icons.delete_outline, 'Waste Types', false),
-
-          const Spacer(),
-
-          // LOGOUT
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              border: Border(top: BorderSide(color: Colors.grey.shade200)),
-            ),
-            child: Row(
-              children: [
-                Icon(Icons.logout, color: Colors.grey.shade600),
-                const SizedBox(width: 12),
-                const Text(
-                  'Logout',
-                  style: TextStyle(fontSize: 15, color: Colors.grey),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // =========================
-  // MENU ITEM
-  // =========================
-
-  Widget _menuItem(
-    BuildContext context,
-    IconData icon,
-    String title,
-    bool selected,
-  ) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-      decoration: BoxDecoration(
-        color: selected ? AppColors.primaryColor : Colors.transparent,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        children: [
-          Icon(
-            icon,
-            size: 20,
-            color: selected ? Colors.white : Colors.grey.shade600,
-          ),
-          const SizedBox(width: 14),
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 15,
-              color: selected ? Colors.white : Colors.grey.shade700,
-              fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
-            ),
-          ),
-        ],
-      ),
     );
   }
 

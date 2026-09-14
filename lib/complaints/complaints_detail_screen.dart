@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:ecotrack_admin_panel/constants/app_color.dart';
 import 'package:ecotrack_admin_panel/constants/responsive.dart';
-import 'package:ecotrack_admin_panel/views/widgets/side_bar.dart';
 import 'package:ecotrack_admin_panel/viewmodel/admin_provider.dart';
 
 class ComplaintDetailScreen extends StatelessWidget {
@@ -71,17 +69,6 @@ class ComplaintDetailScreen extends StatelessWidget {
         if (isMobile) {
           return Scaffold(
             backgroundColor: const Color(0xFFF7FAF8),
-            drawer: Drawer(
-              width: 280,
-              backgroundColor: Colors.white,
-              child: SideBar(
-                selectedIndex: 1,
-                onItemSelected: (index) {
-                  value.changeIndex(index);
-                  Navigator.pop(context);
-                },
-              ),
-            ),
             appBar: _mobileHeader(context),
             body: _content(context, value),
           );
@@ -90,12 +77,6 @@ class ComplaintDetailScreen extends StatelessWidget {
         return Scaffold(
           body: Row(
             children: [
-              SideBar(
-                selectedIndex: 1,
-                onItemSelected: (index) {
-                  value.changeIndex(index);
-                },
-              ),
               Expanded(
                 child: Column(
                   children: [
