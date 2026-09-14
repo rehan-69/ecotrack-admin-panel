@@ -497,22 +497,6 @@ class _UserDetailContent extends StatelessWidget {
                   ],
                 ),
               ),
-
-              const SizedBox(width: 8),
-
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  const Text(
-                    'Account Status',
-                    style: TextStyle(fontSize: 13, color: Color(0xFF64748B)),
-                  ),
-
-                  const SizedBox(height: 7),
-
-                  _statusBadge(context),
-                ],
-              ),
             ],
           ),
 
