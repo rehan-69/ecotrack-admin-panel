@@ -153,18 +153,10 @@ class ComplaintDetailScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       elevation: 0,
       toolbarHeight: 64,
-      leading: Builder(
-        builder: (context) {
-          return IconButton(
-            icon: const Icon(Icons.menu, color: Colors.black54, size: 28),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-          );
-        },
-      ),
+
       title: Row(
         children: [
+          SizedBox(width: context.width * 0.035,),
           const Text(
             'Nashik Municipal Corporation',
             style: TextStyle(
