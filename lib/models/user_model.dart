@@ -6,7 +6,7 @@ class UserModel {
   final String joinedDate;
   final String status;
   final int complaintCount;
-
+  final String provider;
   UserModel({
     required this.id,
     required this.name,
@@ -15,6 +15,7 @@ class UserModel {
     required this.joinedDate,
     required this.status,
     required this.complaintCount,
+    required this.provider,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -33,6 +34,12 @@ class UserModel {
 
       complaintCount:
           int.tryParse(json['complaint_count']?.toString() ?? '0') ?? 0,
+
+      provider: json['provider']?.toString() == 'local'
+          ? 'Email'
+          : json['provider']?.toString() == 'google'
+          ? 'Google'
+          : json['provider']?.toString() ?? '',
     );
   }
 }

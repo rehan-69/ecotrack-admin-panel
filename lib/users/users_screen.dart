@@ -213,7 +213,7 @@ class UsersScreen extends StatelessWidget {
 
           _headerCell(context, 'JOINED DATE', tableWidth * 0.12),
 
-          _headerCell(context, 'STATUS', tableWidth * 0.10),
+          _headerCell(context, 'PROVIDER', tableWidth * 0.10),
 
           _headerCell(context, 'ACTION', tableWidth * 0.08),
         ],
@@ -276,32 +276,10 @@ class UsersScreen extends StatelessWidget {
           _dataCell(context, _formatDate(user.joinedDate), tableWidth * 0.12),
 
           // Status
-          SizedBox(
-            width: tableWidth * 0.10,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 5,
-                ),
-                decoration: BoxDecoration(
-                  color: isActive
-                      ? const Color(0xFFDDF5E2)
-                      : const Color(0xFFF1F3F3),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Text(
-                  user.status,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: isActive
-                        ? Colors.green.shade700
-                        : Colors.grey.shade700,
-                  ),
-                ),
-              ),
-            ),
+          _dataCell(
+            context,
+            user.provider.isEmpty ? '-' : user.provider,
+            tableWidth * 0.10,
           ),
 
           // Action

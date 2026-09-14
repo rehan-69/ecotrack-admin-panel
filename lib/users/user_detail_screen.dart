@@ -10,10 +10,7 @@ import 'package:ecotrack_admin_panel/viewmodel/admin_provider.dart';
 class UserDetailScreen extends StatelessWidget {
   final int id;
 
-  const UserDetailScreen({
-    super.key,
-    required this.id,
-  });
+  const UserDetailScreen({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +21,14 @@ class UserDetailScreen extends StatelessWidget {
 class _UserDetailLoader extends StatelessWidget {
   final int id;
 
-  const _UserDetailLoader({
-    required this.id,
-  });
+  const _UserDetailLoader({required this.id});
 
   @override
   Widget build(BuildContext context) {
     return Consumer<AdminProvider>(
       builder: (context, provider, child) {
         if (!provider.userDetailLoading &&
-            provider.userDetail == null &&
+            (provider.userDetail == null || provider.userDetail!.id != id) &&
             provider.userDetailError == null) {
           Future.microtask(() {
             provider.loadUserDetail(id);
@@ -43,9 +38,7 @@ class _UserDetailLoader extends StatelessWidget {
         if (provider.userDetailLoading) {
           return const Scaffold(
             backgroundColor: Color(0xFFF7FAF8),
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
+            body: Center(child: CircularProgressIndicator()),
           );
         }
 
@@ -55,10 +48,7 @@ class _UserDetailLoader extends StatelessWidget {
             body: Center(
               child: Text(
                 provider.userDetailError!,
-                style: const TextStyle(
-                  color: Colors.red,
-                  fontSize: 14,
-                ),
+                style: const TextStyle(color: Colors.red, fontSize: 14),
               ),
             ),
           );
@@ -70,10 +60,7 @@ class _UserDetailLoader extends StatelessWidget {
           return const Scaffold(
             backgroundColor: Color(0xFFF7FAF8),
             body: Center(
-              child: Text(
-                'User not found',
-                style: TextStyle(fontSize: 15),
-              ),
+              child: Text('User not found', style: TextStyle(fontSize: 15)),
             ),
           );
         }
@@ -87,9 +74,7 @@ class _UserDetailLoader extends StatelessWidget {
 class _UserDetailContent extends StatelessWidget {
   final UserDetailModel user;
 
-  const _UserDetailContent({
-    required this.user,
-  });
+  const _UserDetailContent({required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -117,9 +102,7 @@ class _UserDetailContent extends StatelessWidget {
             child: Column(
               children: [
                 _header(context),
-                Expanded(
-                  child: _mainContent(context),
-                ),
+                Expanded(child: _mainContent(context)),
               ],
             ),
           ),
@@ -142,39 +125,25 @@ class _UserDetailContent extends StatelessWidget {
         children: [
           _backButton(context),
 
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.018,
-          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.018),
 
           const Text(
             'User Details',
-            style: TextStyle(
-              fontSize: 26,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
           ),
 
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.025,
-          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.025),
 
           _userCard(context),
 
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.035,
-          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.035),
 
           const Text(
             'Recent Complaints',
-            style: TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.w600,
-            ),
+            style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
           ),
 
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.016,
-          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.016),
 
           _complaintsTable(context),
         ],
@@ -195,11 +164,7 @@ class _UserDetailContent extends StatelessWidget {
       leading: Builder(
         builder: (context) {
           return IconButton(
-            icon: const Icon(
-              Icons.menu,
-              color: Colors.black54,
-              size: 28,
-            ),
+            icon: const Icon(Icons.menu, color: Colors.black54, size: 28),
             onPressed: () {
               Scaffold.of(context).openDrawer();
             },
@@ -217,9 +182,7 @@ class _UserDetailContent extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          SizedBox(
-            width: context.width * 0.005,
-          ),
+          SizedBox(width: context.width * 0.005),
           const CircleAvatar(
             radius: 15,
             backgroundColor: Color(0xFF2E8B45),
@@ -273,10 +236,7 @@ class _UserDetailContent extends StatelessWidget {
                     color: AppColors.primaryColor,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(
-                    Icons.eco_outlined,
-                    color: Colors.white,
-                  ),
+                  child: const Icon(Icons.eco_outlined, color: Colors.white),
                 ),
                 const SizedBox(width: 12),
                 const Column(
@@ -292,10 +252,7 @@ class _UserDetailContent extends StatelessWidget {
                     ),
                     Text(
                       'Admin Panel',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                      ),
+                      style: TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                   ],
                 ),
@@ -325,33 +282,13 @@ class _UserDetailContent extends StatelessWidget {
 
           const SizedBox(height: 12),
 
-          _menuItem(
-            context,
-            Icons.dashboard_outlined,
-            'Dashboard',
-            false,
-          ),
+          _menuItem(context, Icons.dashboard_outlined, 'Dashboard', false),
 
-          _menuItem(
-            context,
-            Icons.description_outlined,
-            'Complaints',
-            false,
-          ),
+          _menuItem(context, Icons.description_outlined, 'Complaints', false),
 
-          _menuItem(
-            context,
-            Icons.people_outline,
-            'Users',
-            true,
-          ),
+          _menuItem(context, Icons.people_outline, 'Users', true),
 
-          _menuItem(
-            context,
-            Icons.delete_outline,
-            'Waste Types',
-            false,
-          ),
+          _menuItem(context, Icons.delete_outline, 'Waste Types', false),
 
           const Spacer(),
 
@@ -359,25 +296,15 @@ class _UserDetailContent extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              border: Border(
-                top: BorderSide(
-                  color: Colors.grey.shade200,
-                ),
-              ),
+              border: Border(top: BorderSide(color: Colors.grey.shade200)),
             ),
             child: Row(
               children: [
-                Icon(
-                  Icons.logout,
-                  color: Colors.grey.shade600,
-                ),
+                Icon(Icons.logout, color: Colors.grey.shade600),
                 const SizedBox(width: 12),
                 const Text(
                   'Logout',
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.grey,
-                  ),
+                  style: TextStyle(fontSize: 15, color: Colors.grey),
                 ),
               ],
             ),
@@ -398,18 +325,10 @@ class _UserDetailContent extends StatelessWidget {
     bool selected,
   ) {
     return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 12,
-        vertical: 3,
-      ),
-      padding: const EdgeInsets.symmetric(
-        horizontal: 14,
-        vertical: 12,
-      ),
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
-        color: selected
-            ? AppColors.primaryColor
-            : Colors.transparent,
+        color: selected ? AppColors.primaryColor : Colors.transparent,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
@@ -417,21 +336,15 @@ class _UserDetailContent extends StatelessWidget {
           Icon(
             icon,
             size: 20,
-            color: selected
-                ? Colors.white
-                : Colors.grey.shade600,
+            color: selected ? Colors.white : Colors.grey.shade600,
           ),
           const SizedBox(width: 14),
           Text(
             title,
             style: TextStyle(
               fontSize: 15,
-              color: selected
-                  ? Colors.white
-                  : Colors.grey.shade700,
-              fontWeight: selected
-                  ? FontWeight.w600
-                  : FontWeight.w400,
+              color: selected ? Colors.white : Colors.grey.shade700,
+              fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
             ),
           ),
         ],
@@ -449,20 +362,13 @@ class _UserDetailContent extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24),
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.grey.shade200,
-          ),
-        ),
+        border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
       ),
       child: Row(
         children: [
           const Text(
             'Nashik Municipal Corporation',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
           const Spacer(),
           const Column(
@@ -471,17 +377,11 @@ class _UserDetailContent extends StatelessWidget {
             children: [
               Text(
                 'Admin',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
               Text(
                 'admin@ecotrack.gov.in',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey,
-                ),
+                style: TextStyle(fontSize: 12, color: Colors.grey),
               ),
             ],
           ),
@@ -515,18 +415,11 @@ class _UserDetailContent extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: const [
-          Icon(
-            Icons.arrow_back,
-            size: 20,
-            color: Color(0xFF64748B),
-          ),
+          Icon(Icons.arrow_back, size: 20, color: Color(0xFF64748B)),
           SizedBox(width: 8),
           Text(
             'Back',
-            style: TextStyle(
-              fontSize: 14,
-              color: Color(0xFF64748B),
-            ),
+            style: TextStyle(fontSize: 14, color: Color(0xFF64748B)),
           ),
         ],
       ),
@@ -544,15 +437,11 @@ class _UserDetailContent extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(
-        isMobile ? 16 : 20,
-      ),
+      padding: EdgeInsets.all(isMobile ? 16 : 20),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(
-          color: Colors.grey.shade200,
-        ),
+        border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.04),
@@ -580,14 +469,11 @@ class _UserDetailContent extends StatelessWidget {
                 ),
               ),
 
-              SizedBox(
-                width: isMobile ? 10 : 16,
-              ),
+              SizedBox(width: isMobile ? 10 : 16),
 
               Expanded(
                 child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       user.name,
@@ -615,15 +501,11 @@ class _UserDetailContent extends StatelessWidget {
               const SizedBox(width: 8),
 
               Column(
-                crossAxisAlignment:
-                    CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   const Text(
                     'Account Status',
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: Color(0xFF64748B),
-                    ),
+                    style: TextStyle(fontSize: 13, color: Color(0xFF64748B)),
                   ),
 
                   const SizedBox(height: 7),
@@ -634,9 +516,7 @@ class _UserDetailContent extends StatelessWidget {
             ],
           ),
 
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.025,
-          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.025),
 
           // MOBILE INFO BOXES
           if (width < 700)
@@ -741,12 +621,7 @@ class _UserDetailContent extends StatelessWidget {
   ) {
     return SizedBox(
       width: double.infinity,
-      child: _infoBox(
-        context,
-        icon,
-        title,
-        value,
-      ),
+      child: _infoBox(context, icon, title, value),
     );
   }
 
@@ -766,21 +641,14 @@ class _UserDetailContent extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Colors.grey.shade300,
-        ),
+        border: Border.all(color: Colors.grey.shade300),
       ),
       child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(
-                icon,
-                size: 16,
-                color: Colors.grey.shade600,
-              ),
+              Icon(icon, size: 16, color: Colors.grey.shade600),
 
               const SizedBox(width: 7),
 
@@ -803,10 +671,7 @@ class _UserDetailContent extends StatelessWidget {
             value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-            ),
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
           ),
         ],
       ),
@@ -818,27 +683,19 @@ class _UserDetailContent extends StatelessWidget {
   // =========================
 
   Widget _statusBadge(BuildContext context) {
-    final bool active =
-        user.status.toLowerCase() == 'active';
+    final bool active = user.status.toLowerCase() == 'active';
 
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 12,
-        vertical: 5,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
       decoration: BoxDecoration(
-        color: active
-            ? const Color(0xFFD9F5DF)
-            : const Color(0xFFFDE8E8),
+        color: active ? const Color(0xFFD9F5DF) : const Color(0xFFFDE8E8),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Text(
         user.status,
         style: TextStyle(
           fontSize: 12,
-          color: active
-              ? const Color(0xFF16833A)
-              : const Color(0xFFC62828),
+          color: active ? const Color(0xFF16833A) : const Color(0xFFC62828),
           fontWeight: FontWeight.w500,
         ),
       ),
@@ -855,9 +712,7 @@ class _UserDetailContent extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(
-          color: Colors.grey.shade200,
-        ),
+        border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.04),
@@ -891,10 +746,7 @@ class _UserDetailContent extends StatelessWidget {
                   padding: EdgeInsets.all(25),
                   child: Text(
                     'No complaints found',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Color(0xFF64748B),
-                    ),
+                    style: TextStyle(fontSize: 14, color: Color(0xFF64748B)),
                   ),
                 )
               else
@@ -933,88 +785,42 @@ class _UserDetailContent extends StatelessWidget {
     required int complaintDbId,
   }) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 14,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
-        color: isHeader
-            ? const Color(0xFFF7F9F8)
-            : Colors.white,
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.grey.shade200,
-          ),
-        ),
+        color: isHeader ? const Color(0xFFF7F9F8) : Colors.white,
+        border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
       ),
       child: Row(
         children: [
-          Expanded(
-            flex: 15,
-            child: _tableText(
-              context,
-              complaintId,
-              isHeader,
-            ),
-          ),
+          Expanded(flex: 15, child: _tableText(context, complaintId, isHeader)),
 
-          Expanded(
-            flex: 18,
-            child: _tableText(
-              context,
-              title,
-              isHeader,
-            ),
-          ),
+          Expanded(flex: 18, child: _tableText(context, title, isHeader)),
 
-          Expanded(
-            flex: 20,
-            child: _tableText(
-              context,
-              wasteType,
-              isHeader,
-            ),
-          ),
+          Expanded(flex: 20, child: _tableText(context, wasteType, isHeader)),
 
-          Expanded(
-            flex: 15,
-            child: _tableText(
-              context,
-              date,
-              isHeader,
-            ),
-          ),
+          Expanded(flex: 15, child: _tableText(context, date, isHeader)),
 
           Expanded(
             flex: 15,
             child: isHeader
-                ? _tableText(
-                    context,
-                    status,
-                    true,
-                  )
+                ? _tableText(context, status, true)
                 : Align(
                     alignment: Alignment.centerLeft,
                     child: Container(
-                      padding:
-                          const EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                         horizontal: 10,
                         vertical: 5,
                       ),
                       decoration: BoxDecoration(
-                        color: _statusBackground(
-                          status,
-                        ),
-                        borderRadius:
-                            BorderRadius.circular(20),
+                        color: _statusBackground(status),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
                         status,
                         style: TextStyle(
                           fontSize: 12,
                           color: _statusColor(status),
-                          fontWeight:
-                              FontWeight.w500,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
@@ -1031,9 +837,7 @@ class _UserDetailContent extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              ComplaintDetailScreen(
-                            id: complaintDbId,
-                          ),
+                              ComplaintDetailScreen(id: complaintDbId),
                         ),
                       );
                     },
@@ -1045,9 +849,7 @@ class _UserDetailContent extends StatelessWidget {
                   color: isHeader
                       ? const Color(0xFF64748B)
                       : AppColors.primaryColor,
-                  fontWeight: isHeader
-                      ? FontWeight.w500
-                      : FontWeight.w400,
+                  fontWeight: isHeader ? FontWeight.w500 : FontWeight.w400,
                 ),
               ),
             ),
@@ -1061,22 +863,14 @@ class _UserDetailContent extends StatelessWidget {
   // TABLE TEXT
   // =========================
 
-  Widget _tableText(
-    BuildContext context,
-    String text,
-    bool isHeader,
-  ) {
+  Widget _tableText(BuildContext context, String text, bool isHeader) {
     return Text(
       text,
       overflow: TextOverflow.ellipsis,
       style: TextStyle(
         fontSize: isHeader ? 12 : 14,
-        color: isHeader
-            ? const Color(0xFF64748B)
-            : const Color(0xFF07152B),
-        fontWeight: isHeader
-            ? FontWeight.w500
-            : FontWeight.w400,
+        color: isHeader ? const Color(0xFF64748B) : const Color(0xFF07152B),
+        fontWeight: isHeader ? FontWeight.w500 : FontWeight.w400,
       ),
     );
   }
