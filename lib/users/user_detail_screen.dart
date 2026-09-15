@@ -625,27 +625,45 @@ class _UserDetailContent extends StatelessWidget {
 
           Expanded(
             flex: 10,
-            child: GestureDetector(
-              onTap: isHeader
-                  ? null
-                  : () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              ComplaintDetailScreen(id: complaintDbId),
-                        ),
-                      );
-                    },
-              child: Text(
-                action,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 13,
-                  color: isHeader
-                      ? const Color(0xFF64748B)
-                      : AppColors.primaryColor,
-                  fontWeight: isHeader ? FontWeight.w500 : FontWeight.w400,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 12,
+                    ),
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    foregroundColor: AppColors.primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  onPressed: isHeader
+                      ? null
+                      : () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  ComplaintDetailScreen(id: complaintDbId),
+                            ),
+                          );
+                        },
+                  child: Text(
+                    action,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: isHeader
+                          ? const Color(0xFF64748B)
+                          : AppColors.primaryColor,
+                      fontWeight: isHeader ? FontWeight.w500 : FontWeight.w400,
+                    ),
+                  ),
                 ),
               ),
             ),

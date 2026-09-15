@@ -14,6 +14,32 @@ class WasteTypesScreen extends StatelessWidget {
 
   static const double minTableWidth = 988;
 
+  String _formatDate(String value) {
+    try {
+      final date = DateTime.parse(value).toLocal();
+
+      const months = [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
+      ];
+
+      return '${date.day.toString().padLeft(2, '0')} '
+          '${months[date.month - 1]} ${date.year}';
+    } catch (_) {
+      return value;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -218,6 +244,8 @@ class WasteTypesScreen extends StatelessWidget {
 
           Expanded(flex: 17, child: _headerCell(context, 'TOTAL COMPLAINTS')),
 
+          Expanded(flex: 15, child: _headerCell(context, 'ADDED DATE')),
+
           Expanded(flex: 25, child: _headerCell(context, 'ACTIONS')),
         ],
       ),
@@ -275,6 +303,10 @@ class WasteTypesScreen extends StatelessWidget {
           Expanded(
             flex: 17,
             child: _dataCell(context, wasteType.complaintCount.toString()),
+          ),
+          Expanded(
+            flex: 15,
+            child: _dataCell(context, _formatDate(wasteType.createdAt)),
           ),
 
           Expanded(
