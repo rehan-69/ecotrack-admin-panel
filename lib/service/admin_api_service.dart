@@ -6,8 +6,7 @@ import 'package:http/http.dart' as http;
 class AdminApiService {
   static const String baseUrl = 'http://127.0.0.1:5000';
 
-  static const FlutterSecureStorage _storage =
-      FlutterSecureStorage();
+  static const FlutterSecureStorage _storage = FlutterSecureStorage();
 
   // =========================
   // Admin Login
@@ -19,29 +18,19 @@ class AdminApiService {
   }) async {
     final response = await http.post(
       Uri.parse('$baseUrl/admin/login'),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode({
-        'email': email,
-        'password': password,
-      }),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'email': email, 'password': password}),
     );
 
     final data = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
-      await _storage.write(
-        key: 'admin_token',
-        value: data['token'],
-      );
+      await _storage.write(key: 'admin_token', value: data['token']);
 
       return data;
     }
 
-    throw Exception(
-      data['message'] ?? 'Admin login failed',
-    );
+    throw Exception(data['message'] ?? 'Admin login failed');
   }
 
   // =========================
@@ -49,9 +38,7 @@ class AdminApiService {
   // =========================
 
   static Future<String?> getToken() async {
-    return await _storage.read(
-      key: 'admin_token',
-    );
+    return await _storage.read(key: 'admin_token');
   }
 
   // =========================
@@ -59,9 +46,7 @@ class AdminApiService {
   // =========================
 
   static Future<void> logout() async {
-    await _storage.delete(
-      key: 'admin_token',
-    );
+    await _storage.delete(key: 'admin_token');
   }
 
   // =========================
@@ -93,9 +78,7 @@ class AdminApiService {
       return data;
     }
 
-    throw Exception(
-      data['message'] ?? 'Failed to load dashboard',
-    );
+    throw Exception(data['message'] ?? 'Failed to load dashboard');
   }
 
   // =========================
@@ -128,14 +111,9 @@ class AdminApiService {
 
     final uri = Uri.parse(
       '$baseUrl/admin/complaints',
-    ).replace(
-      queryParameters: queryParameters,
-    );
+    ).replace(queryParameters: queryParameters);
 
-    final response = await http.get(
-      uri,
-      headers: await _headers(),
-    );
+    final response = await http.get(uri, headers: await _headers());
 
     final data = jsonDecode(response.body);
 
@@ -143,9 +121,7 @@ class AdminApiService {
       return data;
     }
 
-    throw Exception(
-      data['message'] ?? 'Failed to load complaints',
-    );
+    throw Exception(data['message'] ?? 'Failed to load complaints');
   }
 
   // =========================
@@ -161,23 +137,17 @@ class AdminApiService {
     final data = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
-      return List<String>.from(
-        data['wards'] ?? [],
-      );
+      return List<String>.from(data['wards'] ?? []);
     }
 
-    throw Exception(
-      data['message'] ?? 'Failed to load wards',
-    );
+    throw Exception(data['message'] ?? 'Failed to load wards');
   }
 
   // =========================
   // Complaint Detail
   // =========================
 
-  static Future<Map<String, dynamic>> getComplaintById(
-    int id,
-  ) async {
+  static Future<Map<String, dynamic>> getComplaintById(int id) async {
     final response = await http.get(
       Uri.parse('$baseUrl/admin/complaints/$id'),
       headers: await _headers(),
@@ -189,9 +159,7 @@ class AdminApiService {
       return data;
     }
 
-    throw Exception(
-      data['message'] ?? 'Failed to load complaint',
-    );
+    throw Exception(data['message'] ?? 'Failed to load complaint');
   }
 
   // =========================
@@ -201,15 +169,12 @@ class AdminApiService {
   static Future<Map<String, dynamic>> updateComplaintStatus({
     required int id,
     required String status,
+    String? remark,
   }) async {
     final response = await http.patch(
-      Uri.parse(
-        '$baseUrl/admin/complaints/$id/status',
-      ),
+      Uri.parse('$baseUrl/admin/complaints/$id/status'),
       headers: await _headers(),
-      body: jsonEncode({
-        'status': status,
-      }),
+      body: jsonEncode({'status': status, 'remark': remark}),
     );
 
     final data = jsonDecode(response.body);
@@ -218,18 +183,14 @@ class AdminApiService {
       return data;
     }
 
-    throw Exception(
-      data['message'] ?? 'Failed to update complaint status',
-    );
+    throw Exception(data['message'] ?? 'Failed to update complaint status');
   }
 
   // =========================
   // Users
   // =========================
 
-  static Future<Map<String, dynamic>> getUsers({
-    String? search,
-  }) async {
+  static Future<Map<String, dynamic>> getUsers({String? search}) async {
     final queryParameters = <String, String>{};
 
     if (search != null && search.isNotEmpty) {
@@ -238,14 +199,9 @@ class AdminApiService {
 
     final uri = Uri.parse(
       '$baseUrl/admin/users',
-    ).replace(
-      queryParameters: queryParameters,
-    );
+    ).replace(queryParameters: queryParameters);
 
-    final response = await http.get(
-      uri,
-      headers: await _headers(),
-    );
+    final response = await http.get(uri, headers: await _headers());
 
     final data = jsonDecode(response.body);
 
@@ -253,18 +209,14 @@ class AdminApiService {
       return data;
     }
 
-    throw Exception(
-      data['message'] ?? 'Failed to load users',
-    );
+    throw Exception(data['message'] ?? 'Failed to load users');
   }
 
   // =========================
   // User Detail
   // =========================
 
-  static Future<Map<String, dynamic>> getUserById(
-    int id,
-  ) async {
+  static Future<Map<String, dynamic>> getUserById(int id) async {
     final response = await http.get(
       Uri.parse('$baseUrl/admin/users/$id'),
       headers: await _headers(),
@@ -276,9 +228,7 @@ class AdminApiService {
       return data;
     }
 
-    throw Exception(
-      data['message'] ?? 'Failed to load user',
-    );
+    throw Exception(data['message'] ?? 'Failed to load user');
   }
 
   // =========================
@@ -297,9 +247,7 @@ class AdminApiService {
       return data;
     }
 
-    throw Exception(
-      data['message'] ?? 'Failed to load waste types',
-    );
+    throw Exception(data['message'] ?? 'Failed to load waste types');
   }
 
   // =========================
@@ -313,10 +261,7 @@ class AdminApiService {
     final response = await http.post(
       Uri.parse('$baseUrl/admin/waste-types'),
       headers: await _headers(),
-      body: jsonEncode({
-        'name': name,
-        'description': description,
-      }),
+      body: jsonEncode({'name': name, 'description': description}),
     );
 
     final data = jsonDecode(response.body);
@@ -325,9 +270,7 @@ class AdminApiService {
       return data;
     }
 
-    throw Exception(
-      data['message'] ?? 'Failed to create waste type',
-    );
+    throw Exception(data['message'] ?? 'Failed to create waste type');
   }
 
   // =========================
@@ -342,10 +285,7 @@ class AdminApiService {
     final response = await http.put(
       Uri.parse('$baseUrl/admin/waste-types/$id'),
       headers: await _headers(),
-      body: jsonEncode({
-        'name': name,
-        'description': description,
-      }),
+      body: jsonEncode({'name': name, 'description': description}),
     );
 
     final data = jsonDecode(response.body);
@@ -354,18 +294,14 @@ class AdminApiService {
       return data;
     }
 
-    throw Exception(
-      data['message'] ?? 'Failed to update waste type',
-    );
+    throw Exception(data['message'] ?? 'Failed to update waste type');
   }
 
   // =========================
   // Delete Waste Type
   // =========================
 
-  static Future<Map<String, dynamic>> deleteWasteType(
-    int id,
-  ) async {
+  static Future<Map<String, dynamic>> deleteWasteType(int id) async {
     final response = await http.delete(
       Uri.parse('$baseUrl/admin/waste-types/$id'),
       headers: await _headers(),
@@ -377,8 +313,6 @@ class AdminApiService {
       return data;
     }
 
-    throw Exception(
-      data['message'] ?? 'Failed to delete waste type',
-    );
+    throw Exception(data['message'] ?? 'Failed to delete waste type');
   }
 }

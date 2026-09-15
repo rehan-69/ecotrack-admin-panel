@@ -16,6 +16,13 @@ class AdminProvider extends ChangeNotifier {
 
   int selectedIndex = 0;
 
+  String municipalityRemark = '';
+  
+  void setMunicipalityRemark(String value) {
+    municipalityRemark = value;
+    notifyListeners();
+  }
+
   void changeIndex(int index) {
     selectedIndex = index;
     notifyListeners();
@@ -345,9 +352,14 @@ class AdminProvider extends ChangeNotifier {
   Future<void> updateComplaintStatus({
     required int id,
     required String status,
+    String? remark,
   }) async {
     try {
-      await AdminApiService.updateComplaintStatus(id: id, status: status);
+      await AdminApiService.updateComplaintStatus(
+        id: id,
+        status: status,
+        remark: remark,
+      );
 
       selectedComplaintStatus = status;
 
@@ -366,6 +378,7 @@ class AdminProvider extends ChangeNotifier {
           description: complaintDetail!.description,
           latitude: complaintDetail!.latitude,
           longitude: complaintDetail!.longitude,
+          municipalityRemark: remark ?? complaintDetail!.municipalityRemark,
         );
       }
 

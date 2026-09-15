@@ -156,7 +156,7 @@ class ComplaintDetailScreen extends StatelessWidget {
 
       title: Row(
         children: [
-          SizedBox(width: context.width * 0.035,),
+          SizedBox(width: context.width * 0.035),
           const Text(
             'Nashik Municipal Corporation',
             style: TextStyle(
@@ -278,8 +278,14 @@ class ComplaintDetailScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         _currentStatusCard(context, provider, detail.status),
+
                         const SizedBox(height: 24),
+
                         _statusTimeline(context, detail.status),
+
+                        const SizedBox(height: 24),
+
+                        _municipalityRemark(context, provider),
                       ],
                     ),
                   ),
@@ -726,6 +732,52 @@ class ComplaintDetailScreen extends StatelessWidget {
             completedCompleted,
             currentStatus == 'Completed',
             '4',
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _municipalityRemark(BuildContext context, AdminProvider provider) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: Colors.grey.shade200),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Municipality Remark',
+            style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+          ),
+
+          const SizedBox(height: 15),
+
+          TextField(
+            onChanged: provider.setMunicipalityRemark,
+            maxLines: 4,
+            decoration: InputDecoration(
+              hintText: 'Enter municipality remark',
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(9),
+                borderSide: BorderSide(color: Colors.grey.shade300),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(9),
+                borderSide: BorderSide(color: AppColors.primaryColor),
+              ),
+            ),
           ),
         ],
       ),
