@@ -267,12 +267,16 @@ class ComplaintDetailScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         _complaintImage(context, detail.image),
+
                         const SizedBox(height: 24),
+
                         _complaintInformation(context, detail),
                       ],
                     ),
                   ),
+
                   const SizedBox(width: 24),
+
                   SizedBox(
                     width: 328,
                     child: Column(
@@ -291,7 +295,6 @@ class ComplaintDetailScreen extends StatelessWidget {
                   ),
                 ],
               ),
-
             // =========================
             // MOBILE / TABLET
             // =========================
@@ -299,11 +302,21 @@ class ComplaintDetailScreen extends StatelessWidget {
               Column(
                 children: [
                   _complaintImage(context, detail.image),
+
                   const SizedBox(height: 20),
+
                   _currentStatusCard(context, provider, detail.status),
+
                   const SizedBox(height: 20),
+
                   _statusTimeline(context, detail.status),
+
                   const SizedBox(height: 20),
+
+                  _municipalityRemark(context, provider),
+
+                  const SizedBox(height: 20),
+
                   _complaintInformation(context, detail),
                 ],
               ),
@@ -443,6 +456,7 @@ class ComplaintDetailScreen extends StatelessWidget {
                       await provider.updateComplaintStatus(
                         id: id,
                         status: selectedStatus,
+                        remark: provider.municipalityRemark,
                       );
                     },
               style: ElevatedButton.styleFrom(
@@ -510,15 +524,7 @@ class ComplaintDetailScreen extends StatelessWidget {
               ],
             ),
 
-          if (isMobile)
-            Column(
-              children: [
-                _leftInformation(context, detail),
-                const SizedBox(height: 15),
-                _rightInformation(context, detail),
-              ],
-            ),
-
+         
           const SizedBox(height: 15),
 
           Container(
