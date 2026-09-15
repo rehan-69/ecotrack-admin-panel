@@ -1,3 +1,4 @@
+import 'package:ecotrack_admin_panel/complaints/complaints_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:provider/provider.dart';
@@ -416,12 +417,25 @@ class DashboardScreen extends StatelessWidget {
 
             const Spacer(),
 
-            const Text(
-              'View All Complaints',
-              style: TextStyle(
-                fontSize: 14,
-                color: AppColors.primaryColor,
-                fontWeight: FontWeight.w500,
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ComplaintsScreen(),
+                    ),
+                  );
+                },
+                child: Text(
+                  'View All Complaints',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: AppColors.primaryColor,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
             ),
           ],

@@ -18,42 +18,44 @@ class ComplaintsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AdminProvider>(
-      builder: (context, provider, child) {
-        if (!provider.complaintsLoaded && !provider.complaintsLoading) {
-          Future.microtask(() {
-            provider.loadComplaints();
-          });
-        }
+    return Scaffold(
+      body: Consumer<AdminProvider>(
+        builder: (context, provider, child) {
+          if (!provider.complaintsLoaded && !provider.complaintsLoading) {
+            Future.microtask(() {
+              provider.loadComplaints();
+            });
+          }
 
-        return SingleChildScrollView(
-          padding: EdgeInsets.all(context.width * 0.018),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Complaints',
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-              ),
+          return SingleChildScrollView(
+            padding: EdgeInsets.all(context.width * 0.018),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Complaints',
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                ),
 
-              SizedBox(height: context.height * 0.008),
+                SizedBox(height: context.height * 0.008),
 
-              Text(
-                'View and manage citizen waste complaints.',
-                style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
-              ),
+                Text(
+                  'View and manage citizen waste complaints.',
+                  style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+                ),
 
-              SizedBox(height: context.height * 0.025),
+                SizedBox(height: context.height * 0.025),
 
-              _filters(context, provider),
+                _filters(context, provider),
 
-              SizedBox(height: context.height * 0.025),
+                SizedBox(height: context.height * 0.025),
 
-              _complaintsTable(context),
-            ],
-          ),
-        );
-      },
+                _complaintsTable(context),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 
