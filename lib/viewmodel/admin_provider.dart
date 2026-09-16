@@ -10,18 +10,21 @@ import 'package:ecotrack_admin_panel/models/user_detail_model.dart';
 import 'package:ecotrack_admin_panel/models/waste_type_model.dart';
 
 class AdminProvider extends ChangeNotifier {
-  // =========================
-  // Navigation
-  // =========================
-
-  int selectedIndex = 0;
-
   String municipalityRemark = '';
 
   void setMunicipalityRemark(String value) {
     municipalityRemark = value;
     notifyListeners();
   }
+
+  final TextEditingController municipalityRemarkController =
+      TextEditingController();
+
+  // =========================
+  // Navigation
+  // =========================
+
+  int selectedIndex = 0;
 
   void changeIndex(int index) {
     selectedIndex = index;
@@ -35,20 +38,14 @@ class AdminProvider extends ChangeNotifier {
   bool isLoading = false;
   String? errorMessage;
 
-  Future<bool> login({
-    required String email,
-    required String password,
-  }) async {
+  Future<bool> login({required String email, required String password}) async {
     isLoading = true;
     errorMessage = null;
 
     notifyListeners();
 
     try {
-      await AdminApiService.loginAdmin(
-        email: email,
-        password: password,
-      );
+      await AdminApiService.loginAdmin(email: email, password: password);
 
       isLoading = false;
 
@@ -58,8 +55,7 @@ class AdminProvider extends ChangeNotifier {
     } catch (error) {
       isLoading = false;
 
-      errorMessage =
-          error.toString().replaceFirst('Exception: ', '');
+      errorMessage = error.toString().replaceFirst('Exception: ', '');
 
       notifyListeners();
 
@@ -127,8 +123,7 @@ class AdminProvider extends ChangeNotifier {
     } catch (error) {
       dashboardLoading = false;
 
-      dashboardError =
-          error.toString().replaceFirst('Exception: ', '');
+      dashboardError = error.toString().replaceFirst('Exception: ', '');
 
       notifyListeners();
     }
@@ -166,13 +161,9 @@ class AdminProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final wards =
-          await AdminApiService.getComplaintWards();
+      final wards = await AdminApiService.getComplaintWards();
 
-      complaintWards = [
-        'All Wards',
-        ...wards,
-      ];
+      complaintWards = ['All Wards', ...wards];
 
       complaintWardsLoading = false;
 
@@ -200,16 +191,12 @@ class AdminProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final data =
-          await AdminApiService.getWasteTypes();
+      final data = await AdminApiService.getWasteTypes();
 
       complaintWasteTypes = [
         'All Waste Types',
         ...List<String>.from(
-          (data['wasteTypes'] ?? [])
-              .map(
-                (item) => item['name'].toString(),
-              ),
+          (data['wasteTypes'] ?? []).map((item) => item['name'].toString()),
         ),
       ];
 
@@ -242,8 +229,7 @@ class AdminProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final data =
-          await AdminApiService.getComplaints(
+      final data = await AdminApiService.getComplaints(
         search: complaintSearch,
         status: selectedStatus,
         wasteType: selectedWasteType,
@@ -252,9 +238,7 @@ class AdminProvider extends ChangeNotifier {
 
       complaints = (data['complaints'] as List? ?? [])
           .map(
-            (item) => ComplaintModel.fromJson(
-              Map<String, dynamic>.from(item),
-            ),
+            (item) => ComplaintModel.fromJson(Map<String, dynamic>.from(item)),
           )
           .toList();
 
@@ -265,8 +249,7 @@ class AdminProvider extends ChangeNotifier {
     } catch (error) {
       complaintsLoading = false;
 
-      complaintsError =
-          error.toString().replaceFirst('Exception: ', '');
+      complaintsError = error.toString().replaceFirst('Exception: ', '');
 
       notifyListeners();
     }
@@ -334,23 +317,18 @@ class AdminProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final data =
-          await AdminApiService.getComplaintById(id);
+      final data = await AdminApiService.getComplaintById(id);
 
       final complaintData = Map<String, dynamic>.from(
         data['complaint'] ?? data,
       );
 
-      complaintDetail =
-          ComplaintDetailModel.fromJson(
-        complaintData,
-      );
+      complaintDetail = ComplaintDetailModel.fromJson(complaintData);
 
-      selectedComplaintStatus =
-          complaintDetail!.status;
+      selectedComplaintStatus = complaintDetail!.status;
 
-      municipalityRemark =
-          complaintDetail!.municipalityRemark ?? '';
+      municipalityRemark = complaintDetail!.municipalityRemark ?? '';
+      municipalityRemarkController.text = municipalityRemark;
 
       complaintDetailLoading = false;
 
@@ -358,8 +336,7 @@ class AdminProvider extends ChangeNotifier {
     } catch (error) {
       complaintDetailLoading = false;
 
-      complaintDetailError =
-          error.toString().replaceFirst('Exception: ', '');
+      complaintDetailError = error.toString().replaceFirst('Exception: ', '');
 
       notifyListeners();
     }
@@ -410,8 +387,7 @@ class AdminProvider extends ChangeNotifier {
           description: complaintDetail!.description,
           latitude: complaintDetail!.latitude,
           longitude: complaintDetail!.longitude,
-          municipalityRemark:
-              remark ?? complaintDetail!.municipalityRemark,
+          municipalityRemark: remark ?? complaintDetail!.municipalityRemark,
         );
       }
 
@@ -420,8 +396,7 @@ class AdminProvider extends ChangeNotifier {
       await loadComplaints();
       await loadDashboard();
     } catch (error) {
-      complaintDetailError =
-          error.toString().replaceFirst('Exception: ', '');
+      complaintDetailError = error.toString().replaceFirst('Exception: ', '');
 
       notifyListeners();
     }
@@ -437,6 +412,7 @@ class AdminProvider extends ChangeNotifier {
     complaintDetailLoading = false;
     selectedComplaintStatus = null;
     municipalityRemark = '';
+    municipalityRemarkController.clear();
 
     notifyListeners();
   }
@@ -464,17 +440,10 @@ class AdminProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final data =
-          await AdminApiService.getUsers(
-        search: userSearch,
-      );
+      final data = await AdminApiService.getUsers(search: userSearch);
 
       users = (data['users'] as List? ?? [])
-          .map(
-            (item) => UserModel.fromJson(
-              Map<String, dynamic>.from(item),
-            ),
-          )
+          .map((item) => UserModel.fromJson(Map<String, dynamic>.from(item)))
           .toList();
 
       usersLoaded = true;
@@ -484,8 +453,7 @@ class AdminProvider extends ChangeNotifier {
     } catch (error) {
       usersLoading = false;
 
-      usersError =
-          error.toString().replaceFirst('Exception: ', '');
+      usersError = error.toString().replaceFirst('Exception: ', '');
 
       notifyListeners();
     }
@@ -521,18 +489,13 @@ class AdminProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final data =
-          await AdminApiService.getUserById(id);
+      final data = await AdminApiService.getUserById(id);
 
-      final userData = Map<String, dynamic>.from(
-        data['user'] ?? {},
-      );
+      final userData = Map<String, dynamic>.from(data['user'] ?? {});
 
-      userData['complaints'] =
-          data['complaints'] ?? [];
+      userData['complaints'] = data['complaints'] ?? [];
 
-      userDetail =
-          UserDetailModel.fromJson(userData);
+      userDetail = UserDetailModel.fromJson(userData);
 
       userDetailLoading = false;
 
@@ -540,8 +503,7 @@ class AdminProvider extends ChangeNotifier {
     } catch (error) {
       userDetailLoading = false;
 
-      userDetailError =
-          error.toString().replaceFirst('Exception: ', '');
+      userDetailError = error.toString().replaceFirst('Exception: ', '');
 
       notifyListeners();
     }
@@ -582,14 +544,11 @@ class AdminProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final data =
-          await AdminApiService.getWasteTypes();
+      final data = await AdminApiService.getWasteTypes();
 
       wasteTypes = (data['wasteTypes'] as List? ?? [])
           .map(
-            (item) => WasteTypeModel.fromJson(
-              Map<String, dynamic>.from(item),
-            ),
+            (item) => WasteTypeModel.fromJson(Map<String, dynamic>.from(item)),
           )
           .toList();
 
@@ -600,8 +559,7 @@ class AdminProvider extends ChangeNotifier {
     } catch (error) {
       adminWasteTypesLoading = false;
 
-      adminWasteTypesError =
-          error.toString().replaceFirst('Exception: ', '');
+      adminWasteTypesError = error.toString().replaceFirst('Exception: ', '');
 
       notifyListeners();
     }
@@ -631,8 +589,7 @@ class AdminProvider extends ChangeNotifier {
 
       return true;
     } catch (error) {
-      adminWasteTypesError =
-          error.toString().replaceFirst('Exception: ', '');
+      adminWasteTypesError = error.toString().replaceFirst('Exception: ', '');
 
       notifyListeners();
 
@@ -648,8 +605,7 @@ class AdminProvider extends ChangeNotifier {
 
       return true;
     } catch (error) {
-      adminWasteTypesError =
-          error.toString().replaceFirst('Exception: ', '');
+      adminWasteTypesError = error.toString().replaceFirst('Exception: ', '');
 
       notifyListeners();
 
@@ -673,8 +629,7 @@ class AdminProvider extends ChangeNotifier {
 
       return true;
     } catch (error) {
-      adminWasteTypesError =
-          error.toString().replaceFirst('Exception: ', '');
+      adminWasteTypesError = error.toString().replaceFirst('Exception: ', '');
 
       notifyListeners();
 

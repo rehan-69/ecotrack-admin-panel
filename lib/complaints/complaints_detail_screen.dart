@@ -524,7 +524,6 @@ class ComplaintDetailScreen extends StatelessWidget {
               ],
             ),
 
-         
           const SizedBox(height: 15),
 
           Container(
@@ -771,6 +770,7 @@ class ComplaintDetailScreen extends StatelessWidget {
           const SizedBox(height: 15),
 
           TextField(
+            controller: provider.municipalityRemarkController,
             onChanged: provider.setMunicipalityRemark,
             maxLines: 4,
             decoration: InputDecoration(
@@ -782,6 +782,40 @@ class ComplaintDetailScreen extends StatelessWidget {
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(9),
                 borderSide: BorderSide(color: AppColors.primaryColor),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 12),
+
+          SizedBox(
+            width: double.infinity,
+            height: 37,
+            child: ElevatedButton(
+              onPressed: provider.municipalityRemark.trim().isEmpty
+                  ? null
+                  : () async {
+                      await provider.updateComplaintStatus(
+                        id: id,
+                        status:
+                            provider.selectedComplaintStatus ??
+                            provider.complaintDetail!.status,
+                        remark: provider.municipalityRemark,
+                      );
+                    },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primaryColor,
+                foregroundColor: Colors.white,
+                disabledBackgroundColor: Colors.grey.shade300,
+                disabledForegroundColor: Colors.grey.shade600,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(9),
+                ),
+              ),
+              child: const Text(
+                'Save Remark',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
               ),
             ),
           ),
