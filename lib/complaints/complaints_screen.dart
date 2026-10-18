@@ -148,20 +148,7 @@ class ComplaintsScreen extends StatelessWidget {
 
                     const SizedBox(width: 10),
 
-                    _dropdown(
-                      context,
-                      provider.selectedWard ?? 'All Wards',
-                      provider.complaintWards.isEmpty
-                          ? ['All Wards']
-                          : provider.complaintWards,
-                      (value) {
-                        provider.setComplaintWard(
-                          value == 'All Wards' ? null : value,
-                        );
-
-                        provider.loadComplaints();
-                      },
-                    ),
+                  
                   ],
                 ),
 
@@ -281,20 +268,7 @@ class ComplaintsScreen extends StatelessWidget {
                     },
                   ),
 
-                  _dropdown(
-                    context,
-                    provider.selectedWard ?? 'All Wards',
-                    provider.complaintWards.isEmpty
-                        ? ['All Wards']
-                        : provider.complaintWards,
-                    (value) {
-                      provider.setComplaintWard(
-                        value == 'All Wards' ? null : value,
-                      );
-
-                      provider.loadComplaints();
-                    },
-                  ),
+                
                 ],
               ),
 
@@ -592,7 +566,7 @@ class ComplaintsScreen extends StatelessWidget {
 
           _headerCell(context, 'WASTE TYPE', tableWidth * 0.14),
 
-          _headerCell(context, 'WARD /\nLOCATION', tableWidth * 0.12),
+          _headerCell(context, 'LOCATION', tableWidth * 0.12),
 
           _headerCell(context, 'SUBMITTED\nDATE', tableWidth * 0.12),
 
