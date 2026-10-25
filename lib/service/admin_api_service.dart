@@ -4,8 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class AdminApiService {
-  static const String baseUrl = 'http://127.0.0.1:5000';
-
+  static const String baseUrl = "https://ecotrack-admin-backend.onrender.com";
   static const FlutterSecureStorage _storage = FlutterSecureStorage();
 
   // =========================
