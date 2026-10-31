@@ -327,9 +327,11 @@ class AdminProvider extends ChangeNotifier {
 
       selectedComplaintStatus = complaintDetail!.status;
 
-      municipalityRemark = '';
-      municipalityRemarkController.clear();
-      
+      // Load saved municipality remark from database
+      municipalityRemark =
+          complaintData['municipality_remark']?.toString() ?? '';
+
+      municipalityRemarkController.text = municipalityRemark;
       complaintDetailLoading = false;
 
       notifyListeners();
@@ -370,8 +372,8 @@ class AdminProvider extends ChangeNotifier {
 
       selectedComplaintStatus = status;
 
-      municipalityRemark = '';
-      municipalityRemarkController.clear();
+      municipalityRemark = remark?.trim() ?? '';
+      municipalityRemarkController.text = municipalityRemark;
 
       if (complaintDetail != null) {
         complaintDetail = ComplaintDetailModel(
@@ -388,7 +390,7 @@ class AdminProvider extends ChangeNotifier {
           description: complaintDetail!.description,
           latitude: complaintDetail!.latitude,
           longitude: complaintDetail!.longitude,
-          municipalityRemark: '',
+          municipalityRemark: remark?.trim() ?? '',
         );
       }
 
